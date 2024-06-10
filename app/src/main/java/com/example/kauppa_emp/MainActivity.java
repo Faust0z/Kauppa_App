@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kauppa_emp.databinding.ActivityMainBinding;
 import com.example.kauppa_emp.fragments.CajaDiariaFragment;
@@ -33,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
         // Código para la navbar
+        configureAndSetFragment();
+    }
+
+    private void configureAndSetFragment() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         changeFragment(new CajaDiariaFragment());

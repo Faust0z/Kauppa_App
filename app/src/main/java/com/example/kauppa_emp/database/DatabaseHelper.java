@@ -4,9 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.Nullable;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "mydb.db";
     private static final int DB_VER = 1;
+    private Context context;
 
     private static final String TABLE_PRODUCTOS = "PRODUCTOS";
     private static final String TABLE_PEDIDOS = "PEDIDOS";
@@ -58,10 +61,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "PRIMARY KEY (id_pedido, id_producto))";
 
 
-    public DatabaseHelper(Context context) {
+    public DatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VER);
     }
-
 
     @Override //Método de creación de la BDD
     public void onCreate(SQLiteDatabase db) {
@@ -73,7 +75,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_TO_CREATE_TABLE_PRODUCTOS_POR_VENTA);
         db.execSQL(SQL_TO_CREATE_TABLE_PRODUCTOS_POR_PEDIDO);
     }
-
 
     @Override // Método obligatorio de la clase. Se espera no usarlo.
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

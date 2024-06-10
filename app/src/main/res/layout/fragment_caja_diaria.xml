@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout_cajaDiaria"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CajaDiariaFragment"
-    android:background="@color/material_dynamic_tertiary60">
+    android:background="@color/material_dynamic_tertiary60"
+    tools:context=".fragments.CajaDiariaFragment">
 
-    <TextView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton_herramientas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
+        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
+        app:srcCompat="@drawable/baseline_add_24" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_cajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/string_caja_diaria" />
-
+        tools:listitem="" />
 </FrameLayout>
