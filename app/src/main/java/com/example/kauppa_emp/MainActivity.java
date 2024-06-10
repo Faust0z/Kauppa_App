@@ -13,6 +13,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.kauppa_emp.databinding.ActivityMainBinding;
 import com.example.kauppa_emp.fragments.CajaDiariaFragment;
+import com.example.kauppa_emp.fragments.ComprasFragment;
+import com.example.kauppa_emp.fragments.HerramientasFragment;
+import com.example.kauppa_emp.fragments.PedidosFragment;
+import com.example.kauppa_emp.fragments.VentasFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,13 +37,29 @@ public class MainActivity extends AppCompatActivity {
         // Código para la navbar
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new CajaDiariaFragment());
+        changeFragment(new CajaDiariaFragment());
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.caja_diaria) {
+                changeFragment(new CajaDiariaFragment());
+            } else if (item.getItemId() == R.id.ventas) {
+                changeFragment(new VentasFragment());
+            } else if (item.getItemId() == R.id.pedidos) {
+                changeFragment(new PedidosFragment());
+            } else if (item.getItemId() == R.id.compras) {
+                changeFragment(new ComprasFragment());
+            } else if (item.getItemId() == R.id.herramientas) {
+                changeFragment(new HerramientasFragment());
+            }
+            return true;
+        });
     }
 
-    private void replaceFragment(Fragment fragment) {
+    // Función para hacer funcionar la navbar
+    private void changeFragment(Fragment newFragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.replace(R.id.frame_layout, newFragment);
         fragmentTransaction.commit();
     }
 }
