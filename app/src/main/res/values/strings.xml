@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kauppa_Emp</string>
+    <string name="string_caja_diaria">Estás en la caja diaria</string>
+    <string name="string_ventas">Estás en ventas</string>
+    <string name="string_compras">Estás en compras</string>
+    <string name="string_herramientas">Estás en herramientas</string>
+</resources>
