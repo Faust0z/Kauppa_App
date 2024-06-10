@@ -8,7 +8,7 @@
     android:background="@color/material_dynamic_tertiary70">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButton_herramientas"
+        android:id="@+id/addButton_compras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

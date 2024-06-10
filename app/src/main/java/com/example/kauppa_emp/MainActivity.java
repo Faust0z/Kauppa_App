@@ -18,6 +18,7 @@ import com.example.kauppa_emp.fragments.ComprasFragment;
 import com.example.kauppa_emp.fragments.HerramientasFragment;
 import com.example.kauppa_emp.fragments.PedidosFragment;
 import com.example.kauppa_emp.fragments.VentasFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Código para la navbar
-        configureAndSetFragment();
+        configureNavbarandSetFragment();
     }
 
-    private void configureAndSetFragment() {
+    private void configureNavbarandSetFragment() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         changeFragment(new CajaDiariaFragment());

@@ -9,7 +9,7 @@
     tools:context=".fragments.CajaDiariaFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButton_herramientas"
+        android:id="@+id/addButton_caja_diaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
