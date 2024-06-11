@@ -1,6 +1,8 @@
 package com.example.kauppa_emp.database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -37,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_TO_CREATE_TABLE_MOVIMIENTOS = "CREATE TABLE " + TABLE_MOVIMIENTOS + " ("
             + "id_movimiento INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "fecha TEXT NOT NULL, "
-            + "detalle TEXT NOT NULL, "
+            + "detalle TEXT, "
             + "monto REAL NOT NULL, "
             + "id_pedido_afectado INTEGER, "
             + "id_tipo INTEGER NOT NULL)";
@@ -59,6 +61,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "cantidad INTEGER NOT NULL, "
             + "subtotal REAL NOT NULL, "
             + "PRIMARY KEY (id_pedido, id_producto))";
+    private static final String SQL_INSERT_TIPOS_MOVIMIENTO = "INSERT INTO TIPOS_MOVIMIENTO (id_tipo, descripcion) VALUES " +
+            "(1, 'VENTA SIMPLE'), " +
+            "(2, 'VENTA DETALLADA'), " +
+            "(3, 'PAGO'), " +
+            "(4, 'COBRO'), " +
+            "(5, 'VARIOS'), " +
+            "(6, 'COMPRA');";
+    private static final String SQL_INSERT_ESTADOS_PEDIDO = "INSERT INTO ESTADOS_PEDIDO (id_estado, descripcion) VALUES " +
+            "(1, 'PENDIENTE'), " +
+            "(2, 'PREPARADO'), " +
+            "(3, 'A ENTREGAR'), " +
+            "(4, 'ENTREGADO');";
+
+
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -74,6 +90,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_TO_CREATE_TABLE_ESTADOS_PEDIDO);
         db.execSQL(SQL_TO_CREATE_TABLE_PRODUCTOS_POR_VENTA);
         db.execSQL(SQL_TO_CREATE_TABLE_PRODUCTOS_POR_PEDIDO);
+
+        db.execSQL(SQL_INSERT_TIPOS_MOVIMIENTO);
+        db.execSQL(SQL_INSERT_ESTADOS_PEDIDO);
     }
 
     @Override // Método obligatorio de la clase. Se espera no usarlo.
@@ -86,5 +105,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTOS_POR_VENTA);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTOS_POR_PEDIDO);
         onCreate(db);
+    }
+
+    public long addMovimiento(String fecha, @Nullable String detalle, double monto, @Nullable Integer id_pedido_afectado, int id_tipo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("fecha", fecha);
+        cv.put("detalle", detalle);
+        cv.put("monto", monto);
+        cv.put("id_pedido_afectado", id_pedido_afectado);
+        cv.put("id_tipo", id_tipo);
+        return db.insert(TABLE_MOVIMIENTOS, null, cv);
+    }
+
+    public long addVenta(int id_movimiento, String fecha, double monto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id_movimiento", id_movimiento);
+        cv.put("fecha", fecha);
+        cv.put("monto", monto);
+        return db.insert("VENTAS", null, cv); // Assuming table VENTAS exists
+    }
+
+    public long addCompra(int id_movimiento, String fecha, double monto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id_movimiento", id_movimiento);
+        cv.put("fecha", fecha);
+        cv.put("monto", monto);
+        return db.insert("COMPRAS", null, cv); // Assuming table COMPRAS exists
+    }
+
+
+    public Cursor getAllMovimientos(){
+        String query = "SELECT * FROM " + TABLE_MOVIMIENTOS;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 }
