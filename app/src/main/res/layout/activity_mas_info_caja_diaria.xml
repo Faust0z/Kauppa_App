@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MasInfoCajaDiaria">
+
+    <TextView
+        android:id="@+id/textViewTituloCajaDiariaInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entrada"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextFechaCajaDiariaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="Fecha"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTituloCajaDiariaInfo" />
+
+    <EditText
+        android:id="@+id/editTextMontoCajaDiariaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:hint="Monto"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFechaCajaDiariaInfo" />
+
+    <EditText
+        android:id="@+id/editTextDetalleCajaDiariaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="Detalle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMontoCajaDiariaInfo" />
+
+    <EditText
+        android:id="@+id/editTextIdPedidoAfectadoCajaDiariaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="ID Pedido Afectado"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDetalleCajaDiariaInfo" />
+
+
+    <Button
+        android:id="@+id/buttonCajaDiariaUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Update"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextIdPedidoAfectadoCajaDiariaInfo" />
+
+    <Button
+        android:id="@+id/buttonCajaDiariaDelete"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="Delete"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCajaDiariaUpdate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

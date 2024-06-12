@@ -7,7 +7,7 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/textViewTitulo"
+        android:id="@+id/textViewTituloCajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar Entrada"
@@ -16,7 +16,7 @@
         android:gravity="center" />
 
     <EditText
-        android:id="@+id/editTextFecha"
+        android:id="@+id/editTextFechaCajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Fecha"
@@ -25,7 +25,7 @@
         android:layout_marginBottom="16dp" />
 
     <EditText
-        android:id="@+id/editTextMonto"
+        android:id="@+id/editTextMontoCajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Monto"
@@ -34,7 +34,7 @@
         android:layout_marginBottom="16dp" />
 
     <EditText
-        android:id="@+id/editTextDetalle"
+        android:id="@+id/editTextDetalleCajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Detalle"
@@ -42,7 +42,7 @@
         android:layout_marginBottom="16dp" />
 
     <RadioGroup
-        android:id="@+id/radioGroupTipo"
+        android:id="@+id/radioGroupTipoCajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -52,14 +52,14 @@
         android:gravity="center">
 
         <RadioButton
-            android:id="@+id/radioButtonEntradas"
+            android:id="@+id/radioButtonEntradasCajaDiaria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Entradas"
             android:gravity="center" />
 
         <RadioButton
-            android:id="@+id/radioButtonSalidas"
+            android:id="@+id/radioButtonSalidasCajaDiaria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salidas"
@@ -67,7 +67,7 @@
     </RadioGroup>
 
     <CheckBox
-        android:id="@+id/checkBoxAgregar"
+        android:id="@+id/checkBoxAgregarCajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar como Venta"

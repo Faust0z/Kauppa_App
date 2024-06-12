@@ -36,7 +36,7 @@ public class CajaDiariaFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private DatabaseHelper dbHelper;
-    private ArrayList<String> movimiento_id, movimiento_tipo, movimiento_fecha, movimiento_monto;
+    private ArrayList<String> movimiento_id, movimiento_fecha, movimiento_detalle, movimiento_monto, movimiento_pedidosAfectados, movimiento_tipo;
     CustomAdapterCajaDiaria customAdapter;
     private FloatingActionButton addButton;
 
@@ -45,10 +45,14 @@ public class CajaDiariaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         dbHelper = new DatabaseHelper(getContext());
 
+        // Ni el detalle ni el pedidos afectados se usa para el recyclerview, pero se necesita
+        // almacenar para poder ver todos los datos del movimiento luego
         movimiento_id = new ArrayList<>();
-        movimiento_tipo = new ArrayList<>();
         movimiento_fecha = new ArrayList<>();
+        movimiento_detalle = new ArrayList<>();
+        movimiento_tipo = new ArrayList<>();
         movimiento_monto = new ArrayList<>();
+        movimiento_pedidosAfectados = new ArrayList<>();
     }
 
     @Override
@@ -57,40 +61,61 @@ public class CajaDiariaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_caja_diaria, container, false);
         recyclerView = view.findViewById(R.id.recyclerView_cajaDiaria);
         addButton = view.findViewById(R.id.addButton_caja_diaria);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // Configura el LinearLayoutManager aquí
-        addButton.setOnClickListener(v -> abrirDialogoBotonFlotante());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        addButton.setOnClickListener(v -> openAddDialog());
 
-        bddToArraylist();
-        customAdapter = new CustomAdapterCajaDiaria(getContext(), movimiento_id, movimiento_tipo,
-                movimiento_fecha, movimiento_monto);
-        recyclerView.setAdapter(customAdapter);
+        addElementsToRecyclerView();
 
         return view;
     }
 
-    void bddToArraylist(){
+    private void bddToArraylist(){
+        // Vacío los arraylist antes de volverles a insertar toda la BDD para evitar duplicados
+        movimiento_id.clear();
+        movimiento_fecha.clear();
+        movimiento_detalle.clear();
+        movimiento_tipo.clear();
+        movimiento_monto.clear();
+        movimiento_pedidosAfectados.clear();
+
         Cursor cursor = dbHelper.getAllMovimientos();
         if (cursor.getCount() != 0){
             while (cursor.moveToNext()){
                 movimiento_id.add(cursor.getString(0));
                 movimiento_fecha.add(cursor.getString(1));
-                movimiento_tipo.add(cursor.getString(5));
+                movimiento_detalle.add(cursor.getString(2));
                 movimiento_monto.add(cursor.getString(3));
+                movimiento_pedidosAfectados.add(cursor.getString(4));
+
+                String checkVentaCompra = cursor.getString(5);
+                // Si el id_tipo es 1, 2 o 4. Significa que es una venta simple, detallada o un cobro
+                if (checkVentaCompra.equals("1") || checkVentaCompra.equals("2") || checkVentaCompra.equals("4") ){
+                    movimiento_tipo.add("Entrada");
+                } else{
+                    movimiento_tipo.add("Salida");
+                }
             }
         }
     }
 
-    private void abrirDialogoBotonFlotante() {
+    private void addElementsToRecyclerView(){
+        bddToArraylist();
+        customAdapter = new CustomAdapterCajaDiaria(getContext(), movimiento_id, movimiento_tipo,
+                movimiento_fecha, movimiento_monto);
+        recyclerView.setAdapter(customAdapter);
+    }
+
+    private void openAddDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_cajadiaria, null);
 
-        TextView textViewTitulo = dialogView.findViewById(R.id.textViewTitulo);
-        EditText editTextFecha = dialogView.findViewById(R.id.editTextFecha);
-        EditText editTextMonto = dialogView.findViewById(R.id.editTextMonto);
-        EditText editTextDetalle = dialogView.findViewById(R.id.editTextDetalle);
-        RadioGroup radioGroupTipo = dialogView.findViewById(R.id.radioGroupTipo);
-        RadioButton radioButtonEntradas = dialogView.findViewById(R.id.radioButtonEntradas);
-        CheckBox checkBoxAgregar = dialogView.findViewById(R.id.checkBoxAgregar);
+        TextView textViewTitulo = dialogView.findViewById(R.id.textViewTituloCajaDiaria);
+        EditText editTextFecha = dialogView.findViewById(R.id.editTextFechaCajaDiaria);
+        EditText editTextMonto = dialogView.findViewById(R.id.editTextMontoCajaDiaria);
+        EditText editTextDetalle = dialogView.findViewById(R.id.editTextDetalleCajaDiaria);
+        RadioGroup radioGroupTipo = dialogView.findViewById(R.id.radioGroupTipoCajaDiaria);
+        RadioButton radioButtonEntradas = dialogView.findViewById(R.id.radioButtonEntradasCajaDiaria);
+        CheckBox checkBoxAgregar = dialogView.findViewById(R.id.checkBoxAgregarCajaDiaria);
 
         // Configurar la fecha actual por defecto
         Calendar calendar = Calendar.getInstance();
@@ -113,26 +138,34 @@ public class CajaDiariaFragment extends Fragment {
         // Cambiar el título y la checkbox según sea una Compra/Venta
         radioButtonEntradas.setChecked(true);
         radioGroupTipo.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.radioButtonEntradas) {
+            if (checkedId == R.id.radioButtonEntradasCajaDiaria) {
                 checkBoxAgregar.setText("Agregar como Venta");
                 textViewTitulo.setText("Agregar Entrada");
-            } else if (checkedId == R.id.radioButtonSalidas) {
+            } else if (checkedId == R.id.radioButtonSalidasCajaDiaria) {
                 checkBoxAgregar.setText("Agregar como Compra");
                 textViewTitulo.setText("Agregar Salida");
             }
         });
 
+        // Cuando se aprete el botón "Agregar", se toman todos los inputs y se los procesa.
         new MaterialAlertDialogBuilder(getContext())
                 .setView(dialogView)
                 .setPositiveButton("Agregar", (dialog, which) -> {
                     String fecha = editTextFecha.getText().toString();
                     String detalle = editTextDetalle.getText().toString();
-                    double monto = Double.parseDouble(editTextMonto.getText().toString());
+                    double monto;
+                    try {
+                        monto = Double.parseDouble(editTextMonto.getText().toString());
+                    }catch (Exception e){
+                        Toast.makeText(getContext(), "Error, no se ingresó un monto", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     boolean esVentaOCompra = checkBoxAgregar.isChecked();
                     boolean esEntrada = radioButtonEntradas.isChecked();
 
-                    if (insertarBDD(fecha, detalle, monto, esEntrada, esVentaOCompra) != -1){
+                    if (insertBDD(fecha, detalle, monto, esEntrada, esVentaOCompra) != -1){
                         Toast.makeText(getContext(), "Elemento agregado con éxito", Toast.LENGTH_SHORT).show();
+                        addElementsToRecyclerView();
                     }else{
                         Toast.makeText(getContext(), "Error al ingresar elemento", Toast.LENGTH_SHORT).show();
                     }
@@ -141,8 +174,10 @@ public class CajaDiariaFragment extends Fragment {
                 .show();
     }
 
-    private long insertarBDD(String fecha, String detalle, double monto, boolean esEntrada, boolean esVentaOCompra){
+    private long insertBDD(String fecha, String detalle, double monto, boolean esEntrada, boolean esVentaOCompra){
         int id_tipo = -1;
+        // Los métodos de insert en la BDD devuelven un código para indicar cómo fue la operación.
+        // En caso de que sea -1 vamos a saber que falló el insert.
         long id_movimiento;
 
         if (esEntrada) {
