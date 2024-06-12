@@ -20,6 +20,7 @@ import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -35,10 +36,14 @@ import java.util.Locale;
 public class CajaDiariaFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private DatabaseHelper dbHelper;
-    private ArrayList<String> movimiento_id, movimiento_fecha, movimiento_detalle, movimiento_monto, movimiento_pedidosAfectados, movimiento_tipo;
-    CustomAdapterCajaDiaria customAdapter;
     private FloatingActionButton addButton;
+    private Button buttonFiltrar, buttonResetFiltro;
+
+    private DatabaseHelper dbHelper;
+    private ArrayList<String> arrayMovId, arrayMovFecha, arrayMovDetalle, arrayMovMonto, arrayMovIdPedidos, arrayMovIdTipo;
+    CustomAdapterCajaDiaria customAdapter;
+
+    boolean filtroFecha;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,21 +52,54 @@ public class CajaDiariaFragment extends Fragment {
 
         // Ni el detalle ni el pedidos afectados se usa para el recyclerview, pero se necesita
         // almacenar para poder ver todos los datos del movimiento luego
-        movimiento_id = new ArrayList<>();
-        movimiento_fecha = new ArrayList<>();
-        movimiento_detalle = new ArrayList<>();
-        movimiento_tipo = new ArrayList<>();
-        movimiento_monto = new ArrayList<>();
-        movimiento_pedidosAfectados = new ArrayList<>();
+        arrayMovId = new ArrayList<>();
+        arrayMovFecha = new ArrayList<>();
+        arrayMovMonto = new ArrayList<>();
+        arrayMovDetalle = new ArrayList<>();
+        arrayMovIdPedidos = new ArrayList<>();
+        arrayMovIdTipo = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_caja_diaria, container, false);
+
+        buttonFiltrar = view.findViewById(R.id.buttonFiltrarCajaDiaria);
+        buttonFiltrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view, year1, month1, dayOfMonth) -> {
+                    calendar.set(year1, month1, dayOfMonth);
+                    buttonFiltrar.setText(dateFormat.format(calendar.getTime()));
+
+                    addElementsToRecyclerView();
+
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        buttonResetFiltro = view.findViewById(R.id.buttonResetFiltro);
+        buttonResetFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Limpiamos el campo de filtro y llamamos para refrescar los datos del recyclerview
+                buttonFiltrar.setText("");
+                addElementsToRecyclerView();
+            }
+        });
+
         recyclerView = view.findViewById(R.id.recyclerView_cajaDiaria);
-        addButton = view.findViewById(R.id.addButton_caja_diaria);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        addButton = view.findViewById(R.id.addButton_caja_diaria);
         addButton.setOnClickListener(v -> openAddDialog());
 
         addElementsToRecyclerView();
@@ -69,40 +107,56 @@ public class CajaDiariaFragment extends Fragment {
         return view;
     }
 
-    private void bddToArraylist(){
-        // Vacío los arraylist antes de volverles a insertar toda la BDD para evitar duplicados
-        movimiento_id.clear();
-        movimiento_fecha.clear();
-        movimiento_detalle.clear();
-        movimiento_tipo.clear();
-        movimiento_monto.clear();
-        movimiento_pedidosAfectados.clear();
-
-        Cursor cursor = dbHelper.getAllMovimientos();
-        if (cursor.getCount() != 0){
-            while (cursor.moveToNext()){
-                movimiento_id.add(cursor.getString(0));
-                movimiento_fecha.add(cursor.getString(1));
-                movimiento_detalle.add(cursor.getString(2));
-                movimiento_monto.add(cursor.getString(3));
-                movimiento_pedidosAfectados.add(cursor.getString(4));
-
-                String checkVentaCompra = cursor.getString(5);
-                // Si el id_tipo es 1, 2 o 4. Significa que es una venta simple, detallada o un cobro
-                if (checkVentaCompra.equals("1") || checkVentaCompra.equals("2") || checkVentaCompra.equals("4") ){
-                    movimiento_tipo.add("Entrada");
-                } else{
-                    movimiento_tipo.add("Salida");
-                }
-            }
-        }
+    @Override // Usamos este método para que, si borramos o actualizamos desde la actividad MasInfo, se actualice la lista
+    public void onResume() {
+        super.onResume();
+        bddToArraylist();
+        addElementsToRecyclerView();
     }
 
     private void addElementsToRecyclerView(){
         bddToArraylist();
-        customAdapter = new CustomAdapterCajaDiaria(getContext(), movimiento_id, movimiento_tipo,
-                movimiento_fecha, movimiento_monto);
+        customAdapter = new CustomAdapterCajaDiaria(getActivity(), getContext(), arrayMovId, arrayMovFecha,
+                arrayMovDetalle, arrayMovMonto, arrayMovIdPedidos, arrayMovIdTipo);
         recyclerView.setAdapter(customAdapter);
+    }
+
+    private void bddToArraylist(){
+        // Vacío los arraylist antes de volverles a insertar toda la BDD para evitar duplicados
+        arrayMovId.clear();
+        arrayMovFecha.clear();
+        arrayMovMonto.clear();
+        arrayMovDetalle.clear();
+        arrayMovIdPedidos.clear();
+        arrayMovIdTipo.clear();
+
+
+        Cursor cursor = null;
+        if (!buttonFiltrar.getText().toString().isEmpty()){
+            cursor = dbHelper.getMovimientosByFecha(buttonFiltrar.getText().toString());
+        }else{
+            cursor = dbHelper.getAllMovimientos();
+        }
+
+        // Si obtuvimos datos, volcarlos en los arraylists
+        if (cursor.getCount() != 0){
+            while (cursor.moveToNext()){
+                arrayMovId.add(cursor.getString(0));
+                arrayMovFecha.add(cursor.getString(1));
+                arrayMovDetalle.add(cursor.getString(2));
+                arrayMovMonto.add(cursor.getString(3));
+                arrayMovIdPedidos.add(cursor.getString(4));
+
+                // TODO: puede ser que mueva esta lógica a otro lado para guardar los ID tal cual como en la BDD acá
+                String checkVentaCompra = cursor.getString(5);
+                // Si el id_tipo es 1, 2 o 4. Significa que es una venta simple, detallada o un cobro
+                if (checkVentaCompra.equals("1") || checkVentaCompra.equals("2") || checkVentaCompra.equals("4") ){
+                    arrayMovIdTipo.add("Entrada");
+                } else{
+                    arrayMovIdTipo.add("Salida");
+                }
+            }
+        }
     }
 
     private void openAddDialog() {
@@ -118,16 +172,15 @@ public class CajaDiariaFragment extends Fragment {
         CheckBox checkBoxAgregar = dialogView.findViewById(R.id.checkBoxAgregarCajaDiaria);
 
         // Configurar la fecha actual por defecto
-        Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
         editTextFecha.setText(dateFormat.format(calendar.getTime()));
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         // Mostrar el DatePickerDialog al hacer clic en el campo de fecha
         editTextFecha.setOnClickListener(v -> {
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
             DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view, year1, month1, dayOfMonth) -> {
                 calendar.set(year1, month1, dayOfMonth);
                 editTextFecha.setText(dateFormat.format(calendar.getTime()));
@@ -153,13 +206,7 @@ public class CajaDiariaFragment extends Fragment {
                 .setPositiveButton("Agregar", (dialog, which) -> {
                     String fecha = editTextFecha.getText().toString();
                     String detalle = editTextDetalle.getText().toString();
-                    double monto;
-                    try {
-                        monto = Double.parseDouble(editTextMonto.getText().toString());
-                    }catch (Exception e){
-                        Toast.makeText(getContext(), "Error, no se ingresó un monto", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                    String monto = editTextMonto.getText().toString();
                     boolean esVentaOCompra = checkBoxAgregar.isChecked();
                     boolean esEntrada = radioButtonEntradas.isChecked();
 
@@ -174,10 +221,8 @@ public class CajaDiariaFragment extends Fragment {
                 .show();
     }
 
-    private long insertBDD(String fecha, String detalle, double monto, boolean esEntrada, boolean esVentaOCompra){
+    private long insertBDD(String fecha, String detalle, String monto, boolean esEntrada, boolean esVentaOCompra){
         int id_tipo = -1;
-        // Los métodos de insert en la BDD devuelven un código para indicar cómo fue la operación.
-        // En caso de que sea -1 vamos a saber que falló el insert.
         long id_movimiento;
 
         if (esEntrada) {

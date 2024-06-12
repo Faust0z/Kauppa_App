@@ -32,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "id_pedido INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "fecha TEXT NOT NULL, "
             + "nombre_cliente TEXT NOT NULL, "
-            + "monto REAL NOT NULL, "
+            + "monto TEXT NOT NULL, "
             + "total_pagado REAL NOT NULL, "
             + "pagado BOOLEAN NOT NULL, "
             + "id_estado INTEGER NOT NULL)";
@@ -40,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "id_movimiento INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "fecha TEXT NOT NULL, "
             + "detalle TEXT, "
-            + "monto REAL NOT NULL, "
+            + "monto TEXT NOT NULL, "
             + "id_pedido_afectado INTEGER, "
             + "id_tipo INTEGER NOT NULL)";
     private static final String SQL_TO_CREATE_TABLE_TIPOS_MOVIMIENTO = "CREATE TABLE " + TABLE_TIPOS_MOVIMIENTO + " ("
@@ -105,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long addMovimiento(String fecha, @Nullable String detalle, double monto, @Nullable Integer id_pedido_afectado, int id_tipo) {
+    public long addMovimiento(String fecha, @Nullable String detalle, String monto, @Nullable Integer id_pedido_afectado, int id_tipo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("fecha", fecha);
@@ -116,24 +116,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_MOVIMIENTOS, null, cv);
     }
 
-    public long addVenta(int id_movimiento, String fecha, double monto) {
+    public long updtMovimiento(String movId, String movFecha, String movMonto, @Nullable String movDetalle) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("id_movimiento", id_movimiento);
-        cv.put("fecha", fecha);
-        cv.put("monto", monto);
-        return db.insert("VENTAS", null, cv); // Assuming table VENTAS exists
+        cv.put("fecha", movFecha);
+        cv.put("monto", movMonto);
+        cv.put("detalle", movDetalle);
+        return db.update(TABLE_MOVIMIENTOS, cv, "id_movimiento=?", new String[]{movId});
     }
 
-    public long addCompra(int id_movimiento, String fecha, double monto) {
+    public long delMovimiento(String movId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("id_movimiento", id_movimiento);
-        cv.put("fecha", fecha);
-        cv.put("monto", monto);
-        return db.insert("COMPRAS", null, cv); // Assuming table COMPRAS exists
+        return db.delete(TABLE_MOVIMIENTOS, "id_movimiento=?", new String[]{String.valueOf(movId)});
     }
 
+    public Cursor getMovimientosByFecha(String movFecha) {
+        String query = "SELECT * FROM " + TABLE_MOVIMIENTOS + " WHERE fecha=?";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{movFecha});
+        }
+        return cursor;
+    }
 
     public Cursor getAllMovimientos(){
         String query = "SELECT * FROM " + TABLE_MOVIMIENTOS;
@@ -144,5 +150,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
+    }
+
+    public long addVenta(int id_movimiento, String fecha, String monto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id_movimiento", id_movimiento);
+        cv.put("fecha", fecha);
+        cv.put("monto", monto);
+        return db.insert("VENTAS", null, cv); // Assuming table VENTAS exists
+    }
+
+    public long addCompra(int id_movimiento, String fecha, String monto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id_movimiento", id_movimiento);
+        cv.put("fecha", fecha);
+        cv.put("monto", monto);
+        return db.insert("COMPRAS", null, cv); // Assuming table COMPRAS exists
     }
 }

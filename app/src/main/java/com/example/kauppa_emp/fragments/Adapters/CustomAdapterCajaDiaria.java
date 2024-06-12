@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kauppa_emp.MasInfoCajaDiaria;
 import com.example.kauppa_emp.R;
+import com.example.kauppa_emp.fragments.CajaDiariaFragment;
 
 import java.util.ArrayList;
 
@@ -21,15 +22,19 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
 
     private Context context;
     private Activity activity;
-    private ArrayList movimiento_id, movimiento_tipo, movimiento_fecha, movimiento_monto;
+    private ArrayList<String> movimiento_id, movimiento_fecha, movimiento_detalle, movimiento_monto, movimiento_IdPedidos, movimiento_IdTipo;
 
-    public CustomAdapterCajaDiaria(Context context, ArrayList movimiento_id, ArrayList
-            movimiento_tipo, ArrayList movimiento_fecha, ArrayList movimiento_monto){
+    public CustomAdapterCajaDiaria(Activity activity, Context context, ArrayList<String> movimiento_id, ArrayList<String> movimiento_fecha,
+                                   ArrayList<String> movimiento_detalle, ArrayList<String> movimiento_monto, ArrayList<String>
+                                           movimiento_IDpedidos, ArrayList<String> movimiento_tipo){
+        this.activity = activity;
         this.context = context;
         this.movimiento_id = movimiento_id;
-        this.movimiento_tipo = movimiento_tipo;
         this.movimiento_fecha = movimiento_fecha;
+        this.movimiento_detalle = movimiento_detalle;
         this.movimiento_monto = movimiento_monto;
+        this.movimiento_IdPedidos = movimiento_IDpedidos;
+        this.movimiento_IdTipo = movimiento_tipo;
     }
 
 
@@ -44,7 +49,7 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         holder.cajadiaria_id_txt.setText(String.valueOf(movimiento_id.get(position)));
-        holder.cajadiaria_entradasalida_txt.setText(String.valueOf(movimiento_tipo.get(position)));
+        holder.cajadiaria_entradasalida_txt.setText(String.valueOf(movimiento_IdTipo.get(position)));
         holder.cajadiaria_fecha_txt.setText(String.valueOf(movimiento_fecha.get(position)));
         holder.cajadiaria_monto_txt.setText(String.valueOf(movimiento_monto.get(position)));
 
@@ -56,9 +61,11 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
                 if (currentPosition != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(context, MasInfoCajaDiaria.class);
                     intent.putExtra("id", String.valueOf(movimiento_id.get(currentPosition)));
-                    intent.putExtra("tipo", String.valueOf(movimiento_tipo.get(currentPosition)));
                     intent.putExtra("fecha", String.valueOf(movimiento_fecha.get(currentPosition)));
+                    intent.putExtra("detalle", String.valueOf(movimiento_detalle.get(currentPosition)));
                     intent.putExtra("monto", String.valueOf(movimiento_monto.get(currentPosition)));
+                    intent.putExtra("IdPedidos", String.valueOf(movimiento_IdPedidos.get(currentPosition)));
+                    intent.putExtra("IdTipos", String.valueOf(movimiento_IdTipo.get(currentPosition)));
                     activity.startActivityForResult(intent, 1);
                 }
             }

@@ -21,6 +21,7 @@
         android:id="@+id/editTextFechaCajaDiariaInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:focusable="false"
         android:gravity="center"
         android:hint="Fecha"
         android:inputType="numberDecimal"
@@ -34,7 +35,7 @@
         android:layout_height="0dp"
         android:ems="10"
         android:hint="Monto"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFechaCajaDiariaInfo" />
@@ -45,12 +46,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="Detalle"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextMontoCajaDiariaInfo" />
 
     <EditText
-        android:id="@+id/editTextIdPedidoAfectadoCajaDiariaInfo"
+        android:id="@+id/editTextIdPedidosCajaDiariaInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -65,20 +67,20 @@
         android:id="@+id/buttonCajaDiariaUpdate"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="Update"
+        android:text="Actualizar"
         android:textAllCaps="false"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextIdPedidoAfectadoCajaDiariaInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextIdPedidosCajaDiariaInfo" />
 
     <Button
-        android:id="@+id/buttonCajaDiariaDelete"
+        android:id="@+id/buttonCajaDiariaAnular"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
-        android:text="Delete"
+        android:text="Borrar"
         android:textAllCaps="false"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
