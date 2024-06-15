@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -27,7 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "stock INTEGER, "
             + "stock_minimo INTEGER, "
             + "activo BOOLEAN NOT NULL, "
-            + "a_pedido BOOLEAN NOT NULL)";
+            + "a_pedido BOOLEAN NOT NULL, "
+            + "precio TEXT)";
     private static final String SQL_TO_CREATE_TABLE_PEDIDOS = "CREATE TABLE " + TABLE_PEDIDOS + " ("
             + "id_pedido INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "fecha TEXT NOT NULL, "
@@ -42,7 +44,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "detalle TEXT, "
             + "monto TEXT NOT NULL, "
             + "id_pedido_afectado INTEGER, "
-            + "id_tipo INTEGER NOT NULL)";
+            + "id_tipo INTEGER NOT NULL, "
+            + "nombre_cliente TEXT) ";
     private static final String SQL_TO_CREATE_TABLE_TIPOS_MOVIMIENTO = "CREATE TABLE " + TABLE_TIPOS_MOVIMIENTO + " ("
             + "id_tipo INTEGER PRIMARY KEY, "
             + "descripcion TEXT NOT NULL)";
@@ -73,6 +76,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "(2, 'PREPARADO'), " +
             "(3, 'A ENTREGAR'), " +
             "(4, 'ENTREGADO');";
+    private static final String SQL_INSERT_PRODUCTOS = "INSERT INTO " + TABLE_PRODUCTOS + " (id_producto, nombre, stock, stock_minimo, activo, a_pedido, precio) VALUES " +
+            "(1, 'Producto A', 100, 10, 1, 0, '100'), " +
+            "(2, 'Producto B', 50, 5, 1, 1, '150'), " +
+            "(3, 'Producto C', 200, 20, 1, 0, '1000'), " +
+            "(4, 'Producto D', 0, 5, 0, 1, '3000'), " +
+            "(5, 'Producto E', 150, 15, 1, 0, '777');";
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -91,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(SQL_INSERT_TIPOS_MOVIMIENTO);
         db.execSQL(SQL_INSERT_ESTADOS_PEDIDO);
+        db.execSQL(SQL_INSERT_PRODUCTOS);
     }
 
     @Override // Método obligatorio de la clase. Se espera no usarlo.
@@ -116,11 +126,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_MOVIMIENTOS, null, cv);
     }
 
-    public long updtMovimiento(String movId, String movFecha, String movMonto, @Nullable String movDetalle) {
+    public long updtMovimiento(String movId, String movFecha, String movMonto, @Nullable String movNomCliente, @Nullable String movDetalle) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("fecha", movFecha);
         cv.put("monto", movMonto);
+        cv.put("nombre_cliente", movNomCliente);
         cv.put("detalle", movDetalle);
         return db.update(TABLE_MOVIMIENTOS, cv, "id_movimiento=?", new String[]{movId});
     }
@@ -152,21 +163,80 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public long addVenta(int id_movimiento, String fecha, String monto) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("id_movimiento", id_movimiento);
-        cv.put("fecha", fecha);
-        cv.put("monto", monto);
-        return db.insert("VENTAS", null, cv); // Assuming table VENTAS exists
+    public Cursor getVentasByFecha(String movFecha) {
+        String query = "SELECT * FROM " + TABLE_MOVIMIENTOS + " WHERE fecha=? AND id_tipo = 2";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{movFecha});
+        }
+        return cursor;
     }
 
-    public long addCompra(int id_movimiento, String fecha, String monto) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("id_movimiento", id_movimiento);
-        cv.put("fecha", fecha);
-        cv.put("monto", monto);
-        return db.insert("COMPRAS", null, cv); // Assuming table COMPRAS exists
+    public Cursor getAllVentas(){
+        String query = "SELECT * FROM " + TABLE_MOVIMIENTOS + " WHERE id_tipo = 2";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor getComprasByFecha(String movFecha) {
+        String query = "SELECT * FROM " + TABLE_MOVIMIENTOS + " WHERE fecha=? AND id_tipo = 6";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{movFecha});
+        }
+        return cursor;
+    }
+
+    public Cursor getAllCompras(){
+        String query = "SELECT * FROM " + TABLE_MOVIMIENTOS + " WHERE id_tipo = 6";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor getProductoById(int prodId){
+        String query = "SELECT * FROM " + TABLE_PRODUCTOS + " WHERE id_movimiento=? ";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(prodId)});
+        }
+        return cursor;
+    }
+
+    public Cursor getProductoByNombre(String prodNombre){
+        String query = "SELECT * FROM " + TABLE_PRODUCTOS + " WHERE nombre=? ";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(prodNombre)});
+        }
+        return cursor;
+    }
+
+    public Cursor getAllProductos(){
+        String query = "SELECT * FROM " + TABLE_PRODUCTOS;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 }

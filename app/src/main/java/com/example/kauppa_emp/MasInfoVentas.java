@@ -7,11 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.kauppa_emp.database.DatabaseHelper;
 
@@ -19,29 +22,28 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MasInfoCajaDiaria extends AppCompatActivity {
+public class MasInfoVentas extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
 
     private TextView movTitulo;
-    private EditText movTextoFecha, movTextoDetalle, movTextoMonto, movTextoIdPedidos, movTextoIdTipos;
+    private EditText movTextoFecha, movTextoDetalle, movTextoMonto, movTextoIdPedidos, movTextoIdTipos, movTextoNomCliente;
     private Button actualizarButton, anularButton;
 
-    private String movId, movFecha, movDetalle, movMonto, movIdPedidos, movIdTipos;
+    private String movId, movFecha, movDetalle, movMonto, movIdPedidos, movIdTipos, movNomCliente;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mas_info_caja_diaria);
-        dbHelper = new DatabaseHelper(MasInfoCajaDiaria.this);
+        setContentView(R.layout.activity_mas_info_ventas);
+        dbHelper = new DatabaseHelper(MasInfoVentas.this);
 
-
-        movTitulo = findViewById(R.id.textViewTituloCajaDiariaInfo);
-        movTextoFecha = findViewById(R.id.editTextFechaCajaDiariaInfo);
-        movTextoDetalle = findViewById(R.id.editTextDetalleCajaDiariaInfo);
-        movTextoMonto = findViewById(R.id.editTextMontoCajaDiariaInfo);
-        movTextoIdPedidos = findViewById(R.id.editTextIdPedidosCajaDiariaInfo);
         // Por las dudas, no existe movTextoId. El ID lo agrego al título
+        movTitulo = findViewById(R.id.textViewTituloVentaInfo);
+        movTextoFecha = findViewById(R.id.editTextFechaVentaInfo);
+        movTextoMonto = findViewById(R.id.editTextMontoVentaInfo);
+        movTextoNomCliente = findViewById(R.id.editTextClienteVentaInfo);
+        movTextoDetalle = findViewById(R.id.editTextDetalleVentaInfo);
 
         getIntentData();
         setIntentDataInTxt();
@@ -54,14 +56,14 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(MasInfoCajaDiaria.this, (view, year1, month1, dayOfMonth) -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(MasInfoVentas.this, (view, year1, month1, dayOfMonth) -> {
                 calendar.set(year1, month1, dayOfMonth);
                 movTextoFecha.setText(dateFormat.format(calendar.getTime()));
             }, year, month, day);
             datePickerDialog.show();
         });
 
-        actualizarButton = findViewById(R.id.buttonCajaDiariaUpdate);
+        actualizarButton = findViewById(R.id.buttonVentaUpdate);
         actualizarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,22 +71,13 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
             }
         });
 
-        anularButton = findViewById(R.id.buttonCajaDiariaAnular);
+        anularButton = findViewById(R.id.buttonVentaAnular);
         anularButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createDeleteDialog();
             }
         });
-
-//        idPedidoAfectado = obtenerIdPedidoAfectado();
-//
-//        if (idPedidoAfectado != null && !idPedidoAfectado.isEmpty()) {
-//            movimiento_pedidosAfectados.setVisibility(View.VISIBLE);
-//            movimiento_pedidosAfectados.setText(idPedidoAfectado);
-//        } else {
-//            movimiento_pedidosAfectados.setVisibility(View.GONE);
-//        }
     }
 
     void getIntentData(){
@@ -96,15 +89,18 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
             movMonto = getIntent().getStringExtra("monto");
             movIdPedidos = getIntent().getStringExtra("IdPedidos");
             movIdTipos = getIntent().getStringExtra("IdTipos");
+            movNomCliente = getIntent().getStringExtra("nombreCliente");
+            if (movNomCliente.equals("null")){movNomCliente = "Cliente sin registrar";}
         }
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText(movIdTipos + " " + movId);
+        movTitulo.setText("Venta N° " + movId);
         movTextoFecha.setText(movFecha);
         movTextoMonto.setText(movMonto);
         movTextoDetalle.setText(movDetalle);
-        movTextoIdPedidos.setText(movIdPedidos);
+        // movTextoIdPedidos.setText(movIdPedidos);
+        movTextoNomCliente.setText(movNomCliente);
     }
 
     private void createUpdateDialog() {
@@ -116,8 +112,9 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 movFecha = movTextoFecha.getText().toString().trim();
                 movMonto = movTextoMonto.getText().toString().trim();
+                movNomCliente = movTextoNomCliente.getText().toString().trim();
                 movDetalle = movTextoDetalle.getText().toString().trim();
-                dbHelper.updtMovimiento(movId, movFecha, movMonto, null, movDetalle);
+                dbHelper.updtMovimiento(movId, movFecha, movMonto, movNomCliente, movDetalle);
                 finish(); // Con finish se cierra el intent
             }
         });

@@ -226,24 +226,13 @@ public class CajaDiariaFragment extends Fragment {
         long id_movimiento;
 
         if (esEntrada) {
-            if (esVentaOCompra) {
-                id_tipo = 2; // VENTA DETALLADA
-                id_movimiento = dbHelper.addMovimiento(fecha, detalle, monto, null, id_tipo);
-                dbHelper.addVenta((int) id_movimiento, fecha, monto);
-            } else {
-                id_tipo = 1; // VENTA SIMPLE
-                id_movimiento = dbHelper.addMovimiento(fecha, detalle, monto, null, id_tipo);
-            }
+            if (esVentaOCompra) {id_tipo = 2;} // VENTA DETALLADA
+            else {id_tipo = 1;} // VENTA SIMPLE
         } else {
-            if (esVentaOCompra) {
-                id_tipo = 6; // COMPRA
-                id_movimiento = dbHelper.addMovimiento(fecha, detalle, monto, null, id_tipo);
-                dbHelper.addCompra((int) id_movimiento, fecha, monto);
-            } else {
-                id_tipo = 3; // PAGO
-                id_movimiento = dbHelper.addMovimiento(fecha, detalle, monto, null, id_tipo);
-            }
+            if (esVentaOCompra) { id_tipo = 6;} // COMPRA
+            else {id_tipo = 3;} // PAGO
         }
+        id_movimiento = dbHelper.addMovimiento(fecha, detalle, monto, null, id_tipo);
         return id_movimiento;
     }
 }
