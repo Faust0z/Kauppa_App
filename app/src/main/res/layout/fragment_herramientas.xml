@@ -20,8 +20,7 @@
             android:layout_marginTop="60dp"
             android:text="@string/herramientas_titulo"
             android:textStyle="bold"
-            android:textSize="30sp"
-            android:textColor="@color/material_dynamic_neutral10">
+            android:textSize="30sp">
         </TextView>
 
         <!-- Descripción -->
@@ -31,8 +30,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="16dp"
             android:text="@string/herramientas_descripcion"
-            android:textSize="14sp"
-            android:textColor="@color/material_dynamic_neutral50">
+            android:textSize="14sp">
         </TextView>
 
         <!-- Lista de Herramientas -->
@@ -86,7 +84,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Reporte Mensual"
-                                android:textColor="@color/material_dynamic_neutral20"
                                 android:textSize="16sp"
                                 android:textStyle="bold"></TextView>
 
@@ -94,7 +91,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Ver reporte con estadísticas mensuales de tu negocio."
-                                android:textColor="@color/material_dynamic_neutral20"
                                 android:textSize="14sp"></TextView>
                         </LinearLayout>
                     </LinearLayout>
@@ -138,7 +134,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Calcular Precio"
-                                android:textColor="@color/material_dynamic_neutral20"
                                 android:textSize="16sp"
                                 android:textStyle="bold"></TextView>
 
@@ -146,7 +141,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Calcula de forma sencilla el precio justo para tus productos."
-                                android:textColor="@color/material_dynamic_neutral20"
                                 android:textSize="14sp"></TextView>
                         </LinearLayout>
                     </LinearLayout>
