@@ -71,8 +71,33 @@
         app:layout_constraintEnd_toEndOf="@+id/frame_layout"
         app:srcCompat="@drawable/baseline_add_24" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="360dp"
-        android:layout_height="401dp"
-        android:layout_gravity="center" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp"
+        android:gravity="center|center_horizontal"
+        android:orientation="horizontal">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="360dp"
+                    android:layout_height="401dp"
+                    android:layout_gravity="center"
+                    android:background="#FFFFFF">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </FrameLayout>

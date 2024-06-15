@@ -22,14 +22,6 @@
 
     </FrameLayout>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/topNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#9f715d"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
