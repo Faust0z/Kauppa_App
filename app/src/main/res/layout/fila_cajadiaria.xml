@@ -21,18 +21,20 @@
                 android:id="@+id/cajadiaria_id_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:text="1"
+                android:textColor="#000"
                 android:textSize="40sp"
                 android:textStyle="bold"
-                android:textColor="#000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/cajadiaria_entradasalida_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="94dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="16dp"
                 android:text="EntradaSalida 1"
                 android:textColor="#000"
@@ -45,18 +47,31 @@
                 android:id="@+id/cajadiaria_fecha_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="11/6/24"
                 app:layout_constraintStart_toStartOf="@+id/cajadiaria_entradasalida_txt"
                 app:layout_constraintTop_toBottomOf="@+id/cajadiaria_entradasalida_txt" />
 
             <TextView
                 android:id="@+id/cajadiaria_monto_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="34dp"
                 android:text="2000"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="145dp"
+                android:layout_height="32dp"
+                android:text="Pedido Juan"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.657"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout_cajaDiaria"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_tertiary60"
+    android:background="#E6E5E2"
     tools:context=".fragments.CajaDiariaFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,8 +21,155 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_cajaDiaria"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="#FEFEFE"
         tools:listitem="" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="#BC6D4E" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="128dp"
+        android:layout_height="29dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="CAJA DIARIA"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:gravity="center"
+                    android:text="ENTRADA"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/monto_entrada"
+                    android:layout_width="115dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:hint="montoEntrada" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:gravity="center"
+                    android:text="SALIDA"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/monto_salida"
+                    android:layout_width="115dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:hint="montoSalida" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:gravity="center"
+                    android:text="TOTAL"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/monto_total"
+                    android:layout_width="115dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:hint="montoTotal" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="53dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:src="@android:drawable/ic_menu_search" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="292dp"
+            android:layout_height="match_parent"
+            android:background="#FEFEFE"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/cajaDiaria_buscador"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="buscar"
+                android:inputType="text" />
+        </LinearLayout>
+    </LinearLayout>
+
 </FrameLayout>
