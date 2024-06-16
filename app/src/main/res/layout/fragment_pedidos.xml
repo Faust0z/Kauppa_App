@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.PedidosFragment"
-    android:background="@color/material_dynamic_tertiary90">
+    android:background="@color/material_dynamic_tertiary100"
+    tools:context=".fragments.PedidosFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton_pedidos"
