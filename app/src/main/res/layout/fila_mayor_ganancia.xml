@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/filaMayorGanancia">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/md_theme_surfaceContainer"
+        app:cardElevation="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="9dp"
+            android:paddingHorizontal="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.IconButton.Outlined"
+                android:id="@+id/btnPuestoLineaMayorGanancia"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:text="1"
+                android:layout_marginRight="6dp"
+                app:strokeColor="@color/md_theme_outlineVariant"
+                app:strokeWidth="2dp">
+            </com.google.android.material.button.MaterialButton>
+
+            <TextView
+                android:id="@+id/textProductoLineaMayorGanancia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Piedra Energetica"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                >
+            </TextView>
+
+            <!--
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="2dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="16dp">
+            </com.google.android.material.divider.MaterialDivider>
+            -->
+
+            <TextView
+                android:id="@+id/textGananciaMayorGanancia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="40 Unidades"
+                android:textSize="14sp"
+                android:textAlignment="center">
+            </TextView>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

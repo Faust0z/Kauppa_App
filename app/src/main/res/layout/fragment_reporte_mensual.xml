@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:background="@color/md_theme_background"
+    android:id="@+id/frame_reporteMensual"
+    tools:context=".fragments.ReporteMensualFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:id="@+id/btnVolverReporteMensual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/arrow_back_24px"
+            app:iconSize="25dp"
+            android:layout_marginBottom="20dp"
+            app:rippleColor="@color/md_theme_surfaceContainer">
+        </com.google.android.material.button.MaterialButton>
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reporte Mensual"
+            android:textStyle="bold"
+            android:textSize="30sp">
+        </TextView>
+
+        <!-- Descripción -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Este es el reporte mensual de tu negocio, podrás encontrar datos relevantes que te ayudaran a tomar mejores decisiones."
+            android:textSize="14sp"
+            android:layout_marginBottom="35dp">
+        </TextView>
+
+        <!-- Mas Vendidos -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="@color/md_theme_primary"
+                android:layout_gravity="center"
+                app:cardCornerRadius="100dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/shopping_cart_24px"
+                    app:tint="@color/md_theme_onPrimary"
+                    android:padding="7dp"
+                    >
+                </ImageView>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mas Vendidos"
+                android:textStyle="bold"
+                android:textSize="20sp">
+            </TextView>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMasVendidos"
+            android:layout_width="match_parent"
+            android:layout_height="215dp"
+            android:layout_marginBottom="25dp"
+            tools:itemCount="3">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <!-- Mayor Ganancia -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="@color/md_theme_primary"
+                android:layout_gravity="center"
+                app:cardCornerRadius="100dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/attach_money_24px"
+                    app:tint="@color/md_theme_onPrimary"
+                    android:padding="7dp">
+                </ImageView>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mayor Ganancia"
+                android:textStyle="bold"
+                android:textSize="20sp">
+            </TextView>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMayorGanancia"
+            android:layout_width="match_parent"
+            android:layout_height="215dp"
+            android:layout_marginBottom="25dp"
+            tools:itemCount="3">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+</ScrollView>
+
+

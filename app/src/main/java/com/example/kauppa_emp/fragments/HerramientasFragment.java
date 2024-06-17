@@ -76,6 +76,17 @@ public class HerramientasFragment extends Fragment {
             }
         });
 
+        MaterialCardView btnReporteMensual = view.findViewById(R.id.btnReporteMensual);
+        btnReporteMensual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, new ReporteMensualFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
     }
 }
