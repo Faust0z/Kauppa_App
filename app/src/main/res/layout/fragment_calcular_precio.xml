@@ -32,9 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Calcular Precio"
-            android:textStyle="bold"
-            android:textSize="30sp">
-        </TextView>
+            android:textColor="#49454F"
+            android:textSize="30sp"
+            android:textStyle="bold"></TextView>
 
         <!-- Descripción -->
         <TextView
