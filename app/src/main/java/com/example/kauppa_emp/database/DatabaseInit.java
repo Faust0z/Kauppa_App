@@ -10,7 +10,7 @@ public class DatabaseInit extends SQLiteOpenHelper {
     /*
         Clase para la creación de la BDD y sus tablas, así como algunos inserts en ellas.
      */
-    private static final String DB_NAME = "myDB.db";
+    private static final String DB_NAME = "mydb1.db";
     private static final int DB_VER = 1;
 
     public static final String TABLE_PRODUCTOS = "PRODUCTOS";

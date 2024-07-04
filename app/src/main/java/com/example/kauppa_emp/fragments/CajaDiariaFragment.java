@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,14 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kauppa_emp.R;
-import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
 import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,87 +28,39 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
-public class CajaDiariaFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private FloatingActionButton addButton;
-    private Button buttonFiltrar, buttonResetFiltro;
-
-    private DatabaseHelper dbHelper;
-    private ArrayList<Movimientos> movimientos;
-    private CustomAdapterCajaDiaria customAdapter;
+public class CajaDiariaFragment extends BaseFragment<Movimientos> {
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        dbHelper = new DatabaseHelper(getContext());
-        movimientos = new ArrayList<>();
+    protected int getLayoutId() {
+        return R.layout.fragment_caja_diaria;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_caja_diaria, container, false);
-
-        createButtonFiltrar(view);
-
-        // Todo: eliminar este botón
-        buttonResetFiltro = view.findViewById(R.id.buttonResetFiltro);
-        buttonResetFiltro.setOnClickListener(v -> {
-            // Limpiamos el campo de filtro y llamamos para refrescar los datos del recyclerview
-            buttonFiltrar.setText("");
-            addElementsToRecyclerView();
-        });
-
-        recyclerView = view.findViewById(R.id.recyclerView_cajaDiaria);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        addButton = view.findViewById(R.id.addButton_caja_diaria);
-        addButton.setOnClickListener(v -> openAddDialog());
-
-        addElementsToRecyclerView();
-
-        return view;
+    protected int getRecyclerViewId() {
+        return R.id.recyclerView_cajaDiaria;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        addElementsToRecyclerView();
+    protected int getAddButtonId() {
+        return R.id.addButton_caja_diaria;
     }
 
-    private void createButtonFiltrar(View view){
-        buttonFiltrar = view.findViewById(R.id.buttonFiltrarCajaDiaria);
-        buttonFiltrar.setOnClickListener(v -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view1, year1, month1, dayOfMonth) -> {
-                calendar.set(year1, month1, dayOfMonth);
-                buttonFiltrar.setText(dateFormat.format(calendar.getTime()));
-
-
-            }, year, month, day);
-            datePickerDialog.show();
-
-            addElementsToRecyclerView();
-        });
+    @Override
+    protected int getFiltrarButtonId() {
+        return R.id.buttonFiltrarCajaDiaria;
     }
 
-    private void addElementsToRecyclerView() {
-        bddToArraylist();
-        customAdapter = new CustomAdapterCajaDiaria(getActivity(), getContext(), movimientos);
-        recyclerView.setAdapter(customAdapter);
+    @Override
+    protected int getResetButtonId() {
+        return R.id.buttonResetFiltro;
     }
 
-    private void bddToArraylist() {
-        movimientos.clear();
-
-        // Todo: la funcionalidad de esto pasará a una activity, por lo que no es necesaria acá
+    @Override
+    protected void bddToArraylist() {
+        items.clear();
         Cursor cursor = null;
         if (!buttonFiltrar.getText().toString().isEmpty()) {
             cursor = dbHelper.getMovimientosByFecha(buttonFiltrar.getText().toString());
@@ -127,7 +75,6 @@ public class CajaDiariaFragment extends Fragment {
                 String monto = cursor.getString(2);
                 String detalle = cursor.getString(3);
 
-                // Todo: puede ser que esta lógica se mueva a otro lado y en el movimiento simplemente se guarde el id en forma de string
                 String tipo;
                 String checkVentaCompra = cursor.getString(4);
                 if (checkVentaCompra.equals("1") || checkVentaCompra.equals("2") || checkVentaCompra.equals("4")) {
@@ -137,12 +84,18 @@ public class CajaDiariaFragment extends Fragment {
                 }
 
                 Movimientos movimiento = new Movimientos(id, fecha, detalle, monto, tipo);
-                movimientos.add(movimiento);
+                items.add(movimiento);
             }
         }
     }
 
-    private void openAddDialog() {
+    @Override
+    protected RecyclerView.Adapter getAdapter() {
+        return new CustomAdapterCajaDiaria(getActivity(), getContext(), items);
+    }
+
+    @Override
+    protected void openAddDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_cajadiaria, null);
 
@@ -152,10 +105,9 @@ public class CajaDiariaFragment extends Fragment {
         EditText editTextDetalle = dialogView.findViewById(R.id.editTextDetalleCajaDiaria);
         RadioGroup radioGroupTipo = dialogView.findViewById(R.id.radioGroupTipoCajaDiaria);
         RadioButton radioButtonEntradas = dialogView.findViewById(R.id.radioButtonEntradasCajaDiaria);
-        CheckBox checkBoxAgregar = dialogView.findViewById(R.id.checkBoxAgregarCajaDiaria);
 
         createTextFechaYDialog(editTextFecha);
-        createRadioGroup(radioGroupTipo, radioButtonEntradas, checkBoxAgregar, textViewTitulo);
+        createRadioGroup(radioGroupTipo, radioButtonEntradas, textViewTitulo);
 
         new MaterialAlertDialogBuilder(getContext())
                 .setView(dialogView)
@@ -163,10 +115,9 @@ public class CajaDiariaFragment extends Fragment {
                     String fecha = editTextFecha.getText().toString();
                     String detalle = editTextDetalle.getText().toString();
                     String monto = editTextMonto.getText().toString();
-                    boolean esVentaOCompra = checkBoxAgregar.isChecked();
                     boolean esEntrada = radioButtonEntradas.isChecked();
 
-                    if (insertBDD(fecha, detalle, monto, esEntrada, esVentaOCompra) != -1) {
+                    if (insertBDD(fecha, detalle, monto, esEntrada) != -1) {
                         Toast.makeText(getContext(), "Elemento agregado con éxito", Toast.LENGTH_SHORT).show();
                         addElementsToRecyclerView();
                     } else {
@@ -194,35 +145,25 @@ public class CajaDiariaFragment extends Fragment {
         });
     }
 
-    private void createRadioGroup(RadioGroup radioGroupTipo, RadioButton radioButtonEntradas, CheckBox checkBoxAgregar, TextView textViewTitulo) {
+    private void createRadioGroup(RadioGroup radioGroupTipo, RadioButton radioButtonEntradas, TextView textViewTitulo) {
         radioButtonEntradas.setChecked(true);
         radioGroupTipo.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.radioButtonEntradasCajaDiaria) {
-                checkBoxAgregar.setText("Agregar como Venta");
                 textViewTitulo.setText("Agregar Entrada");
             } else if (checkedId == R.id.radioButtonSalidasCajaDiaria) {
-                checkBoxAgregar.setText("Agregar como Compra");
                 textViewTitulo.setText("Agregar Salida");
             }
         });
     }
 
-    private long insertBDD(String fecha, String monto, String detalle, boolean esEntrada, boolean esVentaOCompra) {
-        int idTipo = 0;
-
+    private long insertBDD(String fecha, String detalle, String monto, boolean esEntrada) {
+        int tipo;
         if (esEntrada) {
-            if (esVentaOCompra) {
-                idTipo = 2; // VENTA DETALLADA
-            } else {
-                idTipo = 1; // VENTA SIMPLE
-            }
+            tipo = 3;
         } else {
-            if (esVentaOCompra) {
-                idTipo = 6; // COMPRA
-            } else {
-                idTipo = 3; // PAGO
-            }
+            tipo = 5;
         }
-        return dbHelper.addMovimiento(fecha, monto, detalle, idTipo);
+
+        return dbHelper.addMovimiento(fecha, detalle, monto, tipo);
     }
 }

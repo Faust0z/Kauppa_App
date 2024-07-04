@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,102 +18,61 @@ import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCompras;
 import com.example.kauppa_emp.fragments.dataObjects.Egresos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class ComprasFragment extends Fragment {
-
-    private RecyclerView recyclerView;
-    private FloatingActionButton addButton;
-    private Button buttonFiltrar, buttonResetFiltro;
-
-    private DatabaseHelper dbHelper;
-    private ArrayList<Egresos> egresos;
-    private CustomAdapterCompras customAdapter;
-
+public class ComprasFragment extends BaseFragment<Egresos> {
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        dbHelper = new DatabaseHelper(getContext());
-        egresos = new ArrayList<>();
+    protected int getLayoutId() {
+        return R.layout.fragment_compras;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_compras, container, false);
-
-        createButtonFiltrar(view);
-
-        // Todo: eliminar este botón
-        buttonResetFiltro = view.findViewById(R.id.buttonResetFiltroCompras);
-        buttonResetFiltro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Limpiamos el campo de filtro y llamamos para refrescar los datos del recyclerview
-                buttonFiltrar.setText("");
-                addElementsToRecyclerView();
-            }
-        });
-
-        recyclerView = view.findViewById(R.id.recyclerViewCompras);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        addElementsToRecyclerView();
-
-        return view;
+    protected int getRecyclerViewId() {
+        return R.id.recyclerViewCompras;
     }
 
-    @Override // Usamos este método para que, si borramos o actualizamos desde la actividad MasInfo, se actualice la lista
-    public void onResume() {
-        super.onResume();
-        addElementsToRecyclerView();
+    @Override
+    protected int getAddButtonId() {
+        return R.id.addButton_caja_diaria; //R.id.addButtonCompras; Todo: Falta implementar este botón
     }
 
-    private void createButtonFiltrar(View view){
-        buttonFiltrar = view.findViewById(R.id.buttonFiltrarCompras);
-        buttonFiltrar.setOnClickListener(v -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view1, year1, month1, dayOfMonth) -> {
-                calendar.set(year1, month1, dayOfMonth);
-                buttonFiltrar.setText(dateFormat.format(calendar.getTime()));
-            }, year, month, day);
-            datePickerDialog.show();
-
-            addElementsToRecyclerView();
-        });
+    @Override
+    protected int getFiltrarButtonId() {
+        return R.id.buttonFiltrarCompras;
     }
 
-    private void addElementsToRecyclerView(){
-        bddToArraylist();
-        customAdapter = new CustomAdapterCompras(getActivity(), getContext(), egresos);
-        recyclerView.setAdapter(customAdapter);
+    @Override
+    protected int getResetButtonId() {
+        return R.id.buttonResetFiltroCompras;
     }
 
-    private void bddToArraylist(){
-        egresos.clear();
+    @Override
+    protected void openAddDialog() {
+        return; //Todo: a implementar
+    }
 
-        // Todo: la funcionalidad de esto pasará a una activity, por lo que no es necesaria acá
+    @Override
+    protected void bddToArraylist() {
+        items.clear();
         Cursor cursor;
-        if (!buttonFiltrar.getText().toString().isEmpty()){
+        if (!buttonFiltrar.getText().toString().isEmpty()) {
             cursor = dbHelper.getComprasByFecha(buttonFiltrar.getText().toString());
-        }else{
+        } else {
             cursor = dbHelper.getAllCompras();
         }
 
-        // Si obtuvimos datos, volcarlos en los arraylists
-        if (cursor.getCount() != 0){
-            while (cursor.moveToNext()){
+        if (cursor != null && cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
                 String id = cursor.getString(0);
                 String fecha = cursor.getString(1);
                 String monto = cursor.getString(2);
@@ -123,8 +81,14 @@ public class ComprasFragment extends Fragment {
                 String nomCliente = cursor.getString(5);
 
                 Egresos egreso = new Egresos(id, fecha, monto, detalle, idTipo, nomCliente);
-                egresos.add(egreso);
+                items.add(egreso);
             }
+            cursor.close();
         }
+    }
+
+    @Override
+    protected RecyclerView.Adapter getAdapter() {
+        return new CustomAdapterCompras(getActivity(), getContext(), items);
     }
 }

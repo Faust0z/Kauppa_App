@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,111 +32,65 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class VentasFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private FloatingActionButton addButton;
-    private Button buttonFiltrar, buttonResetFiltro;
-
-    private DatabaseHelper dbHelper;
-    private ArrayList<Ingresos> ingresos;
-    private CustomAdapterVentas customAdapter;
+public class VentasFragment extends BaseFragment<Ingresos> {
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        dbHelper = new DatabaseHelper(getContext());
-        ingresos = new ArrayList<>();
+    protected int getLayoutId() {
+        return R.layout.fragment_ventas;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ventas, container, false);
-
-        createButtonFiltrar(view);
-
-        // Todo: eliminar este botón
-        buttonResetFiltro = view.findViewById(R.id.buttonResetFiltroVentas);
-        buttonResetFiltro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Limpiamos el campo de filtro y llamamos para refrescar los datos del recyclerview
-                buttonFiltrar.setText("");
-                addElementsToRecyclerView();
-            }
-        });
-
-        recyclerView = view.findViewById(R.id.recyclerViewVentas);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        addButton = view.findViewById(R.id.addButtonVentas);
-        addButton.setOnClickListener(v -> openAddDialog());
-
-        addElementsToRecyclerView();
-
-        return view;
+    protected int getRecyclerViewId() {
+        return R.id.recyclerViewVentas;
     }
 
-    @Override // Usamos este método para que, si borramos o actualizamos desde la actividad MasInfo, se actualice la lista
-    public void onResume() {
-        super.onResume();
-        addElementsToRecyclerView();
+    @Override
+    protected int getAddButtonId() {
+        return R.id.addButtonVentas;
     }
 
-    private void createButtonFiltrar(View view){
-        buttonFiltrar = view.findViewById(R.id.buttonFiltrarVentas);
-        buttonFiltrar.setOnClickListener(v -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view1, year1, month1, dayOfMonth) -> {
-                calendar.set(year1, month1, dayOfMonth);
-                buttonFiltrar.setText(dateFormat.format(calendar.getTime()));
-            }, year, month, day);
-            datePickerDialog.show();
-
-            addElementsToRecyclerView();
-        });
-
+    @Override
+    protected int getFiltrarButtonId() {
+        return R.id.buttonFiltrarVentas;
     }
 
-    private void addElementsToRecyclerView(){
-        bddToArraylist();
-        customAdapter = new CustomAdapterVentas(getActivity(), getContext(), ingresos);
-        recyclerView.setAdapter(customAdapter);
+    @Override
+    protected int getResetButtonId() {
+        return R.id.buttonResetFiltroVentas;
     }
 
-    private void bddToArraylist(){
-        ingresos.clear();
-
-        // Todo: la funcionalidad de esto pasará a una activity, por lo que no es necesaria acá
+    @Override
+    protected void bddToArraylist() {
+        items.clear();
         Cursor cursor;
-        if (!buttonFiltrar.getText().toString().isEmpty()){
+        if (!buttonFiltrar.getText().toString().isEmpty()) {
             cursor = dbHelper.getVentasByFecha(buttonFiltrar.getText().toString());
-        }else{
+        } else {
             cursor = dbHelper.getAllVentas();
         }
 
-        if (cursor.getCount() != 0){
-            while (cursor.moveToNext()){
+        if (cursor != null && cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
                 String id = cursor.getString(0);
                 String fecha = cursor.getString(1);
                 String monto = cursor.getString(2);
                 String detalle = cursor.getString(3);
                 String idTipo = cursor.getString(4);
                 String nomCliente = cursor.getString(5);
-                // Todo: inciar consulta a la tabla de mov_tiene_productos para obtener todos los datos de las ventas detalladas
 
                 Ingresos ingreso = new Ingresos(id, fecha, monto, detalle, idTipo, nomCliente);
-                ingresos.add(ingreso);
+                items.add(ingreso);
             }
+            cursor.close();
         }
     }
 
-    private void openAddDialog() {
+    @Override
+    protected RecyclerView.Adapter getAdapter() {
+        return new CustomAdapterVentas(getActivity(), getContext(), items);
+    }
+
+    protected void openAddDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_ventas, null);
 
