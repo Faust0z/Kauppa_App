@@ -12,32 +12,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kauppa_emp.MasInfoCompras;
+import com.example.kauppa_emp.MasInfoCajaDiaria;
 import com.example.kauppa_emp.R;
+import com.example.kauppa_emp.fragments.dataObjects.Egresos;
 
 import java.util.ArrayList;
 
 public class CustomAdapterCompras extends RecyclerView.Adapter<CustomAdapterCompras.MyViewHolder> {
+    private final Context context;
+    private final Activity activity;
+    private final ArrayList<Egresos> egresos;
 
-    private Context context;
-    private Activity activity;
-    private ArrayList<String> movimiento_id, movimiento_fecha, movimiento_detalle, movimiento_monto, movimiento_IdPedidos, movimiento_IdTipo, movimiento_NomCliente;
-
-    public CustomAdapterCompras(Activity activity, Context context, ArrayList<String> movimiento_id, ArrayList<String> movimiento_fecha,
-                                ArrayList<String> movimiento_detalle, ArrayList<String> movimiento_monto, ArrayList<String>
-                                           movimiento_IDpedidos, ArrayList<String> movimiento_tipo,
-                                ArrayList<String> movimiento_NomCliente){
+    public CustomAdapterCompras(Activity activity, Context context, ArrayList<Egresos> egresos){
         this.activity = activity;
         this.context = context;
-        this.movimiento_id = movimiento_id;
-        this.movimiento_fecha = movimiento_fecha;
-        this.movimiento_detalle = movimiento_detalle;
-        this.movimiento_monto = movimiento_monto;
-        this.movimiento_IdPedidos = movimiento_IDpedidos;
-        this.movimiento_IdTipo = movimiento_tipo;
-        this.movimiento_NomCliente = movimiento_NomCliente;
+        this.egresos = egresos;
     }
-
 
     @NonNull
     @Override
@@ -49,35 +39,30 @@ public class CustomAdapterCompras extends RecyclerView.Adapter<CustomAdapterComp
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
-        // En estos Holders tenemos que poner los datos que queremos mostrar al abrir los detalles de un elemento
-        holder.filaCompras_id_txt.setText(String.valueOf(movimiento_id.get(position)));
-        holder.filaCompras_fecha_txt.setText(String.valueOf(movimiento_fecha.get(position)));
-        holder.filaCompras_monto_txt.setText(String.valueOf(movimiento_monto.get(position)));
+        Egresos egresoActual = egresos.get(position);
+        holder.filaCompras_id_txt.setText(egresoActual.getId());
+        holder.filaCompras_fecha_txt.setText(egresoActual.getFecha());
+        holder.filaCompras_monto_txt.setText(egresoActual.getMonto());
 
-        // onClickListener para cada fila
-        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int currentPosition = holder.getAdapterPosition();
-                if (currentPosition != RecyclerView.NO_POSITION) {
-                    //Indicar qué datos le vamos a pasar al intent de "Ver más info"
-                    Intent intent = new Intent(context, MasInfoCompras.class);
-                    intent.putExtra("id", String.valueOf(movimiento_id.get(currentPosition)));
-                    intent.putExtra("fecha", String.valueOf(movimiento_fecha.get(currentPosition)));
-                    intent.putExtra("detalle", String.valueOf(movimiento_detalle.get(currentPosition)));
-                    intent.putExtra("monto", String.valueOf(movimiento_monto.get(currentPosition)));
-                    intent.putExtra("IdPedidos", String.valueOf(movimiento_IdPedidos.get(currentPosition)));
-                    intent.putExtra("IdTipos", String.valueOf(movimiento_IdTipo.get(currentPosition)));
-                    intent.putExtra("nombreCliente", String.valueOf(movimiento_NomCliente.get(currentPosition)));
-                    activity.startActivityForResult(intent, 1);
-                }
+        holder.mainLayout.setOnClickListener(v -> {
+            int currentPosition = holder.getAdapterPosition();
+
+            if (currentPosition != RecyclerView.NO_POSITION) {
+                Intent intent = new Intent(context, MasInfoCajaDiaria.class);
+                intent.putExtra("movId", egresoActual.getId());
+                intent.putExtra("movFecha", egresoActual.getFecha());
+                intent.putExtra("movDetalle", egresoActual.getDetalle());
+                intent.putExtra("movMonto", egresoActual.getMonto());
+                intent.putExtra("movIdTipos", egresoActual.getIdTipo());
+                intent.putExtra("movNomCliente", egresoActual.getNomCliente());
+                activity.startActivityForResult(intent, 1);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return movimiento_id.size();
+        return egresos.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

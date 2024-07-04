@@ -1,7 +1,6 @@
 package com.example.kauppa_emp;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,20 +12,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kauppa_emp.database.DatabaseHelper;
+import com.example.kauppa_emp.fragments.dataObjects.Egresos;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class MasInfoCompras extends AppCompatActivity {
-
     private DatabaseHelper dbHelper;
 
     private TextView movTitulo;
     private EditText movTextoFecha, movTextoDetalle, movTextoMonto, movTextoIdPedidos, movTextoIdTipos, movTextoNomCliente;
-    private Button actualizarButton, anularButton;
-
-    private String movId, movFecha, movDetalle, movMonto, movIdPedidos, movIdTipos, movNomCliente;
+    private Egresos egreso;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +31,6 @@ public class MasInfoCompras extends AppCompatActivity {
         setContentView(R.layout.activity_mas_info_compras);
         dbHelper = new DatabaseHelper(MasInfoCompras.this);
 
-        // Por las dudas, no existe movTextoId. El ID lo agrego al título
         movTitulo = findViewById(R.id.textViewTituloCompraInfo);
         movTextoFecha = findViewById(R.id.editTextFechaCompraInfo);
         movTextoMonto = findViewById(R.id.editTextMontoCompraInfo);
@@ -59,7 +55,7 @@ public class MasInfoCompras extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        actualizarButton = findViewById(R.id.buttonCompraUpdate);
+        Button actualizarButton = findViewById(R.id.buttonCompraUpdate);
         actualizarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +63,7 @@ public class MasInfoCompras extends AppCompatActivity {
             }
         });
 
-        anularButton = findViewById(R.id.buttonCompraAnular);
+        Button anularButton = findViewById(R.id.buttonCompraAnular);
         anularButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,68 +74,55 @@ public class MasInfoCompras extends AppCompatActivity {
 
     void getIntentData(){
         // Compruebo que el intent haya traído datos. Asumo que si está el id están todos
-        if (getIntent().hasExtra("id")){
-            movId = getIntent().getStringExtra("id");
-            movFecha = getIntent().getStringExtra("fecha");
-            movDetalle = getIntent().getStringExtra("detalle");
-            movMonto = getIntent().getStringExtra("monto");
-            movIdPedidos = getIntent().getStringExtra("IdPedidos");
-            movIdTipos = getIntent().getStringExtra("IdTipos");
-            movNomCliente = getIntent().getStringExtra("nombreCliente");
-            if (movNomCliente.equals("null")){movNomCliente = "Cliente sin registrar";}
+        if (getIntent().hasExtra("movId")){
+            String id = getIntent().getStringExtra("movId");
+            String fecha = getIntent().getStringExtra("movFecha");
+            String detalle = getIntent().getStringExtra("movDetalle");
+            String monto = getIntent().getStringExtra("movMonto");
+            String idTipos = getIntent().getStringExtra("movIdTipos");
+            String movNomCliente = getIntent().getStringExtra("movNomCliente");
+
+            egreso = new Egresos(id, fecha, monto, detalle, idTipos, movNomCliente);
         }
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText("Compra N° " + movId);
-        movTextoFecha.setText(movFecha);
-        movTextoMonto.setText(movMonto);
-        movTextoDetalle.setText(movDetalle);
-        // movTextoIdPedidos.setText(movIdPedidos);
-        movTextoNomCliente.setText(movNomCliente);
+        movTitulo.setText("Compra N° " + egreso.getId());
+        movTextoFecha.setText(egreso.getFecha());
+        movTextoMonto.setText(egreso.getMonto());
+        movTextoDetalle.setText(egreso.getDetalle());
+        movTextoNomCliente.setText(egreso.getNomCliente());
     }
 
     private void createUpdateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Actualizar " + movIdTipos + " " + movId + "?");
-        builder.setMessage("Desea actualizar la " + movIdTipos + " " + movId + "?");
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                movFecha = movTextoFecha.getText().toString().trim();
-                movMonto = movTextoMonto.getText().toString().trim();
-                movNomCliente = movTextoNomCliente.getText().toString().trim();
-                movDetalle = movTextoDetalle.getText().toString().trim();
-                dbHelper.updtMovimiento(movId, movFecha, movMonto, movNomCliente, movDetalle);
-                finish(); // Con finish se cierra el intent
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        builder.setTitle("Actualizar la compra N° " + egreso.getId() + "?");
+        builder.setMessage("Desea actualizar la compra " + egreso.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
+            String fecha = movTextoFecha.getText().toString().trim();
+            String monto = movTextoMonto.getText().toString().trim();
+            String detalle = movTextoDetalle.getText().toString().trim();
+            String nomCliente =  movTextoNomCliente.getText().toString().trim();
 
-            }
+            dbHelper.updtEgreso(egreso.getId(), fecha, monto, detalle, nomCliente);
+            finish(); // Con finish se cierra el intent
         });
+
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
         builder.create().show();
     }
 
     private void createDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Eliminar " + movIdTipos + " " + movId + "?");
-        builder.setMessage("Desea eliminar la " + movIdTipos + " " + movId + "?");
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dbHelper.delMovimiento(movId);
-                finish(); // Con finish se cierra el intent
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
+        builder.setTitle("Eliminar la venta " + egreso.getId() + "?");
+        builder.setMessage("Desea eliminar la venta " + egreso.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
+            dbHelper.delEgreso(egreso.getId());
+            finish(); // Con finish se cierra el intent
         });
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
+
         builder.create().show();
     }
 }
