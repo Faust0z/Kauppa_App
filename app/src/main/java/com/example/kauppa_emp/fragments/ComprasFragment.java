@@ -17,16 +17,10 @@ import android.view.ViewGroup;
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCompras;
+import com.example.kauppa_emp.fragments.dataObjects.Egresos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,23 +34,14 @@ public class ComprasFragment extends Fragment {
     private Button buttonFiltrar, buttonResetFiltro;
 
     private DatabaseHelper dbHelper;
-    private ArrayList<String> arrayMovId, arrayMovFecha, arrayMovDetalle, arrayMovMonto, arrayMovIdPedidos, arrayMovIdTipo, arrayMovNomCliente;
+    private ArrayList<Egresos> egresos;
     private CustomAdapterCompras customAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbHelper = new DatabaseHelper(getContext());
-
-        // Ni el detalle ni el pedidos afectados se usa para el recyclerview, pero se necesita
-        // almacenar para poder ver todos los datos del movimiento luego
-        arrayMovId = new ArrayList<>();
-        arrayMovFecha = new ArrayList<>();
-        arrayMovMonto = new ArrayList<>();
-        arrayMovDetalle = new ArrayList<>();
-        arrayMovIdPedidos = new ArrayList<>();
-        arrayMovIdTipo = new ArrayList<>();
-        arrayMovNomCliente = new ArrayList<>();
+        egresos = new ArrayList<>();
     }
 
     @Override
@@ -64,27 +49,9 @@ public class ComprasFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compras, container, false);
 
-        buttonFiltrar = view.findViewById(R.id.buttonFiltrarCompras);
-        buttonFiltrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+        createButtonFiltrar(view);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view, year1, month1, dayOfMonth) -> {
-                    calendar.set(year1, month1, dayOfMonth);
-                    buttonFiltrar.setText(dateFormat.format(calendar.getTime()));
-
-                    addElementsToRecyclerView();
-
-                }, year, month, day);
-                datePickerDialog.show();
-            }
-        });
-
+        // Todo: eliminar este botón
         buttonResetFiltro = view.findViewById(R.id.buttonResetFiltroCompras);
         buttonResetFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,27 +73,38 @@ public class ComprasFragment extends Fragment {
     @Override // Usamos este método para que, si borramos o actualizamos desde la actividad MasInfo, se actualice la lista
     public void onResume() {
         super.onResume();
-        bddToArraylist();
         addElementsToRecyclerView();
+    }
+
+    private void createButtonFiltrar(View view){
+        buttonFiltrar = view.findViewById(R.id.buttonFiltrarCompras);
+        buttonFiltrar.setOnClickListener(v -> {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view1, year1, month1, dayOfMonth) -> {
+                calendar.set(year1, month1, dayOfMonth);
+                buttonFiltrar.setText(dateFormat.format(calendar.getTime()));
+            }, year, month, day);
+            datePickerDialog.show();
+
+            addElementsToRecyclerView();
+        });
     }
 
     private void addElementsToRecyclerView(){
         bddToArraylist();
-        customAdapter = new CustomAdapterCompras(getActivity(), getContext(), arrayMovId, arrayMovFecha,
-                arrayMovDetalle, arrayMovMonto, arrayMovIdPedidos, arrayMovIdTipo, arrayMovNomCliente);
+        customAdapter = new CustomAdapterCompras(getActivity(), getContext(), egresos);
         recyclerView.setAdapter(customAdapter);
     }
 
     private void bddToArraylist(){
-        // Vacío los arraylist antes de volverles a insertar toda la BDD para evitar duplicados
-        arrayMovId.clear();
-        arrayMovFecha.clear();
-        arrayMovMonto.clear();
-        arrayMovDetalle.clear();
-        arrayMovIdPedidos.clear();
-        arrayMovIdTipo.clear();
-        arrayMovNomCliente.clear();
+        egresos.clear();
 
+        // Todo: la funcionalidad de esto pasará a una activity, por lo que no es necesaria acá
         Cursor cursor;
         if (!buttonFiltrar.getText().toString().isEmpty()){
             cursor = dbHelper.getComprasByFecha(buttonFiltrar.getText().toString());
@@ -137,13 +115,15 @@ public class ComprasFragment extends Fragment {
         // Si obtuvimos datos, volcarlos en los arraylists
         if (cursor.getCount() != 0){
             while (cursor.moveToNext()){
-                arrayMovId.add(cursor.getString(0));
-                arrayMovFecha.add(cursor.getString(1));
-                arrayMovDetalle.add(cursor.getString(2));
-                arrayMovMonto.add(cursor.getString(3));
-                arrayMovIdPedidos.add(cursor.getString(4));
-                arrayMovIdTipo.add(cursor.getString(5));
-                arrayMovNomCliente.add(cursor.getString(6));
+                String id = cursor.getString(0);
+                String fecha = cursor.getString(1);
+                String monto = cursor.getString(2);
+                String detalle = cursor.getString(3);
+                String idTipo = cursor.getString(4);
+                String nomCliente = cursor.getString(5);
+
+                Egresos egreso = new Egresos(id, fecha, monto, detalle, idTipo, nomCliente);
+                egresos.add(egreso);
             }
         }
     }
