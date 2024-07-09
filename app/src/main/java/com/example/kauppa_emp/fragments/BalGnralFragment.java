@@ -115,6 +115,6 @@ public class BalGnralFragment extends BaseFragment<Movimientos> {
 
     @Override
     protected Activity getFiltrarActivity() {
-        return new FiltrarPorFechaBalGnral<Movimientos>();
+        return new FiltrarPorFechaBalGnral();
     }
 }

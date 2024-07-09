@@ -71,9 +71,9 @@ public abstract class BaseFragment<T> extends Fragment {
             DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view1, year1, month1, dayOfMonth) -> {
                 calendar.set(year1, month1, dayOfMonth);
 
-                Intent intent = new Intent(getContext(), getAdapter().getClass());
+                Intent intent = new Intent(getContext(), getFiltrarActivity().getClass());
                 intent.putExtra("fecha", dateFormat.format(calendar.getTime()));
-                getFiltrarActivity().startActivityForResult(intent, 1);
+                startActivity(intent);
             }, year, month, day);
             datePickerDialog.show();
         });
