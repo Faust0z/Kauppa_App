@@ -1,5 +1,6 @@
 package com.example.kauppa_emp.fragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -42,23 +43,26 @@ public class ComprasFragment extends BaseFragment<Egresos> {
     }
 
     @Override
-    protected int getAddButtonId() {
-        return R.id.addButton_caja_diaria; //R.id.addButtonCompras; Todo: Falta implementar este botón
-    }
-
-    @Override
     protected int getFiltrarButtonId() {
         return R.id.buttonFiltrarCompras;
     }
 
     @Override
-    protected int getResetButtonId() {
-        return R.id.buttonResetFiltroCompras;
+    protected RecyclerView.Adapter getAdapter() {
+        return new CustomAdapterCompras(getActivity(), getContext(), items);
+    }
+
+    protected void openAddDialog() {
+        return; //Todo: a implementar
+    }
+
+    protected int getAddButtonId() {
+        return R.id.addButton_caja_diaria; //R.id.addButtonCompras; Todo: Falta implementar este botón
     }
 
     @Override
-    protected void openAddDialog() {
-        return; //Todo: a implementar
+    protected Activity getFiltrarActivity() {
+        return null;
     }
 
     @Override
@@ -85,10 +89,5 @@ public class ComprasFragment extends BaseFragment<Egresos> {
             }
             cursor.close();
         }
-    }
-
-    @Override
-    protected RecyclerView.Adapter getAdapter() {
-        return new CustomAdapterCompras(getActivity(), getContext(), items);
     }
 }

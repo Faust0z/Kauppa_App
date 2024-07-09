@@ -1,7 +1,9 @@
 package com.example.kauppa_emp.fragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.view.LayoutInflater;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kauppa_emp.R;
+import com.example.kauppa_emp.database.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
 import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +35,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CajaDiariaFragment extends BaseFragment<Movimientos> {
+    private FloatingActionButton addButton;
 
     @Override
     protected int getLayoutId() {
@@ -44,18 +48,26 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     }
 
     @Override
+    protected int getFiltrarButtonId() {
+        return R.id.buttonFiltrarCajaDiaria;
+    }
+
     protected int getAddButtonId() {
         return R.id.addButton_caja_diaria;
     }
 
     @Override
-    protected int getFiltrarButtonId() {
-        return R.id.buttonFiltrarCajaDiaria;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        addButton = view.findViewById(getAddButtonId());
+        addButton.setOnClickListener(v -> openAddDialog());
+
+        return view;
     }
 
     @Override
-    protected int getResetButtonId() {
-        return R.id.buttonResetFiltro;
+    protected Activity getFiltrarActivity() {
+        return null;
     }
 
     @Override
@@ -74,14 +86,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
                 String fecha = cursor.getString(1);
                 String monto = cursor.getString(2);
                 String detalle = cursor.getString(3);
-
-                String tipo;
-                String checkVentaCompra = cursor.getString(4);
-                if (checkVentaCompra.equals("1") || checkVentaCompra.equals("2") || checkVentaCompra.equals("4")) {
-                    tipo = "Entrada";
-                } else {
-                    tipo = "Salida";
-                }
+                String tipo = cursor.getString(4);
 
                 Movimientos movimiento = new Movimientos(id, fecha, detalle, monto, tipo);
                 items.add(movimiento);
@@ -94,7 +99,6 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         return new CustomAdapterCajaDiaria(getActivity(), getContext(), items);
     }
 
-    @Override
     protected void openAddDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_cajadiaria, null);
@@ -157,13 +161,13 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     }
 
     private long insertBDD(String fecha, String detalle, String monto, boolean esEntrada) {
-        int tipo;
+        String tipo;
+        //Todo: placeholders para probar el Balance Gnral
         if (esEntrada) {
-            tipo = 3;
+            tipo = TiposMovimiento.VENTA_SIMPLE;
         } else {
-            tipo = 5;
+            tipo = TiposMovimiento.COMPRA;
         }
-
-        return dbHelper.addMovimiento(fecha, detalle, monto, tipo);
+        return dbHelper.addMovimiento(fecha, detalle, monto, Integer.parseInt(tipo));
     }
 }

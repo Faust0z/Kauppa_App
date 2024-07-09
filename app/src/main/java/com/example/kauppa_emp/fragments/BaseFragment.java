@@ -1,6 +1,8 @@
 package com.example.kauppa_emp.fragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.widget.Button;
 
@@ -26,8 +26,7 @@ import java.util.Locale;
 
 public abstract class BaseFragment<T> extends Fragment {
     protected RecyclerView recyclerView;
-    protected FloatingActionButton addButton;
-    protected Button buttonFiltrar, buttonResetFiltro;
+    protected Button buttonFiltrar;
 
     protected DatabaseHelper dbHelper;
     protected ArrayList<T> items;
@@ -46,17 +45,8 @@ public abstract class BaseFragment<T> extends Fragment {
 
         createButtonFiltrar(view);
 
-        buttonResetFiltro = view.findViewById(getResetButtonId());
-        buttonResetFiltro.setOnClickListener(v -> {
-            buttonFiltrar.setText("");
-            addElementsToRecyclerView();
-        });
-
         recyclerView = view.findViewById(getRecyclerViewId());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        addButton = view.findViewById(getAddButtonId());
-        addButton.setOnClickListener(v -> openAddDialog());
 
         addElementsToRecyclerView();
 
@@ -80,11 +70,12 @@ public abstract class BaseFragment<T> extends Fragment {
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view1, year1, month1, dayOfMonth) -> {
                 calendar.set(year1, month1, dayOfMonth);
-                buttonFiltrar.setText(dateFormat.format(calendar.getTime()));
+
+                Intent intent = new Intent(getContext(), getAdapter().getClass());
+                intent.putExtra("fecha", dateFormat.format(calendar.getTime()));
+                getFiltrarActivity().startActivityForResult(intent, 1);
             }, year, month, day);
             datePickerDialog.show();
-
-            addElementsToRecyclerView();
         });
     }
 
@@ -94,6 +85,8 @@ public abstract class BaseFragment<T> extends Fragment {
         recyclerView.setAdapter(customAdapter);
     }
 
+    protected abstract Activity getFiltrarActivity();
+
     protected abstract void bddToArraylist();
 
     protected abstract RecyclerView.Adapter getAdapter();
@@ -102,11 +95,5 @@ public abstract class BaseFragment<T> extends Fragment {
 
     protected abstract int getRecyclerViewId();
 
-    protected abstract int getAddButtonId();
-
     protected abstract int getFiltrarButtonId();
-
-    protected abstract int getResetButtonId();
-
-    protected abstract void openAddDialog();
 }
