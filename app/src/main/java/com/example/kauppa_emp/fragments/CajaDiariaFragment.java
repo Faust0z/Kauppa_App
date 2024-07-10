@@ -1,16 +1,11 @@
 package com.example.kauppa_emp.fragments;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
-import android.view.LayoutInflater;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,15 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kauppa_emp.MainActivity;
 import com.example.kauppa_emp.R;
-import com.example.kauppa_emp.database.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
 import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -40,8 +32,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CajaDiariaFragment extends BaseFragment<Movimientos> {
-    private FloatingActionButton addButton;
-    private Button button_irBalGnral_CajaDiaria;
 
     @Override
     protected int getLayoutId() {
@@ -54,42 +44,18 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     }
 
     @Override
-    protected int getFiltrarButtonId() {
-        return R.id.buttonFiltrarCajaDiaria;
-    }
-
     protected int getAddButtonId() {
         return R.id.addButton_caja_diaria;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        addButton = view.findViewById(getAddButtonId());
-        addButton.setOnClickListener(v -> openAddDialog());
-
-        button_irBalGnral_CajaDiaria = view.findViewById(R.id.button_irBalGnral_CajaDiaria);
-        button_irBalGnral_CajaDiaria.setOnClickListener(v -> changeFragment(new BalGnralFragment()));
-
-        return view;
-    }
-
-    /*
-      Este método lo copié del Main activity y no me termina de convencer la idea. Buscando encontré
-      que se puede agregar una interfaz para permitir a cualquier fragmento llamar a ese método, pero
-      no sé cuánto me convence hacer eso si ningún otro fragmento tiene necesidad de usar esto.
-    */
-    public void changeFragment(Fragment newFragment) { //Tuve que repetir
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, newFragment);
-        fragmentTransaction.commit();
+    protected int getFiltrarButtonId() {
+        return R.id.buttonFiltrarCajaDiaria;
     }
 
     @Override
-    protected Activity getFiltrarActivity() {
-        return null;
+    protected int getResetButtonId() {
+        return R.id.buttonResetFiltro;
     }
 
     @Override
@@ -108,7 +74,14 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
                 String fecha = cursor.getString(1);
                 String monto = cursor.getString(2);
                 String detalle = cursor.getString(3);
-                String tipo = cursor.getString(4);
+
+                String tipo;
+                String checkVentaCompra = cursor.getString(4);
+                if (checkVentaCompra.equals("1") || checkVentaCompra.equals("2") || checkVentaCompra.equals("4")) {
+                    tipo = "Entrada";
+                } else {
+                    tipo = "Salida";
+                }
 
                 Movimientos movimiento = new Movimientos(id, fecha, detalle, monto, tipo);
                 items.add(movimiento);
@@ -121,6 +94,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         return new CustomAdapterCajaDiaria(getActivity(), getContext(), items);
     }
 
+    @Override
     protected void openAddDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_cajadiaria, null);
@@ -183,13 +157,13 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     }
 
     private long insertBDD(String fecha, String detalle, String monto, boolean esEntrada) {
-        String tipo;
-        //Todo: placeholders para probar el Balance Gnral
+        int tipo;
         if (esEntrada) {
-            tipo = TiposMovimiento.VENTA_SIMPLE;
+            tipo = 3;
         } else {
-            tipo = TiposMovimiento.COMPRA;
+            tipo = 5;
         }
-        return dbHelper.addMovimiento(fecha, detalle, monto, Integer.parseInt(tipo));
+
+        return dbHelper.addMovimiento(fecha, detalle, monto, tipo);
     }
 }

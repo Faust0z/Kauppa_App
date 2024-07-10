@@ -10,8 +10,8 @@ public class DatabaseInit extends SQLiteOpenHelper {
     /*
         Clase para la creación de la BDD y sus tablas, así como algunos inserts en ellas.
      */
-    private static final String DB_NAME = "mydb.db";
-    private static final int DB_VER = 2;
+    private static final String DB_NAME = "mydb1.db";
+    private static final int DB_VER = 1;
 
     public static final String TABLE_PRODUCTOS = "PRODUCTOS";
     public static final String TABLE_PEDIDOS = "PEDIDOS";
@@ -79,12 +79,12 @@ public class DatabaseInit extends SQLiteOpenHelper {
             + "PRIMARY KEY (id_pedido, id_producto))";
 
     private static final String SQL_INSERT_TIPOS_MOVIMIENTO = "INSERT INTO TIPOS_MOVIMIENTO (id_tipo, descripcion) VALUES " +
-            "(" + TiposMovimiento.VENTA_SIMPLE + ", 'VENTA SIMPLE'), " +
-            "(" + TiposMovimiento.VENTA_DETALLADA + ", 'VENTA DETALLADA'), " +
-            "(" + TiposMovimiento.COMPRA + ", 'COMPRA'), " +
-            "(" + TiposMovimiento.PAGO + ", 'PAGO'), " +
-            "(" + TiposMovimiento.VARIOS + ", 'VARIOS'), " +
-            "(" + TiposMovimiento.COBRO + ", 'COBRO');";
+            "(1, 'VENTA SIMPLE'), " +
+            "(2, 'VENTA DETALLADA'), " +
+            "(3, 'PAGO'), " +
+            "(4, 'COBRO'), " +
+            "(5, 'VARIOS'), " +
+            "(6, 'COMPRA');";
     private static final String SQL_INSERT_ESTADOS_PEDIDO = "INSERT INTO ESTADOS_PEDIDO (id_estado, descripcion) VALUES " +
             "(1, 'PENDIENTE'), " +
             "(2, 'PREPARADO'), " +
