@@ -1,45 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout_cajaDiaria"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_tertiary60"
-    tools:context=".fragments.CajaDiariaFragment">
+    tools:context=".MasInfoCajaDiaria">
 
-    <Button
-        android:id="@+id/buttonFiltrarCajaDiaria"
+    <TextView
+        android:id="@+id/textViewTituloCajaDiariaInfo"
         android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:hint="filtrar"
-        android:stateListAnimator="@null" />
-
-    <!-- Se puede configurar que no sea visible el botón hasta que se introduzca una fecha filtro -->
-    <Button
-        android:id="@+id/button_irBalGnral_CajaDiaria"
-        android:layout_width="53dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/baseline_home_24" />
+        android:text="Entrada"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_cajaDiaria"
-        android:layout_width="match_parent"
-        android:layout_height="643dp"
-        android:layout_gravity="bottom
-"
-        tools:listitem="" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButton_caja_diaria"
+    <EditText
+        android:id="@+id/editTextFechaCajaDiariaInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
-        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
-        app:srcCompat="@drawable/baseline_add_24" />
+        android:focusable="false"
+        android:gravity="center"
+        android:hint="Fecha"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTituloCajaDiariaInfo" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/editTextMontoCajaDiariaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:hint="Monto"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFechaCajaDiariaInfo" />
+
+    <EditText
+        android:id="@+id/editTextDetalleCajaDiariaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="Detalle"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMontoCajaDiariaInfo" />
+
+    <EditText
+        android:id="@+id/editTextIdPedidosCajaDiariaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="ID Pedido Afectado"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDetalleCajaDiariaInfo" />
+
+
+    <Button
+        android:id="@+id/buttonCajaDiariaUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Actualizar"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextIdPedidosCajaDiariaInfo" />
+
+    <Button
+        android:id="@+id/buttonCajaDiariaAnular"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="Borrar"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCajaDiariaUpdate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
