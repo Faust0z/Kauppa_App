@@ -8,6 +8,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kauppa_emp.MainActivity;
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
@@ -22,6 +26,7 @@ import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +41,7 @@ import java.util.Locale;
 
 public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     private FloatingActionButton addButton;
+    private Button button_irBalGnral_CajaDiaria;
 
     @Override
     protected int getLayoutId() {
@@ -59,10 +65,26 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
         addButton = view.findViewById(getAddButtonId());
         addButton.setOnClickListener(v -> openAddDialog());
 
+        button_irBalGnral_CajaDiaria = view.findViewById(R.id.button_irBalGnral_CajaDiaria);
+        button_irBalGnral_CajaDiaria.setOnClickListener(v -> changeFragment(new BalGnralFragment()));
+
         return view;
+    }
+
+    /*
+      Este método lo copié del Main activity y no me termina de convencer la idea. Buscando encontré
+      que se puede agregar una interfaz para permitir a cualquier fragmento llamar a ese método, pero
+      no sé cuánto me convence hacer eso si ningún otro fragmento tiene necesidad de usar esto.
+    */
+    public void changeFragment(Fragment newFragment) { //Tuve que repetir
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, newFragment);
+        fragmentTransaction.commit();
     }
 
     @Override

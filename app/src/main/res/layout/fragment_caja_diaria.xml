@@ -8,9 +8,6 @@
     android:background="@color/material_dynamic_tertiary60"
     tools:context=".fragments.CajaDiariaFragment">
 
-    <!-- Lo puse con un button porque me pareció que quedaría bien, pero se puede usar cualquier tipo    -->
-    <!-- de dato que tenga el método setOnClickListener. Cuidado con ponerle propiedad "texto"   -->
-    <!-- ya que el fragmento usa ese valor para filtrar los elementos   -->
     <Button
         android:id="@+id/buttonFiltrarCajaDiaria"
         android:layout_width="match_parent"
@@ -21,10 +18,10 @@
 
     <!-- Se puede configurar que no sea visible el botón hasta que se introduzca una fecha filtro -->
     <Button
-        android:id="@+id/buttonResetFiltro"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_irBalGnral_CajaDiaria"
+        android:layout_width="53dp"
         android:layout_height="wrap_content"
-        android:text="Reset filtro" />
+        app:srcCompat="@drawable/baseline_home_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_cajaDiaria"
