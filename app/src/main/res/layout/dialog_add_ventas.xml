@@ -2,298 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_gravity="center"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center">
 
-    <com.google.android.material.card.MaterialCardView
-
-        android:layout_width="380dp"
+    <TextView
+        android:id="@+id/textViewTituloVenta"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:text="Agregar Venta"
+        android:textSize="18sp"
         android:layout_marginBottom="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="1dp">
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/editTextNomClienteVenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del Cliente"
+        android:focusable="false"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editTextFechaVenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Fecha"
+        android:focusable="false"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/textViewTotalVenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cálculo automático del total"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="154dp"
+        android:background="@color/material_dynamic_tertiary60">
 
         <LinearLayout
-            android:layout_width="380dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewTituloVenta"
-                android:layout_width="180dp"
+                android:id="@+id/textViewTituloProductosVenta"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="#CAB5AB"
-                android:gravity="center"
-                android:text="AGREGAR VENTA"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="Ingresar Productos" />
 
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textViewSubituloProductosVenta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Producto                                                  Cant" />
 
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:gravity="center"
-                        android:text="Fecha:"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/editTextFechaVenta"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="16dp"
-                        android:focusable="false"
-                        android:gravity="center"
-                        android:hint="Fecha" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView12"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:gravity="center"
-                        android:text="Cliente:"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/editTextNomClienteVenta"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="16dp"
-                        android:focusable="false"
-                        android:gravity="center"
-                        android:hint="Nombre del Cliente" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:gravity="center"
-                        android:text="Total:"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textViewTotalVenta"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:text="Cálculo automático del total"
-                        android:textSize="18sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ScrollView
-                    android:layout_width="360dp"
-                    android:layout_height="154dp"
-                    android:background="@color/material_dynamic_tertiary60">
-
-                    <LinearLayout
-                        android:layout_width="360dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textViewTituloProductosVenta"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#8C7C7C"
-                            android:gravity="center"
-                            android:text="Ingresar Productos"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textViewSubituloProductosVenta"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#9F8F8F"
-                            android:text="Producto                                                  Cant"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerViewProductosVenta"
-                            android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
-                            android:background="#CAB5AB" />
-
-                    </LinearLayout>
-                </ScrollView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:gravity="center"
-                        android:text="Detalle:"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/editTextDetalleVenta"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:hint="Detalle" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:gravity="center"
-                        android:text="Seña:"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/editTextSeniaVenta"
-                        android:layout_width="180dp"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:hint="Seña" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/buttonAgregarProductoVentasDialog"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:text="Agregar Producto" />
-
-            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProductosVenta"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" />
 
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttonAgregarProductoVentasDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar Producto" />
+
+    <EditText
+        android:id="@+id/editTextDetalleVenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Detalle"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editTextSeniaVenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Seña"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
 
 </LinearLayout>

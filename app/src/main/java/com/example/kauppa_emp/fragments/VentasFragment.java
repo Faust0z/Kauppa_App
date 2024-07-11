@@ -1,5 +1,6 @@
 package com.example.kauppa_emp.fragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -44,7 +45,6 @@ public class VentasFragment extends BaseFragment<Ingresos> {
         return R.id.recyclerViewVentas;
     }
 
-    @Override
     protected int getAddButtonId() {
         return R.id.addButtonVentas;
     }
@@ -55,8 +55,8 @@ public class VentasFragment extends BaseFragment<Ingresos> {
     }
 
     @Override
-    protected int getResetButtonId() {
-        return R.id.buttonResetFiltroVentas;
+    protected Activity getFiltrarActivity() {
+        return null;
     }
 
     @Override

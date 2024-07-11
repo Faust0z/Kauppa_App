@@ -3,38 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
-    android:background="@color/md_theme_background"
-    android:id="@+id/frame_calcularPrecio"
-    tools:context=".fragments.CalcularPrecioFragment">
-
+    android:background="@color/md_theme_background">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
-        android:layout_marginTop="20dp">
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.IconButton.Outlined"
-            android:id="@+id/btnVolverCalcularPrecio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/arrow_back_24px"
-            app:iconSize="25dp"
-            android:layout_marginBottom="20dp"
-            app:rippleColor="@color/md_theme_surfaceContainer">
-        </com.google.android.material.button.MaterialButton>
+        android:layout_marginTop="60dp">
 
         <!-- Título -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Calcular Precio"
-            android:textColor="#49454F"
-            android:textSize="30sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"
+            android:textSize="30sp">
+        </TextView>
 
         <!-- Descripción -->
         <TextView
@@ -52,73 +37,32 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="1dp">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <LinearLayout
+                <!-- Card - Titulo  -->
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:text="Precio de Venta"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp">
+                </TextView>
 
-                    <!-- Card - Titulo  -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Precio de Venta"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp">
-                    </TextView>
-
-                    <!-- Card - Resultado  -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$"
-                            android:textSize="24sp"
-                            android:textStyle="bold">
-                        </TextView>
-
-                        <TextView
-                            android:id="@+id/textPrecioVenta"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0.00"
-                            android:textSize="24sp"
-                            android:textStyle="bold"
-                            android:textIsSelectable="true">
-                        </TextView>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- Card - Botón Copiar Precio -->
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:id="@+id/btnCopiarPrecioVenta"
+                <!-- Card - Resultado  -->
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:icon="@drawable/content_copy_24px"
-                    app:iconSize="20dp"
-                    android:text="Copiar"
-                    app:rippleColor="@color/md_theme_secondary"
-                    app:cornerRadius="16dp">
-                </com.google.android.material.button.MaterialButton>
+                    android:layout_height="wrap_content"
+                    android:text="$11.900,00"
+                    android:textSize="24sp"
+                    android:textStyle="bold">
+                </TextView>
 
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Input Layout - Costo Producto  -->
@@ -129,11 +73,11 @@
 
             <!-- Input -->
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputCostoProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Costo Producto"
-                android:inputType="numberDecimal">
+                android:inputType="numberDecimal"
+                android:text="7000">
             </com.google.android.material.textfield.TextInputEditText>
 
             <!-- Descripción -->
@@ -155,11 +99,11 @@
 
             <!-- Input -->
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputGastoAdicional"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Gasto Adicional x Unidad"
-                android:inputType="numberDecimal">
+                android:inputType="numberDecimal"
+                android:text="1500">
             </com.google.android.material.textfield.TextInputEditText>
 
             <!-- Descripción -->
@@ -181,11 +125,11 @@
 
             <!-- Input -->
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputPorcentajeGanancia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Porcentaje de Ganancia"
-                android:inputType="numberDecimal">
+                android:inputType="numberDecimal"
+                android:text="40">
             </com.google.android.material.textfield.TextInputEditText>
 
             <!-- Descripción -->
@@ -211,7 +155,4 @@
         </com.google.android.material.button.MaterialButton>
 
     </LinearLayout>
-
 </ScrollView>
-
-

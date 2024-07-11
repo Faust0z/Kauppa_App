@@ -1,5 +1,8 @@
 package com.example.kauppa_emp.fragments.dataObjects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Movimientos {
     private String id;
     private String fecha;
@@ -7,7 +10,6 @@ public class Movimientos {
     private String detalle;
     private String idTipo;
 
-    // Constructor
     public Movimientos(String id, String fecha, String monto, String detalle, String idTipo) {
         this.id = id;
         this.fecha = fecha;
@@ -16,7 +18,6 @@ public class Movimientos {
         this.idTipo = idTipo;
     }
 
-    // Getters
     public String getId() {
         return id;
     }
@@ -25,16 +26,15 @@ public class Movimientos {
         return fecha;
     }
 
-    public String getDetalle() {
-        return detalle;
-    }
-
     public String getMonto() {
         return monto;
+    }
+
+    public String getDetalle() {
+        return detalle;
     }
 
     public String getIdTipo() {
         return idTipo;
     }
 }
-
