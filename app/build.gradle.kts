@@ -34,6 +34,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        resources {
+            excludes.add("META-INF/androidx.cardview_cardview.version")
+        }
+    }
 }
 
 dependencies {
