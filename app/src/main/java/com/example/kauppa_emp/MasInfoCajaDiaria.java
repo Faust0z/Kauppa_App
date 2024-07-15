@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kauppa_emp.database.DatabaseHelper;
+import com.example.kauppa_emp.database.TiposMovimiento;
 import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 
 import java.text.SimpleDateFormat;
@@ -76,7 +77,7 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText(movimiento.getIdTipo() + " " + movimiento.getId());
+        movTitulo.setText(TiposMovimiento.getTipoById(movimiento.getIdTipo()) + " N° " + movimiento.getId());
         movTextoFecha.setText(movimiento.getFecha());
         movTextoMonto.setText(movimiento.getMonto());
         movTextoDetalle.setText(movimiento.getDetalle());

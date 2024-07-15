@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/mainLayoutFilaCajaDiaria">
@@ -18,7 +17,7 @@
             android:padding="12dp">
 
             <TextView
-                android:id="@+id/cajadiaria_id_txt"
+                android:id="@+id/textView_Id_FilaCajaDiaria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
@@ -30,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/cajadiaria_entradasalida_txt"
+                android:id="@+id/textView_Tipo_FilaCajaDiaria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -38,19 +37,11 @@
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/cajadiaria_id_txt"
-                app:layout_constraintTop_toTopOf="@+id/cajadiaria_id_txt" />
+                app:layout_constraintStart_toEndOf="@+id/textView_Id_FilaCajaDiaria"
+                app:layout_constraintTop_toTopOf="@+id/textView_Id_FilaCajaDiaria" />
 
             <TextView
-                android:id="@+id/cajadiaria_fecha_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="11/6/24"
-                app:layout_constraintStart_toStartOf="@+id/cajadiaria_entradasalida_txt"
-                app:layout_constraintTop_toBottomOf="@+id/cajadiaria_entradasalida_txt" />
-
-            <TextView
-                android:id="@+id/cajadiaria_monto_txt"
+                android:id="@+id/textView_Monto_FilaCajaDiaria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2000"

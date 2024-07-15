@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kauppa_emp.MasInfoCajaDiaria;
 import com.example.kauppa_emp.R;
+import com.example.kauppa_emp.database.TiposMovimiento;
 import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 
 import java.util.ArrayList;
@@ -41,8 +42,7 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Movimientos movimientoActual = movimientos.get(position);
         holder.cajadiaria_id_txt.setText(movimientoActual.getId());
-        holder.cajadiaria_entradasalida_txt.setText(movimientoActual.getIdTipo());
-        holder.cajadiaria_fecha_txt.setText(movimientoActual.getFecha());
+        holder.cajadiaria_entradasalida_txt.setText(TiposMovimiento.getIngreOrEgreById(movimientoActual.getIdTipo()));
         holder.cajadiaria_monto_txt.setText(movimientoActual.getMonto());
 
         holder.mainLayout.setOnClickListener(v -> {
@@ -66,15 +66,14 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView cajadiaria_id_txt, cajadiaria_entradasalida_txt, cajadiaria_fecha_txt, cajadiaria_monto_txt;
+        TextView cajadiaria_id_txt, cajadiaria_entradasalida_txt, cajadiaria_monto_txt;
         LinearLayout mainLayout;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            cajadiaria_id_txt = itemView.findViewById(R.id.cajadiaria_id_txt);
-            cajadiaria_entradasalida_txt = itemView.findViewById(R.id.cajadiaria_entradasalida_txt);
-            cajadiaria_fecha_txt = itemView.findViewById(R.id.cajadiaria_fecha_txt);
-            cajadiaria_monto_txt = itemView.findViewById(R.id.cajadiaria_monto_txt);
+            cajadiaria_id_txt = itemView.findViewById(R.id.textView_Id_FilaCajaDiaria);
+            cajadiaria_entradasalida_txt = itemView.findViewById(R.id.textView_Tipo_FilaCajaDiaria);
+            cajadiaria_monto_txt = itemView.findViewById(R.id.textView_Monto_FilaCajaDiaria);
             mainLayout = itemView.findViewById(R.id.mainLayoutFilaCajaDiaria);
         }
     }

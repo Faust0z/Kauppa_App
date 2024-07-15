@@ -39,8 +39,8 @@ public class DatabaseInit extends SQLiteOpenHelper {
     private static final String SQL_TO_CREATE_TABLE_EGRESOS = "CREATE TABLE " + TABLE_EGRESOS + " ("
             + "id_movimiento INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "fecha TEXT NOT NULL, "
-            + "detalle TEXT, "
             + "monto TEXT NOT NULL, "
+            + "detalle TEXT, "
             + "id_tipo INTEGER NOT NULL, "
             + "nombre_cliente TEXT) ";
     private static final String SQL_TO_CREATE_TABLE_TIPOS_MOVIMIENTO = "CREATE TABLE " + TABLE_TIPOS_MOVIMIENTO + " ("
@@ -49,8 +49,8 @@ public class DatabaseInit extends SQLiteOpenHelper {
     private static final String SQL_TO_CREATE_TABLE_PEDIDOS = "CREATE TABLE " + TABLE_PEDIDOS + " ("
             + "id_pedido INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "fecha TEXT NOT NULL, "
-            + "nombre_cliente TEXT NOT NULL, "
             + "monto TEXT NOT NULL, "
+            + "nombre_cliente TEXT NOT NULL, "
             + "total_pagado REAL NOT NULL, "
             + "pagado BOOLEAN NOT NULL, "
             + "id_estado INTEGER NOT NULL)";
