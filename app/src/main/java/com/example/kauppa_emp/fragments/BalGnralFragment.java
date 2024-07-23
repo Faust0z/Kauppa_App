@@ -1,7 +1,6 @@
 package com.example.kauppa_emp.fragments;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -95,21 +94,7 @@ public class BalGnralFragment extends BaseFragment<Movimientos> {
 
     @Override
     protected void bddToArraylist() {
-        items.clear();
-
-        Cursor cursor = dbHelper.getAllMovimientos();
-        if (cursor.getCount() != 0) {
-            while (cursor.moveToNext()) {
-                String id = cursor.getString(0);
-                String fecha = cursor.getString(1);
-                String monto = cursor.getString(2);
-                String detalle = cursor.getString(3);
-                String tipo = cursor.getString(4);
-
-                Movimientos movimiento = new Movimientos(id, fecha, detalle, monto, tipo);
-                items.add(movimiento);
-            }
-        }
+        items = Movimientos.bddToArraylist(dbHelper.getAllMovimientos());
         Collections.reverse(items);
     }
 

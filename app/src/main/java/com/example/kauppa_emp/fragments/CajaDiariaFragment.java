@@ -1,7 +1,6 @@
 package com.example.kauppa_emp.fragments;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.os.Bundle;
 
@@ -133,24 +132,10 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
 
     @Override
     protected void bddToArraylist() {
-        items.clear();
         if (fechaActual != null){
-            Cursor cursor = dbHelper.getMovimientosByFecha(fechaActual);
-            if (cursor.getCount() != 0) {
-                while (cursor.moveToNext()) {
-                    String id = cursor.getString(0);
-                    String fecha = cursor.getString(1);
-                    String monto = cursor.getString(3); // Monto debería ser la segunda columna, pero es la 3 por algún motivo
-                    String detalle = cursor.getString(2);
-                    String tipo = cursor.getString(4);
-
-                    Movimientos movimiento = new Movimientos(id, fecha, monto, detalle, tipo);
-                    items.add(movimiento);
-                }
-            }
+            items = Movimientos.bddToArraylist(dbHelper.getMovimientosByFecha(fechaActual));
             Collections.reverse(items);
         }
-
     }
 
     @Override

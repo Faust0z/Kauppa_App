@@ -1,7 +1,6 @@
 package com.example.kauppa_emp.fragments;
 
 import android.app.Activity;
-import android.database.Cursor;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,27 +44,10 @@ public class ComprasFragment extends BaseFragment<Egresos> {
 
     @Override
     protected void bddToArraylist() {
-        items.clear();
-        Cursor cursor;
         if (!buttonFiltrar.getText().toString().isEmpty()) {
-            cursor = dbHelper.getComprasByFecha(buttonFiltrar.getText().toString());
+            items = Egresos.bddToArraylist(dbHelper.getComprasByFecha(buttonFiltrar.getText().toString()));
         } else {
-            cursor = dbHelper.getAllCompras();
-        }
-
-        if (cursor != null && cursor.getCount() != 0) {
-            while (cursor.moveToNext()) {
-                String id = cursor.getString(0);
-                String fecha = cursor.getString(1);
-                String monto = cursor.getString(2);
-                String detalle = cursor.getString(3);
-                String idTipo = cursor.getString(4);
-                String nomCliente = cursor.getString(5);
-
-                Egresos egreso = new Egresos(id, fecha, monto, detalle, idTipo, nomCliente);
-                items.add(egreso);
-            }
-            cursor.close();
+            items = Egresos.bddToArraylist(dbHelper.getAllCompras());
         }
     }
 }

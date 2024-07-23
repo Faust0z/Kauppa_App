@@ -34,7 +34,7 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.fila_cajadiaria, parent, false);
+        View view = inflater.inflate(R.layout.filas_cajadiaria, parent, false);
         return new MyViewHolder(view);
     }
 

@@ -33,7 +33,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="EntradaSalida 1"
+                android:layout_marginTop="12dp"
+                android:text="Entrada/Salida 1"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/textView_Id_FilaCajaDiaria"
+                app:layout_constraintTop_toTopOf="@+id/textView_Id_FilaCajaDiaria" />
+
+            <TextView
+                android:id="@+id/textView_NomAsoci_FilaCajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="184dp"
+                android:layout_marginTop="12dp"
+                android:text="NomAsoci 1"
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold"
