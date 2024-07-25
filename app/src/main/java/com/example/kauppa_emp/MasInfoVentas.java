@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.fragments.dataObjects.Ingresos;
-import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

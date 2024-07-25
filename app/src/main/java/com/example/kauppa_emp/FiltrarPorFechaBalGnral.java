@@ -44,8 +44,6 @@ public class FiltrarPorFechaBalGnral extends AppCompatActivity {
         dbHelper = new DatabaseHelper(FiltrarPorFechaBalGnral.this);
         items = new ArrayList<>();
 
-        createButtonFiltrar();
-
         recView_FiltrarPorFechaAct = findViewById(getRecyclerViewId());
         recView_FiltrarPorFechaAct.setLayoutManager(new LinearLayoutManager(this));
 
@@ -53,11 +51,13 @@ public class FiltrarPorFechaBalGnral extends AppCompatActivity {
         buttonVolver.setOnClickListener(v -> finish());
 
         getIntentData();
+        createButtonFiltrar();
         addElementsToRecyclerView();
     }
 
     protected void createButtonFiltrar() {
         button_Filtrar_FiltrarPorFechaAct = findViewById(getFiltrarButtonId());
+        button_Filtrar_FiltrarPorFechaAct.setText(fecha);
         button_Filtrar_FiltrarPorFechaAct.setOnClickListener(v -> {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             Calendar calendar = Calendar.getInstance();
@@ -68,6 +68,7 @@ public class FiltrarPorFechaBalGnral extends AppCompatActivity {
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view1, year1, month1, dayOfMonth) -> {
                 calendar.set(year1, month1, dayOfMonth);
                 fecha = dateFormat.format(calendar.getTime());
+                button_Filtrar_FiltrarPorFechaAct.setText(fecha);
                 addElementsToRecyclerView();
             }, year, month, day);
             datePickerDialog.show();
