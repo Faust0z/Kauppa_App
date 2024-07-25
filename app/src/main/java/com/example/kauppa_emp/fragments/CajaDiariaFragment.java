@@ -28,9 +28,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Locale;
 
 public class CajaDiariaFragment extends BaseFragment<Movimientos> {
@@ -43,6 +46,8 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
 
     SimpleDateFormat dateFormat;
     String fechaActual;
+
+    private BigDecimal bigDeciTotalIngres, bigDeciTotalEgres;
 
     @Override
     protected int getLayoutId() {
@@ -71,10 +76,6 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         textView_EgresosCant_CajaDiaria = view.findViewById(R.id.textView_EgresosCant_CajaDiaria);
         textView_TotalCant_CajaDiaria = view.findViewById(R.id.textView_TotalCant_CajaDiaria);
 
-        textView_IngresosCant_CajaDiaria.setText("$" + calcularTextViewIngresos());
-        textView_EgresosCant_CajaDiaria.setText("$-" + calcularTextViewEgresos());
-        textView_TotalCant_CajaDiaria.setText("$" + calcularTextViewTotal());
-
         addButton = view.findViewById(getAddButtonId());
         addButton.setOnClickListener(v -> openAddDialog());
 
@@ -87,30 +88,40 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         return view;
     }
 
-    private double calcularTextViewIngresos(){
-        double total = 0;
+    @Override
+    public void onResume(){
+        super.onResume();
+        calcularIngEgrTotal();
+    }
+
+    private void calcularIngEgrTotal() {
+        bigDeciTotalIngres = calcularTextViewIngresos();
+        bigDeciTotalEgres = calcularTextViewEgresos();
+        textView_IngresosCant_CajaDiaria.setText("$" + bigDeciTotalIngres);
+        textView_EgresosCant_CajaDiaria.setText("$-" + bigDeciTotalEgres);
+        textView_TotalCant_CajaDiaria.setText("$" + bigDeciTotalIngres.subtract(bigDeciTotalEgres));
+    }
+
+    private BigDecimal calcularTextViewIngresos(){
+        BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
             if (itemTipo.equals(TiposMovimiento.VENTA_SIMPLE) || itemTipo.equals(TiposMovimiento.VENTA_DETALLADA)){
-                total += Double.parseDouble(item.getMonto());
+                total = total.add(new BigDecimal(item.getMonto()));
             }
         }
         return total;
     }
 
-    private double calcularTextViewEgresos(){
-        double total = 0;
+    private BigDecimal calcularTextViewEgresos(){
+        BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
-            if (itemTipo.equals(TiposMovimiento.COMPRA) || itemTipo.equals(TiposMovimiento.COBRO)){
-                total += Double.parseDouble(item.getMonto());
+            if (itemTipo.equals(TiposMovimiento.COMPRA) || itemTipo.equals(TiposMovimiento.COBRO) || itemTipo.equals(TiposMovimiento.VARIOS)){
+                total = total.add(new BigDecimal(item.getMonto()));
             }
         }
         return total;
-    }
-
-    private double calcularTextViewTotal(){
-        return calcularTextViewIngresos() - calcularTextViewEgresos();
     }
 
     /*
@@ -133,7 +144,17 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     @Override
     protected void bddToArraylist() {
         if (fechaActual != null){
-            items = Movimientos.bddToArraylist(dbHelper.getMovimientosByFecha(fechaActual));
+            items = Movimientos.bddToArraylistByFecha(dbHelper, fechaActual);
+
+            items.sort((mov1, mov2) -> {
+                try {
+                    Date fecha1 = dateFormat.parse(mov1.getFecha());
+                    Date fecha2 = dateFormat.parse(mov2.getFecha());
+                    return fecha1.compareTo(fecha2);
+                } catch (ParseException e) {
+                    throw new IllegalArgumentException(e);
+                }
+            });
             Collections.reverse(items);
         }
     }
@@ -195,7 +216,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         if (esEntrada) {
             tipo = TiposMovimiento.VENTA_SIMPLE;
         } else {
-            tipo = TiposMovimiento.COMPRA;
+            tipo = TiposMovimiento.VARIOS;
         }
         return dbHelper.addMovimiento(fechaActual, detalle, monto, Integer.parseInt(tipo));
     }

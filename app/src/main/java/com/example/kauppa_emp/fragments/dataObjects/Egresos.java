@@ -38,6 +38,24 @@ public class Egresos {
         return items;
     }
 
+    public static ArrayList<Movimientos> bddToArraylistMovimientos(Cursor cursor){
+        ArrayList<Movimientos> items = new ArrayList<>();
+        if (cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(0);
+                String fecha = cursor.getString(1);
+                String monto = cursor.getString(2);
+                String detalle = cursor.getString(3);
+                String idTipo = cursor.getString(4);
+                String nomCliente = cursor.getString(5);
+
+                Movimientos movimiento = new Movimientos(id, fecha, monto, detalle, idTipo, nomCliente);
+                items.add(movimiento);
+            }
+        }
+        return items;
+    }
+
     public String getId() {
         return id;
     }

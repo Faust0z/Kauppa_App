@@ -18,7 +18,12 @@ import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 public class BalGnralFragment extends BaseFragment<Movimientos> {
     private TextView textView_IngresosCant_Balgnral,
@@ -26,6 +31,8 @@ public class BalGnralFragment extends BaseFragment<Movimientos> {
                      textView_TotalCant_BalGnral,
                      textView_PdidoPndienCant_Balgnral,
                      textView_ProdBajoStockCant_Balgnral;
+
+    private BigDecimal bigDeciTotalIngres, bigDeciTotalEgres;
 
     @Override
     protected int getLayoutId() {
@@ -57,44 +64,65 @@ public class BalGnralFragment extends BaseFragment<Movimientos> {
         textView_PdidoPndienCant_Balgnral = view.findViewById(R.id.textView_PdidoPndienCant_Balgnral);
         textView_ProdBajoStockCant_Balgnral = view.findViewById(R.id.textView_ProdBajoStockCant_Balgnral);
 
-        textView_IngresosCant_Balgnral.setText("$" + calcularTextViewIngresos());
-        textView_EgresosCant_Balgnral.setText("$-" + calcularTextViewEgresos());
-        textView_TotalCant_BalGnral.setText("$" + calcularTextViewTotal());
+        calcularIngEgrTotal();
+
         textView_PdidoPndienCant_Balgnral.setText("");
         textView_ProdBajoStockCant_Balgnral.setText("");
 
         return view;
     }
 
-    private double calcularTextViewIngresos(){
-        double total = 0;
+    @Override
+    public void onResume(){
+        super.onResume();
+        calcularIngEgrTotal();
+    }
+
+    private void calcularIngEgrTotal(){
+        bigDeciTotalIngres = calcularTextViewIngresos();
+        bigDeciTotalEgres = calcularTextViewEgresos();
+        textView_IngresosCant_Balgnral.setText("$" + bigDeciTotalIngres);
+        textView_EgresosCant_Balgnral.setText("$-" + bigDeciTotalEgres);
+        textView_TotalCant_BalGnral.setText("$" + bigDeciTotalIngres.subtract(bigDeciTotalEgres));
+    }
+
+    private BigDecimal calcularTextViewIngresos(){
+        BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
             if (itemTipo.equals(TiposMovimiento.VENTA_SIMPLE) || itemTipo.equals(TiposMovimiento.VENTA_DETALLADA)){
-                total += Double.parseDouble(item.getMonto());
+                total = total.add(new BigDecimal(item.getMonto()));
             }
         }
         return total;
     }
 
-    private double calcularTextViewEgresos(){
-        double total = 0;
+    private BigDecimal calcularTextViewEgresos(){
+        BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
-            if (itemTipo.equals(TiposMovimiento.COMPRA) || itemTipo.equals(TiposMovimiento.COBRO)){
-                total += Double.parseDouble(item.getMonto());
+            if (itemTipo.equals(TiposMovimiento.COMPRA) || itemTipo.equals(TiposMovimiento.COBRO) || itemTipo.equals(TiposMovimiento.VARIOS)){
+                total = total.add(new BigDecimal(item.getMonto()));
             }
         }
         return total;
-    }
-
-    private double calcularTextViewTotal(){
-        return calcularTextViewIngresos() - calcularTextViewEgresos();
     }
 
     @Override
     protected void bddToArraylist() {
-        items = Movimientos.bddToArraylist(dbHelper.getAllMovimientos());
+        items = Movimientos.bddToArraylist(dbHelper, dbHelper.getAllMovimientos());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        items.sort((mov1, mov2) -> {
+            try {
+                Date fecha1 = dateFormat.parse(mov1.getFecha());
+                Date fecha2 = dateFormat.parse(mov2.getFecha());
+                return fecha1.compareTo(fecha2);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
+        });
+
         Collections.reverse(items);
     }
 

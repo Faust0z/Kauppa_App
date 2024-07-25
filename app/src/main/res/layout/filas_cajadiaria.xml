@@ -42,17 +42,25 @@
                 app:layout_constraintTop_toTopOf="@+id/textView_Id_FilaCajaDiaria" />
 
             <TextView
-                android:id="@+id/textView_NomAsoci_FilaCajaDiaria"
+                android:id="@+id/textView_DatoExtra_FilaCajaDiaria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="184dp"
                 android:layout_marginTop="12dp"
-                android:text="NomAsoci 1"
+                android:text=""
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView_Id_FilaCajaDiaria"
                 app:layout_constraintTop_toTopOf="@+id/textView_Id_FilaCajaDiaria" />
+
+            <TextView
+                android:id="@+id/textView_Fecha_FilaCajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11/6/24"
+                app:layout_constraintStart_toStartOf="@+id/textView_Tipo_FilaCajaDiaria"
+                app:layout_constraintTop_toBottomOf="@+id/textView_Tipo_FilaCajaDiaria" />
 
             <TextView
                 android:id="@+id/textView_Monto_FilaCajaDiaria"

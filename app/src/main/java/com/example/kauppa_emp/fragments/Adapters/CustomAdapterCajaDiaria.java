@@ -41,9 +41,11 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Movimientos movimientoActual = movimientos.get(position);
-        holder.cajadiaria_id_txt.setText(movimientoActual.getId());
-        holder.cajadiaria_entradasalida_txt.setText(TiposMovimiento.getIngreOrEgreById(movimientoActual.getIdTipo()));
-        holder.cajadiaria_monto_txt.setText(movimientoActual.getMonto());
+        holder.textView_Id_FilaCajaDiaria.setText(String.valueOf(movimientos.size() - position));
+        holder.textView_Fecha_FilaCajaDiaria.setText(movimientoActual.getFecha());
+        holder.textView_Monto_FilaCajaDiaria.setText(movimientoActual.getMonto());
+        holder.textView_Tipo_FilaCajaDiaria.setText(TiposMovimiento.getIngreOrEgreById(movimientoActual.getIdTipo()));
+        holder.textView_DatoExtra_FilaCajaDiaria.setText(movimientoActual.getDatoExtra());
 
         holder.mainLayout.setOnClickListener(v -> {
             int currentPosition = holder.getAdapterPosition();
@@ -66,14 +68,16 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView cajadiaria_id_txt, cajadiaria_entradasalida_txt, cajadiaria_monto_txt;
+        TextView textView_Id_FilaCajaDiaria, textView_Fecha_FilaCajaDiaria, textView_Monto_FilaCajaDiaria, textView_Tipo_FilaCajaDiaria, textView_DatoExtra_FilaCajaDiaria;
         LinearLayout mainLayout;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            cajadiaria_id_txt = itemView.findViewById(R.id.textView_Id_FilaCajaDiaria);
-            cajadiaria_entradasalida_txt = itemView.findViewById(R.id.textView_Tipo_FilaCajaDiaria);
-            cajadiaria_monto_txt = itemView.findViewById(R.id.textView_Monto_FilaCajaDiaria);
+            textView_Id_FilaCajaDiaria = itemView.findViewById(R.id.textView_Id_FilaCajaDiaria);
+            textView_Fecha_FilaCajaDiaria = itemView.findViewById(R.id.textView_Fecha_FilaCajaDiaria);
+            textView_Monto_FilaCajaDiaria = itemView.findViewById(R.id.textView_Monto_FilaCajaDiaria);
+            textView_Tipo_FilaCajaDiaria = itemView.findViewById(R.id.textView_Tipo_FilaCajaDiaria);
+            textView_DatoExtra_FilaCajaDiaria = itemView.findViewById(R.id.textView_DatoExtra_FilaCajaDiaria);
             mainLayout = itemView.findViewById(R.id.mainLayoutFilaCajaDiaria);
         }
     }
