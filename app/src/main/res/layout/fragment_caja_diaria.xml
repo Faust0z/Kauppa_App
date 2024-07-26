@@ -21,8 +21,7 @@
         android:id="@+id/button_irBalGnral_CajaDiaria"
         android:layout_width="53dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/baseline_home_24"
-        android:text="BalGneral"/>
+        app:srcCompat="@drawable/baseline_home_24"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_cajaDiaria"

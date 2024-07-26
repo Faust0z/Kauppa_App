@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
+
 public class DatabaseInit extends SQLiteOpenHelper {
     /*
         Clase para la creación de la BDD y sus tablas, así como algunos inserts en ellas.

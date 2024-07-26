@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kauppa_emp.MasInfoVentas;
+import com.example.kauppa_emp.activities.MasInfoVentas;
 import com.example.kauppa_emp.R;
-import com.example.kauppa_emp.fragments.dataObjects.Ingresos;
+import com.example.kauppa_emp.database.dataObjects.Ingresos;
 
 import java.util.ArrayList;
 
