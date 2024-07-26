@@ -4,4 +4,6 @@
     <!-- Textos de Pantalla: Herramienta -->
     <string name="herramientas_titulo">Herramientas</string>
     <string name="herramientas_descripcion">Aquí encontraras todas las herramientas necesarias para gestionar y tomar decisiones respecto tu negocio.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

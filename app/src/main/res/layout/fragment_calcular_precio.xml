@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:background="@color/md_theme_background"
+    tools:context=".fragments.CalcularPrecioFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:id="@+id/btnVolverCalcularPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/arrow_back_24px"
+            app:iconSize="25dp"
+            android:layout_marginBottom="20dp"
+            app:rippleColor="@color/md_theme_surfaceContainer">
+        </com.google.android.material.button.MaterialButton>
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calcular Precio"
+            android:textStyle="bold"
+            android:textSize="30sp">
+        </TextView>
+
+        <!-- Descripción -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completa los campos con los datos correspondientes del producto y obtén el precio final adecuado."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp">
+        </TextView>
+
+        <!-- Card - Precio de Venta -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- Card - Titulo  -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Precio de Venta"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp">
+                    </TextView>
+
+                    <!-- Card - Resultado  -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$"
+                            android:textSize="24sp"
+                            android:textStyle="bold">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/textPrecioVenta"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.00"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textIsSelectable="true">
+                        </TextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Card - Botón Copiar Precio -->
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:id="@+id/btnCopiarPrecioVenta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:icon="@drawable/content_copy_24px"
+                    app:iconSize="20dp"
+                    android:text="Copiar"
+                    app:rippleColor="@color/md_theme_secondary"
+                    app:cornerRadius="16dp">
+                </com.google.android.material.button.MaterialButton>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Input Layout - Costo Producto  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <!-- Input -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputCostoProducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Costo Producto"
+                android:inputType="numberDecimal">
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <!-- Descripción -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="El costo de un producto incluye todo lo que interviene directamente en la fabricación o adquisición."
+                android:textSize="12sp"
+                android:layout_marginTop="4dp">
+            </TextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Input Layout - Gasto Adicional x Unidad  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <!-- Input -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputGastoAdicional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Gasto Adicional x Unidad"
+                android:inputType="numberDecimal">
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <!-- Descripción -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Los gastos adicionales son aquellos que intervienen indirectamente (impuestos, alquiler, maquinaria)."
+                android:textSize="12sp"
+                android:layout_marginTop="4dp">
+            </TextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Input Layout - Porcentaje Ganancia -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <!-- Input -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPorcentajeGanancia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Porcentaje de Ganancia"
+                android:inputType="numberDecimal">
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <!-- Descripción -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Corresponde a la cantidad porcentual que le quieras ganar al producto."
+                android:textSize="12sp"
+                android:layout_marginTop="4dp">
+            </TextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botón - Calcular Precio Venta -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCalcularPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/md_theme_primary"
+            android:text="Calcular"
+            android:textColor="@android:color/white"
+            app:cornerRadius="8dp">
+        </com.google.android.material.button.MaterialButton>
+
+    </LinearLayout>
+
+</ScrollView>
+
