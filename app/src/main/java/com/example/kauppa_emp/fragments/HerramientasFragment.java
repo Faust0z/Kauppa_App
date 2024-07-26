@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kauppa_emp.R;
+import com.google.android.material.card.MaterialCardView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +62,31 @@ public class HerramientasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_herramientas, container, false);
+        View view = inflater.inflate(R.layout.fragment_herramientas, container, false);
+
+        MaterialCardView btnCalcularPrecio = view.findViewById(R.id.btnCalcularPrecio);
+        btnCalcularPrecio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Replace current fragent
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, new CalcularPrecioFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        MaterialCardView btnReporteMensual = view.findViewById(R.id.btnReporteMensual);
+        btnReporteMensual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, new ReporteMensualFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        return view;
     }
 }
