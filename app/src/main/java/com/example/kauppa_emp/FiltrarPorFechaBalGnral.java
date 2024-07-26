@@ -100,7 +100,7 @@ public class FiltrarPorFechaBalGnral extends AppCompatActivity {
                 String detalle = cursor.getString(3);
                 String tipo = cursor.getString(4);
 
-                Movimientos movimiento = new Movimientos(id, fecha, detalle, monto, tipo);
+                Movimientos movimiento = new Movimientos(id, fecha, monto, detalle, tipo);
                 items.add(movimiento);
             }
         }

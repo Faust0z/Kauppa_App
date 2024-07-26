@@ -182,11 +182,11 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         new MaterialAlertDialogBuilder(getContext())
                 .setView(dialogView)
                 .setPositiveButton("Agregar", (dialog, which) -> {
-                    String detalle = editText_Detalle_CajaDiaria.getText().toString();
                     String monto = editText_Monto_CajaDiaria.getText().toString();
+                    String detalle = editText_Detalle_CajaDiaria.getText().toString();
                     boolean esEntrada = radButton_Entrada_CajaDiaria.isChecked();
 
-                    if (insertBDD(detalle, monto, esEntrada) != -1) {
+                    if (insertBDD(monto, detalle, esEntrada) != -1) {
                         Toast.makeText(getContext(), "Elemento agregado con éxito", Toast.LENGTH_SHORT).show();
                         addElementsToRecyclerView();
                     } else {
@@ -210,7 +210,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         });
     }
 
-    private long insertBDD(String detalle, String monto, boolean esEntrada) {
+    private long insertBDD(String monto, String detalle, boolean esEntrada) {
         String tipo;
         //Todo: placeholders para probar el Balance Gnral
         if (esEntrada) {
@@ -218,6 +218,6 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         } else {
             tipo = TiposMovimiento.VARIOS;
         }
-        return dbHelper.addMovimiento(fechaActual, detalle, monto, Integer.parseInt(tipo));
+        return dbHelper.addMovimiento(fechaActual, monto, detalle, Integer.parseInt(tipo));
     }
 }

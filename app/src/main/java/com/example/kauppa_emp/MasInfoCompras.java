@@ -77,8 +77,8 @@ public class MasInfoCompras extends AppCompatActivity {
         if (getIntent().hasExtra("movId")){
             String id = getIntent().getStringExtra("movId");
             String fecha = getIntent().getStringExtra("movFecha");
-            String detalle = getIntent().getStringExtra("movDetalle");
             String monto = getIntent().getStringExtra("movMonto");
+            String detalle = getIntent().getStringExtra("movDetalle");
             String idTipos = getIntent().getStringExtra("movIdTipos");
             String movNomCliente = getIntent().getStringExtra("movNomCliente");
 
