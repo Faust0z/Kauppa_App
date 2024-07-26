@@ -1,5 +1,8 @@
 package com.example.kauppa_emp.fragments.dataObjects;
 
+import android.database.Cursor;
+import java.util.ArrayList;
+
 public class Egresos {
     private String id;
     private String fecha;
@@ -15,6 +18,42 @@ public class Egresos {
         this.detalle = detalle;
         this.idTipo = idTipo;
         this.nomCliente = nomCliente;
+    }
+
+    public static ArrayList<Egresos> bddToArraylist(Cursor cursor){
+        ArrayList<Egresos> items = new ArrayList<>();
+        if (cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(0);
+                String fecha = cursor.getString(1);
+                String monto = cursor.getString(2);
+                String detalle = cursor.getString(3);
+                String idTipo = cursor.getString(4);
+                String nomCliente = cursor.getString(5);
+
+                Egresos egreso = new Egresos(id, fecha, monto, detalle, idTipo, nomCliente);
+                items.add(egreso);
+            }
+        }
+        return items;
+    }
+
+    public static ArrayList<Movimientos> bddToArraylistMovimientos(Cursor cursor){
+        ArrayList<Movimientos> items = new ArrayList<>();
+        if (cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(0);
+                String fecha = cursor.getString(1);
+                String monto = cursor.getString(2);
+                String detalle = cursor.getString(3);
+                String idTipo = cursor.getString(4);
+                String nomCliente = cursor.getString(5);
+
+                Movimientos movimiento = new Movimientos(id, fecha, monto, detalle, idTipo, nomCliente);
+                items.add(movimiento);
+            }
+        }
+        return items;
     }
 
     public String getId() {

@@ -39,8 +39,8 @@ public class DatabaseInit extends SQLiteOpenHelper {
     private static final String SQL_TO_CREATE_TABLE_EGRESOS = "CREATE TABLE " + TABLE_EGRESOS + " ("
             + "id_movimiento INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "fecha TEXT NOT NULL, "
-            + "detalle TEXT, "
             + "monto TEXT NOT NULL, "
+            + "detalle TEXT, "
             + "id_tipo INTEGER NOT NULL, "
             + "nombre_cliente TEXT) ";
     private static final String SQL_TO_CREATE_TABLE_TIPOS_MOVIMIENTO = "CREATE TABLE " + TABLE_TIPOS_MOVIMIENTO + " ("
@@ -49,8 +49,8 @@ public class DatabaseInit extends SQLiteOpenHelper {
     private static final String SQL_TO_CREATE_TABLE_PEDIDOS = "CREATE TABLE " + TABLE_PEDIDOS + " ("
             + "id_pedido INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "fecha TEXT NOT NULL, "
-            + "nombre_cliente TEXT NOT NULL, "
             + "monto TEXT NOT NULL, "
+            + "nombre_cliente TEXT NOT NULL, "
             + "total_pagado REAL NOT NULL, "
             + "pagado BOOLEAN NOT NULL, "
             + "id_estado INTEGER NOT NULL)";
@@ -96,6 +96,18 @@ public class DatabaseInit extends SQLiteOpenHelper {
             "(3, 'Producto C', 200, 20, 1, 0, '1000'), " +
             "(4, 'Producto D', 0, 5, 0, 1, '3000'), " +
             "(5, 'Producto E', 150, 15, 1, 0, '777');";
+    private static final String SQL_INSERT_INGRESOS = "INSERT INTO " + TABLE_INGRESOS + " (id_movimiento, fecha, monto, detalle, id_tipo, nombre_cliente) VALUES " +
+            "(1, '23/07/2024', '100', 'Detalle de ingreso 1', 2, 'Cliente A'), " +
+            "(4, '25/04/2023', '300', 'Detalle de ingreso 4', 2, 'Cliente D'), " +
+            "(5, '30/05/2023', '250', 'Detalle de ingreso 5', 2, 'Cliente E');";
+    private static final String SQL_INSERT_EGRESOS = "INSERT INTO " + TABLE_EGRESOS + " (id_movimiento, fecha, monto, detalle, id_tipo, nombre_cliente) VALUES " +
+            "(1, '05/01/2023', '50.0', 'Detalle de egreso 1', 3, 'Prov F'), " +
+            "(2, '20/02/2023', '75.0', 'Detalle de egreso 2', 3, 'Prov G'), " +
+            "(3, '15/03/2023', '100.0', 'Detalle de egreso 3', 3, 'Prov H'), " +
+            "(4, '30/04/2023', '200.0', 'Detalle de egreso 4', 3, 'Aramis'), " +
+            "(5, '10/05/2023', '125.0', 'Detalle de egreso 5', 3, 'Gato Negro');";
+
+
 
     public DatabaseInit(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VER);
@@ -116,6 +128,8 @@ public class DatabaseInit extends SQLiteOpenHelper {
         db.execSQL(SQL_INSERT_TIPOS_MOVIMIENTO);
         db.execSQL(SQL_INSERT_ESTADOS_PEDIDO);
         db.execSQL(SQL_INSERT_PRODUCTOS);
+        db.execSQL(SQL_INSERT_INGRESOS);
+        db.execSQL(SQL_INSERT_EGRESOS);
     }
 
     @Override

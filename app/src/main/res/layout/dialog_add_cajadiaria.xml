@@ -7,7 +7,7 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/textViewTituloCajaDiaria"
+        android:id="@+id/textView_Titulo_CajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar Entrada"
@@ -16,16 +16,7 @@
         android:gravity="center" />
 
     <EditText
-        android:id="@+id/editTextFechaCajaDiaria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Fecha"
-        android:focusable="false"
-        android:gravity="center"
-        android:layout_marginBottom="16dp" />
-
-    <EditText
-        android:id="@+id/editTextMontoCajaDiaria"
+        android:id="@+id/editText_Monto_CajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Monto"
@@ -34,7 +25,7 @@
         android:layout_marginBottom="16dp" />
 
     <EditText
-        android:id="@+id/editTextDetalleCajaDiaria"
+        android:id="@+id/editText_Detalle_CajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Detalle"
@@ -42,7 +33,7 @@
         android:layout_marginBottom="16dp" />
 
     <RadioGroup
-        android:id="@+id/radioGroupTipoCajaDiaria"
+        android:id="@+id/radGroup_Tipo_CajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -52,14 +43,14 @@
         android:gravity="center">
 
         <RadioButton
-            android:id="@+id/radioButtonEntradasCajaDiaria"
+            android:id="@+id/radButton_Entrada_CajaDiaria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Entradas"
             android:gravity="center" />
 
         <RadioButton
-            android:id="@+id/radioButtonSalidasCajaDiaria"
+            android:id="@+id/radButton_Salida_CajaDiaria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salidas"
@@ -67,7 +58,7 @@
     </RadioGroup>
 
     <CheckBox
-        android:id="@+id/checkBoxAgregarCajaDiaria"
+        android:id="@+id/checkBox_AddComo_CajaDiaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar como Venta"

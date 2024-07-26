@@ -2,6 +2,7 @@ package com.example.kauppa_emp;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,11 +12,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kauppa_emp.database.DatabaseHelper;
+import com.example.kauppa_emp.database.TiposMovimiento;
 import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MasInfoCajaDiaria extends AppCompatActivity {
     private DatabaseHelper dbHelper;
@@ -55,11 +58,22 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        Button actualizarButton = findViewById(R.id.buttonCajaDiariaUpdate);
-        actualizarButton.setOnClickListener(v -> createUpdateDialog());
+        comprobarDelUpdtButtons();
+    }
 
+    private void comprobarDelUpdtButtons() {
+        Button actualizarButton = findViewById(R.id.buttonCajaDiariaUpdate);
         Button anularButton = findViewById(R.id.buttonCajaDiariaAnular);
-        anularButton.setOnClickListener(v -> createDeleteDialog());
+        String intentIdTipos = getIntent().getStringExtra("movIdTipos");
+
+        if (Objects.equals(intentIdTipos, TiposMovimiento.VENTA_SIMPLE) || Objects.equals(intentIdTipos, TiposMovimiento.VARIOS)){
+            actualizarButton.setOnClickListener(v -> createUpdateDialog());
+            anularButton.setOnClickListener(v -> createDeleteDialog());
+        }
+        else{
+            actualizarButton.setVisibility(View.GONE);
+            anularButton.setVisibility(View.GONE);
+        }
     }
 
     void getIntentData(){
@@ -76,7 +90,7 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText(movimiento.getIdTipo() + " " + movimiento.getId());
+        movTitulo.setText(TiposMovimiento.getTipoById(movimiento.getIdTipo()) + " N° " + movimiento.getId());
         movTextoFecha.setText(movimiento.getFecha());
         movTextoMonto.setText(movimiento.getMonto());
         movTextoDetalle.setText(movimiento.getDetalle());

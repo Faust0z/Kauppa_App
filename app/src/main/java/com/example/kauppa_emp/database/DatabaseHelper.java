@@ -179,7 +179,7 @@ public class DatabaseHelper {
     }
 
     public Cursor getVentasByFecha(String movFecha) {
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS + " WHERE fecha=? AND id_tipo = 2";
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS + " WHERE fecha=?";
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
@@ -190,7 +190,7 @@ public class DatabaseHelper {
     }
 
     public Cursor getAllVentas(){
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_MOVIMIENTOS + " WHERE id_tipo = 2";
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS;
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
@@ -201,7 +201,7 @@ public class DatabaseHelper {
     }
 
     public Cursor getComprasByFecha(String movFecha) {
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_MOVIMIENTOS + " WHERE fecha=? AND id_tipo = 6";
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_EGRESOS + " WHERE fecha=?";
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
@@ -212,7 +212,7 @@ public class DatabaseHelper {
     }
 
     public Cursor getAllCompras(){
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_MOVIMIENTOS + " WHERE id_tipo = 6";
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_EGRESOS;
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
