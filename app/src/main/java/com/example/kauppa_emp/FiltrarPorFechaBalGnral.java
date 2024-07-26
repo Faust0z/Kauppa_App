@@ -1,18 +1,19 @@
-package com.example.kauppa_emp.activities;
+package com.example.kauppa_emp;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
-import com.example.kauppa_emp.database.dataObjects.Movimientos;
+import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

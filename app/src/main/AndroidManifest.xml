@@ -13,16 +13,16 @@
         android:theme="@style/Theme.Kauppa_Emp"
         tools:targetApi="31">
         <activity
-            android:name=".activities.FiltrarPorFechaBalGnral"
+            android:name=".FiltrarPorFechaBalGnral"
             android:exported="false" />
         <activity
-            android:name=".activities.MasInfoVentas"
+            android:name=".MasInfoVentas"
             android:exported="false" />
         <activity
-            android:name=".activities.MasInfoCajaDiaria"
+            android:name=".MasInfoCajaDiaria"
             android:exported="false" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,21 +1,20 @@
-package com.example.kauppa_emp.database.dataObjects;
+package com.example.kauppa_emp.fragments.dataObjects;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class Movimientos {
+public class Ingresos {
     private String id;
     private String fecha;
     private String monto;
     private String detalle;
     private String idTipo;
+    private String nomCliente;
 
-    public Movimientos(String id, String fecha, String monto, String detalle, String idTipo) {
+    public Ingresos(String id, String fecha, String monto, String detalle, String idTipo, String nomCliente) {
         this.id = id;
         this.fecha = fecha;
         this.monto = monto;
         this.detalle = detalle;
         this.idTipo = idTipo;
+        this.nomCliente = nomCliente;
     }
 
     public String getId() {
@@ -26,15 +25,19 @@ public class Movimientos {
         return fecha;
     }
 
-    public String getMonto() {
-        return monto;
-    }
-
     public String getDetalle() {
         return detalle;
     }
 
+    public String getMonto() {
+        return monto;
+    }
+
     public String getIdTipo() {
         return idTipo;
+    }
+
+    public String getNomCliente() {
+        return nomCliente;
     }
 }

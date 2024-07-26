@@ -1,4 +1,4 @@
-package com.example.kauppa_emp.database.dataObjects;
+package com.example.kauppa_emp.database;
 
 public class TiposMovimiento {
     public static final String VENTA_SIMPLE = "1";

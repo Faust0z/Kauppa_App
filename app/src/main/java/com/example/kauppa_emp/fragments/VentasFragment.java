@@ -3,18 +3,24 @@ package com.example.kauppa_emp.fragments;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.kauppa_emp.R;
+import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterProductosVentasDialog;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterVentas;
-import com.example.kauppa_emp.database.dataObjects.Ingresos;
-import com.example.kauppa_emp.database.dataObjects.ProductosEnIngresos;
+import com.example.kauppa_emp.fragments.dataObjects.Ingresos;
+import com.example.kauppa_emp.fragments.dataObjects.ProductosEnIngresos;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import android.widget.Button;

@@ -7,18 +7,22 @@ import android.view.LayoutInflater;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kauppa_emp.MainActivity;
 import com.example.kauppa_emp.R;
-import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
+import com.example.kauppa_emp.database.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
-import com.example.kauppa_emp.database.dataObjects.Movimientos;
+import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -30,7 +34,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class CajaDiariaFragment extends BaseFragment<Movimientos> {

@@ -1,4 +1,4 @@
-package com.example.kauppa_emp.database.dataObjects;
+package com.example.kauppa_emp.fragments.dataObjects;
 
 public class ProductosEnIngresos {
     private String idProducto;

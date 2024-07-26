@@ -1,13 +1,35 @@
 package com.example.kauppa_emp.fragments;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.kauppa_emp.R;
+import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCompras;
-import com.example.kauppa_emp.database.dataObjects.Egresos;
+import com.example.kauppa_emp.fragments.dataObjects.Egresos;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ComprasFragment extends BaseFragment<Egresos> {
     @Override

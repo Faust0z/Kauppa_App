@@ -1,6 +1,6 @@
-package com.example.kauppa_emp.database.dataObjects;
+package com.example.kauppa_emp.fragments.dataObjects;
 
-public class Ingresos {
+public class Egresos {
     private String id;
     private String fecha;
     private String monto;
@@ -8,7 +8,7 @@ public class Ingresos {
     private String idTipo;
     private String nomCliente;
 
-    public Ingresos(String id, String fecha, String monto, String detalle, String idTipo, String nomCliente) {
+    public Egresos(String id, String fecha, String monto, String detalle, String idTipo, String nomCliente) {
         this.id = id;
         this.fecha = fecha;
         this.monto = monto;
