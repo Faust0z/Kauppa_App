@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kauppa_emp.R;
-import com.example.kauppa_emp.database.TiposMovimiento;
+import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
-import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
+import com.example.kauppa_emp.database.dataObjects.Movimientos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 

@@ -13,8 +13,8 @@ import android.view.View;
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterProductosVentasDialog;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterVentas;
-import com.example.kauppa_emp.fragments.dataObjects.Ingresos;
-import com.example.kauppa_emp.fragments.dataObjects.ProductosEnIngresos;
+import com.example.kauppa_emp.database.dataObjects.Ingresos;
+import com.example.kauppa_emp.database.dataObjects.ProductosEnIngresos;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import android.widget.Button;

@@ -1,4 +1,4 @@
-package com.example.kauppa_emp;
+package com.example.kauppa_emp.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -11,9 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
-import com.example.kauppa_emp.database.TiposMovimiento;
-import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
+import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
+import com.example.kauppa_emp.database.dataObjects.Movimientos;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCompras;
-import com.example.kauppa_emp.fragments.dataObjects.Egresos;
+import com.example.kauppa_emp.database.dataObjects.Egresos;
 
 public class ComprasFragment extends BaseFragment<Egresos> {
     @Override

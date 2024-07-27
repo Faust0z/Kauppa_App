@@ -1,4 +1,4 @@
-package com.example.kauppa_emp;
+package com.example.kauppa_emp.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -11,31 +11,32 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
-import com.example.kauppa_emp.fragments.dataObjects.Ingresos;
+import com.example.kauppa_emp.database.dataObjects.Egresos;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MasInfoVentas extends AppCompatActivity {
+public class MasInfoCompras extends AppCompatActivity {
     private DatabaseHelper dbHelper;
 
     private TextView movTitulo;
-    private EditText movTextoFecha, movTextoMonto, movTextoDetalle, movTextoIdPedidos, movTextoIdTipos, movTextoNomCliente;
-    private Ingresos ingreso;
+    private EditText movTextoFecha, movTextoDetalle, movTextoMonto, movTextoIdPedidos, movTextoIdTipos, movTextoNomCliente;
+    private Egresos egreso;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mas_info_ventas);
-        dbHelper = new DatabaseHelper(MasInfoVentas.this);
+        setContentView(R.layout.activity_mas_info_compras);
+        dbHelper = new DatabaseHelper(MasInfoCompras.this);
 
-        movTitulo = findViewById(R.id.textViewTituloVentaInfo);
-        movTextoFecha = findViewById(R.id.editTextFechaVentaInfo);
-        movTextoMonto = findViewById(R.id.editTextMontoVentaInfo);
-        movTextoDetalle = findViewById(R.id.editTextDetalleVentaInfo);
-        movTextoNomCliente = findViewById(R.id.editTextClienteVentaInfo);
+        movTitulo = findViewById(R.id.textViewTituloCompraInfo);
+        movTextoFecha = findViewById(R.id.editTextFechaCompraInfo);
+        movTextoMonto = findViewById(R.id.editTextMontoCompraInfo);
+        movTextoNomCliente = findViewById(R.id.editTextClienteCompraInfo);
+        movTextoDetalle = findViewById(R.id.editTextDetalleCompraInfo);
 
         getIntentData();
         setIntentDataInTxt();
@@ -48,15 +49,14 @@ public class MasInfoVentas extends AppCompatActivity {
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(MasInfoVentas.this, (view, year1, month1, dayOfMonth) -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(MasInfoCompras.this, (view, year1, month1, dayOfMonth) -> {
                 calendar.set(year1, month1, dayOfMonth);
                 movTextoFecha.setText(dateFormat.format(calendar.getTime()));
             }, year, month, day);
-
             datePickerDialog.show();
         });
 
-        Button actualizarButton = findViewById(R.id.buttonVentaUpdate);
+        Button actualizarButton = findViewById(R.id.buttonCompraUpdate);
         actualizarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +64,7 @@ public class MasInfoVentas extends AppCompatActivity {
             }
         });
 
-        Button anularButton = findViewById(R.id.buttonVentaAnular);
+        Button anularButton = findViewById(R.id.buttonCompraAnular);
         anularButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,48 +81,45 @@ public class MasInfoVentas extends AppCompatActivity {
             String monto = getIntent().getStringExtra("movMonto");
             String detalle = getIntent().getStringExtra("movDetalle");
             String idTipos = getIntent().getStringExtra("movIdTipos");
-            String nomCliente = getIntent().getStringExtra("movNomCliente");
-            if (nomCliente.equals("null")){nomCliente = "Cliente sin registrar";} //Todo: seguramente sea mejor pasar esta lógica a otro lado
+            String movNomCliente = getIntent().getStringExtra("movNomCliente");
 
-            ingreso = new Ingresos(id, fecha, monto, detalle, idTipos, nomCliente);
+            egreso = new Egresos(id, fecha, monto, detalle, idTipos, movNomCliente);
         }
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText("Venta N° " + ingreso.getId());
-        movTextoFecha.setText(ingreso.getFecha());
-        movTextoMonto.setText(ingreso.getMonto());
-        movTextoDetalle.setText(ingreso.getDetalle());
-        movTextoNomCliente.setText(ingreso.getNomCliente());
+        movTitulo.setText("Compra N° " + egreso.getId());
+        movTextoFecha.setText(egreso.getFecha());
+        movTextoMonto.setText(egreso.getMonto());
+        movTextoDetalle.setText(egreso.getDetalle());
+        movTextoNomCliente.setText(egreso.getNomCliente());
     }
 
     private void createUpdateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Actualizar la venta N° " + ingreso.getId() + "?");
-        builder.setMessage("Desea actualizar la " + ingreso.getIdTipo() + " " + ingreso.getId() + "?");
+        builder.setTitle("Actualizar la compra N° " + egreso.getId() + "?");
+        builder.setMessage("Desea actualizar la compra " + egreso.getId() + "?");
         builder.setPositiveButton("Si", (dialogInterface, i) -> {
             String fecha = movTextoFecha.getText().toString().trim();
             String monto = movTextoMonto.getText().toString().trim();
             String detalle = movTextoDetalle.getText().toString().trim();
             String nomCliente =  movTextoNomCliente.getText().toString().trim();
 
-            dbHelper.updtIngreso(ingreso.getId(), fecha, monto, detalle, nomCliente);
+            dbHelper.updtEgreso(egreso.getId(), fecha, monto, detalle, nomCliente);
             finish(); // Con finish se cierra el intent
         });
 
         builder.setNegativeButton("No", (dialogInterface, i) -> {});
-
         builder.create().show();
     }
 
     private void createDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Eliminar la venta " + ingreso.getId() + "?");
-        builder.setMessage("Desea eliminar la venta " + ingreso.getId() + "?");
+        builder.setTitle("Eliminar la venta " + egreso.getId() + "?");
+        builder.setMessage("Desea eliminar la venta " + egreso.getId() + "?");
         builder.setPositiveButton("Si", (dialogInterface, i) -> {
-            dbHelper.delIngreso(ingreso.getId());
+            dbHelper.delEgreso(egreso.getId());
             finish(); // Con finish se cierra el intent
         });
         builder.setNegativeButton("No", (dialogInterface, i) -> {});

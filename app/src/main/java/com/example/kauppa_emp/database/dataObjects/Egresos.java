@@ -1,10 +1,9 @@
-package com.example.kauppa_emp.fragments.dataObjects;
+package com.example.kauppa_emp.database.dataObjects;
 
 import android.database.Cursor;
-
 import java.util.ArrayList;
 
-public class Ingresos {
+public class Egresos {
     private String id;
     private String fecha;
     private String monto;
@@ -12,7 +11,7 @@ public class Ingresos {
     private String idTipo;
     private String nomCliente;
 
-    public Ingresos(String id, String fecha, String monto, String detalle, String idTipo, String nomCliente) {
+    public Egresos(String id, String fecha, String monto, String detalle, String idTipo, String nomCliente) {
         this.id = id;
         this.fecha = fecha;
         this.monto = monto;
@@ -21,8 +20,8 @@ public class Ingresos {
         this.nomCliente = nomCliente;
     }
 
-    public static ArrayList<Ingresos> bddToArraylist(Cursor cursor){
-        ArrayList<Ingresos> items = new ArrayList<>();
+    public static ArrayList<Egresos> bddToArraylist(Cursor cursor){
+        ArrayList<Egresos> items = new ArrayList<>();
         if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
                 String id = cursor.getString(0);
@@ -32,8 +31,8 @@ public class Ingresos {
                 String idTipo = cursor.getString(4);
                 String nomCliente = cursor.getString(5);
 
-                Ingresos ingreso = new Ingresos(id, fecha, monto, detalle, idTipo, nomCliente);
-                items.add(ingreso);
+                Egresos egreso = new Egresos(id, fecha, monto, detalle, idTipo, nomCliente);
+                items.add(egreso);
             }
         }
         return items;

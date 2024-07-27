@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
 
-import com.example.kauppa_emp.fragments.dataObjects.ProductosEnIngresos;
+import com.example.kauppa_emp.database.dataObjects.ProductosEnIngresos;
 
 import java.util.ArrayList;
 

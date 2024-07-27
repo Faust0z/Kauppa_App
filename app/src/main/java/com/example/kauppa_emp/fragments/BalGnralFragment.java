@@ -10,11 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kauppa_emp.FiltrarPorFechaBalGnral;
+import com.example.kauppa_emp.activities.FiltrarPorFechaBalGnral;
 import com.example.kauppa_emp.R;
-import com.example.kauppa_emp.database.TiposMovimiento;
+import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
-import com.example.kauppa_emp.fragments.dataObjects.Movimientos;
+import com.example.kauppa_emp.database.dataObjects.Movimientos;
 
 import android.widget.TextView;
 
