@@ -8,38 +8,102 @@
     android:background="@color/material_dynamic_tertiary60"
     tools:context=".fragments.CajaDiariaFragment">
 
-    <Button
-        android:id="@+id/buttonFiltrarCajaDiaria"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:hint="filtrar"
-        android:stateListAnimator="@null" />
+        android:layout_height="666dp"
+        android:orientation="vertical">
 
-    <!-- Se puede configurar que no sea visible el botón hasta que se introduzca una fecha filtro -->
-    <Button
-        android:id="@+id/button_irBalGnral_CajaDiaria"
-        android:layout_width="53dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/baseline_home_24" />
+        <LinearLayout
+            android:id="@+id/layout_EntSalTotal_CajaDiaria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_cajaDiaria"
-        android:layout_width="match_parent"
-        android:layout_height="643dp"
-        android:layout_gravity="bottom
-"
-        tools:listitem="" />
+            <TextView
+                android:id="@+id/textView_Ingresos_CajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ingresos:" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButton_caja_diaria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
-        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
-        app:srcCompat="@drawable/baseline_add_24" />
+            <TextView
+                android:id="@+id/textView_IngresosCant_CajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="$" />
 
+            <TextView
+                android:id="@+id/textView_Egresos_CajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Egresos" />
+
+            <TextView
+                android:id="@+id/textView_EgresosCant_CajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="$" />
+
+            <TextView
+                android:id="@+id/textView_Total_CajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total" />
+
+            <TextView
+                android:id="@+id/textView_TotalCant_CajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="$" />
+        </LinearLayout>
+
+        <!-- Es necesario que este botón esté como "gone" en vez de eliminarlo directamente -->
+        <Button
+            android:id="@+id/button_Filtrar_CajaDiaria"
+            android:layout_width="match_parent"
+            android:layout_height="87dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/button_irBalGnral_CajaDiaria"
+            android:layout_width="45dp"
+            android:layout_height="44dp"
+            android:drawableBottom="@drawable/baseline_home_24" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recView_CajaDiaria"
+            android:layout_width="match_parent"
+            android:layout_height="492dp"
+            android:layout_gravity="bottom"
+            tools:listitem="">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatButton_Whatsapp_CajaDiaria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/baseline_message_24" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatButton_add_CajaDiaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
+                app:layout_constraintEnd_toEndOf="@+id/frame_layout"
+                app:srcCompat="@drawable/baseline_add_24" />
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

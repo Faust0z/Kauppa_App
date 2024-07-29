@@ -1,4 +1,4 @@
-package com.example.kauppa_emp;
+package com.example.kauppa_emp.activities;
 
 import android.os.Bundle;
 
@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.databinding.ActivityMainBinding;
 import com.example.kauppa_emp.fragments.CajaDiariaFragment;
 import com.example.kauppa_emp.fragments.ComprasFragment;
