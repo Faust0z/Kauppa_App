@@ -67,7 +67,7 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
         Button anularButton = findViewById(R.id.buttonCajaDiariaAnular);
         String intentIdTipos = getIntent().getStringExtra("movIdTipos");
 
-        if (Objects.equals(intentIdTipos, TiposMovimiento.VENTA_SIMPLE) || Objects.equals(intentIdTipos, TiposMovimiento.VARIOS)){
+        if (Objects.equals(intentIdTipos, TiposMovimiento.VENTA) || Objects.equals(intentIdTipos, TiposMovimiento.PEDIDO)){
             actualizarButton.setOnClickListener(v -> createUpdateDialog());
             anularButton.setOnClickListener(v -> createDeleteDialog());
         }
@@ -91,7 +91,7 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText(TiposMovimiento.getTipoById(movimiento.getIdTipo()) + " N° " + movimiento.getId());
+        movTitulo.setText(dbHelper.getTipoMovById(movimiento.getIdTipo()) + " N° " + movimiento.getId());
         movTextoFecha.setText(movimiento.getFecha());
         movTextoMonto.setText(movimiento.getMonto());
         movTextoDetalle.setText(movimiento.getDetalle());

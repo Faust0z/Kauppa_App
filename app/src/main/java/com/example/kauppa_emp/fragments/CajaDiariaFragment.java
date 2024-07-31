@@ -106,7 +106,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
-            if (itemTipo.equals(TiposMovimiento.VENTA_SIMPLE) || itemTipo.equals(TiposMovimiento.VENTA_DETALLADA)){
+            if (itemTipo.equals(TiposMovimiento.VENTA) || itemTipo.equals(TiposMovimiento.SENIA)){
                 total = total.add(new BigDecimal(item.getMonto()));
             }
         }
@@ -117,7 +117,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
-            if (itemTipo.equals(TiposMovimiento.COMPRA) || itemTipo.equals(TiposMovimiento.COBRO) || itemTipo.equals(TiposMovimiento.VARIOS)){
+            if (itemTipo.equals(TiposMovimiento.VARIOSING) || itemTipo.equals(TiposMovimiento.PAGO) || itemTipo.equals(TiposMovimiento.PEDIDO)){
                 total = total.add(new BigDecimal(item.getMonto()));
             }
         }
@@ -214,9 +214,9 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         String tipo;
         //Todo: placeholders para probar el Balance Gnral
         if (esEntrada) {
-            tipo = TiposMovimiento.VENTA_SIMPLE;
+            tipo = TiposMovimiento.VENTA;
         } else {
-            tipo = TiposMovimiento.VARIOS;
+            tipo = TiposMovimiento.PEDIDO;
         }
         return dbHelper.addMovimiento(fechaActual, monto, detalle, Integer.parseInt(tipo));
     }

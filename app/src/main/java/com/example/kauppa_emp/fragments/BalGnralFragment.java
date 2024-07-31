@@ -90,7 +90,7 @@ public class BalGnralFragment extends BaseFragment<Movimientos> {
         BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
-            if (itemTipo.equals(TiposMovimiento.VENTA_SIMPLE) || itemTipo.equals(TiposMovimiento.VENTA_DETALLADA)){
+            if (itemTipo.equals(TiposMovimiento.VENTA) || itemTipo.equals(TiposMovimiento.SENIA)){
                 total = total.add(new BigDecimal(item.getMonto()));
             }
         }
@@ -101,7 +101,7 @@ public class BalGnralFragment extends BaseFragment<Movimientos> {
         BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
-            if (itemTipo.equals(TiposMovimiento.COMPRA) || itemTipo.equals(TiposMovimiento.COBRO) || itemTipo.equals(TiposMovimiento.VARIOS)){
+            if (itemTipo.equals(TiposMovimiento.VARIOSING) || itemTipo.equals(TiposMovimiento.PAGO) || itemTipo.equals(TiposMovimiento.PEDIDO)){
                 total = total.add(new BigDecimal(item.getMonto()));
             }
         }

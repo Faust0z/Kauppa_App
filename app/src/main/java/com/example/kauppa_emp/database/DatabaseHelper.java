@@ -123,6 +123,22 @@ public class DatabaseHelper {
         return db.delete(DatabaseInit.TABLE_EGRESOS, "id_movimiento=?", new String[]{String.valueOf(movId)});
     }
 
+    public String getTipoMovById(String tipoMovId){
+        String query = "SELECT descripcion FROM " + DatabaseInit.TABLE_TIPOS_MOVIMIENTO + " WHERE id_tipo=?";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        String descripcion = "Tipo no definido";
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{tipoMovId});
+            if (cursor != null && cursor.moveToFirst()) {
+                descripcion = cursor.getString(cursor.getColumnIndexOrThrow("descripcion"));
+                cursor.close();
+            }
+        }
+        return descripcion;
+    }
+
     private Cursor getLastIngreso() {
         String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS + " ORDER BY id DESC LIMIT 1";
         SQLiteDatabase db = dbInit.getReadableDatabase();
