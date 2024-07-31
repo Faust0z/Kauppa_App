@@ -173,11 +173,8 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         EditText editText_Detalle_CajaDiaria = dialogView.findViewById(R.id.editText_Detalle_CajaDiaria);
         RadioGroup radGroup_Tipo_CajaDiaria = dialogView.findViewById(R.id.radGroup_Tipo_CajaDiaria);
         RadioButton radButton_Entrada_CajaDiaria = dialogView.findViewById(R.id.radButton_Entrada_CajaDiaria);
-        CheckBox checkBox_AddComo_CajaDiaria = dialogView.findViewById(R.id.checkBox_AddComo_CajaDiaria);
 
-        createRadioGroup(radGroup_Tipo_CajaDiaria, radButton_Entrada_CajaDiaria, textView_Titulo_CajaDiaria, checkBox_AddComo_CajaDiaria);
-
-        checkBox_AddComo_CajaDiaria.setChecked(true);
+        createRadioGroup(radGroup_Tipo_CajaDiaria, radButton_Entrada_CajaDiaria, textView_Titulo_CajaDiaria);
 
         new MaterialAlertDialogBuilder(getContext())
                 .setView(dialogView)
@@ -197,27 +194,19 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
                 .show();
     }
 
-    private void createRadioGroup(RadioGroup radioGroupTipo, RadioButton radioButtonEntradas, TextView textViewTitulo, CheckBox checkBox) {
+    private void createRadioGroup(RadioGroup radioGroupTipo, RadioButton radioButtonEntradas, TextView textViewTitulo) {
         radioButtonEntradas.setChecked(true);
         radioGroupTipo.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.radButton_Entrada_CajaDiaria) {
                 textViewTitulo.setText("Agregar Entrada");
-                checkBox.setText("Agregar como Ingreso");
             } else if (checkedId == R.id.radButton_Salida_CajaDiaria) {
                 textViewTitulo.setText("Agregar Salida");
-                checkBox.setText("Agregar como Egreso");
             }
         });
     }
 
     private long insertBDD(String monto, String detalle, boolean esEntrada) {
-        String tipo;
-        //Todo: placeholders para probar el Balance Gnral
-        if (esEntrada) {
-            tipo = TiposMovimiento.VENTA;
-        } else {
-            tipo = TiposMovimiento.PEDIDO;
-        }
+        String tipo = esEntrada ? TiposMovimiento.VARIOSING : TiposMovimiento.VARIOSEGR;
         return dbHelper.addMovimiento(fechaActual, monto, detalle, Integer.parseInt(tipo));
     }
 }

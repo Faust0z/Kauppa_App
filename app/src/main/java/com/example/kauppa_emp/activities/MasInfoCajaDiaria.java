@@ -67,13 +67,13 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
         Button anularButton = findViewById(R.id.buttonCajaDiariaAnular);
         String intentIdTipos = getIntent().getStringExtra("movIdTipos");
 
-        if (Objects.equals(intentIdTipos, TiposMovimiento.VENTA) || Objects.equals(intentIdTipos, TiposMovimiento.PEDIDO)){
+        if (Objects.equals(intentIdTipos, TiposMovimiento.VARIOSEGR) || Objects.equals(intentIdTipos, TiposMovimiento.VARIOSING)){
             actualizarButton.setOnClickListener(v -> createUpdateDialog());
             anularButton.setOnClickListener(v -> createDeleteDialog());
         }
         else{
-            actualizarButton.setVisibility(View.GONE);
-            anularButton.setVisibility(View.GONE);
+            actualizarButton.setEnabled(false);
+            anularButton.setEnabled(false);
         }
     }
 

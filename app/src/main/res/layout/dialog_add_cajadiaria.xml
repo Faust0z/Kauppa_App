@@ -57,11 +57,4 @@
             android:gravity="center" />
     </RadioGroup>
 
-    <CheckBox
-        android:id="@+id/checkBox_AddComo_CajaDiaria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Agregar como Venta"
-        android:gravity="center"
-        android:layout_marginBottom="16dp" />
 </LinearLayout>
