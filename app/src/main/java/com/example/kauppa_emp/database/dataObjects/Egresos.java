@@ -9,15 +9,15 @@ public class Egresos {
     private String monto;
     private String detalle;
     private String idTipo;
-    private String nomCliente;
+    private String nomProv;
 
-    public Egresos(String id, String fecha, String monto, String detalle, String idTipo, String nomCliente) {
+    public Egresos(String id, String fecha, String monto, String detalle, String idTipo, String nomProv) {
         this.id = id;
         this.fecha = fecha;
         this.monto = monto;
         this.detalle = detalle;
         this.idTipo = idTipo;
-        this.nomCliente = nomCliente;
+        this.nomProv = nomProv;
     }
 
     public static ArrayList<Egresos> bddToArraylist(Cursor cursor){
@@ -29,9 +29,9 @@ public class Egresos {
                 String monto = cursor.getString(2);
                 String detalle = cursor.getString(3);
                 String idTipo = cursor.getString(4);
-                String nomCliente = cursor.getString(5);
+                String nomProv = cursor.getString(5);
 
-                Egresos egreso = new Egresos(id, fecha, monto, detalle, idTipo, nomCliente);
+                Egresos egreso = new Egresos(id, fecha, monto, detalle, idTipo, nomProv);
                 items.add(egreso);
             }
         }
@@ -47,9 +47,9 @@ public class Egresos {
                 String monto = cursor.getString(2);
                 String detalle = cursor.getString(3);
                 String idTipo = cursor.getString(4);
-                String nomCliente = cursor.getString(5);
+                String nomProv = cursor.getString(5);
 
-                Movimientos movimiento = new Movimientos(id, fecha, monto, detalle, idTipo, nomCliente);
+                Movimientos movimiento = new Movimientos(id, fecha, monto, detalle, idTipo, nomProv);
                 items.add(movimiento);
             }
         }
@@ -76,7 +76,7 @@ public class Egresos {
         return idTipo;
     }
 
-    public String getNomCliente() {
-        return nomCliente;
+    public String getNomProv() {
+        return nomProv;
     }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/textView_Titulo_Egreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Egreso"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/editText_NomProv_Egreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Proveedor"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+
+    <Spinner
+        android:id="@+id/spinner_Tipo_Egreso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/editText_Fecha_Egreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Fecha"
+        android:focusable="false"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editText_Monto_Egreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Monto"
+        android:inputType="numberDecimal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editText_Detalle_Egreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Detalle"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+</LinearLayout>

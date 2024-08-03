@@ -156,21 +156,21 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/button_Filtrar_BalGnral"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:background="?android:attr/selectableItemBackground"
+            android:hint="filtrar"
+            android:stateListAnimator="@null" />
+
+        <Button
             android:id="@+id/button_RepDispon_BalGnral"
             android:layout_width="360dp"
             android:layout_height="85dp"
             android:layout_marginTop="10sp"
             android:background="?android:attr/selectableItemBackground"
             android:hint="Reporte disponible"
-            android:stateListAnimator="@null" />
-
-        <Button
-            android:id="@+id/button_Filtrar_BalGnral"
-            android:layout_width="360dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="10sp"
-            android:background="?android:attr/selectableItemBackground"
-            android:hint="filtrar"
             android:stateListAnimator="@null" />
 
         <androidx.core.widget.NestedScrollView

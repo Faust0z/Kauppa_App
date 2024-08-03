@@ -56,9 +56,9 @@ public class VentasFragment extends BaseFragment<Ingresos> {
     @Override
     protected void bddToArraylist() {
         if (!buttonFiltrar.getText().toString().isEmpty()) {
-            items = Ingresos.bddToArraylist(dbHelper.getVentasByFecha(buttonFiltrar.getText().toString()));
+            items = Ingresos.bddToArraylist(dbHelper.getIngresosByFecha(buttonFiltrar.getText().toString()));
         } else {
-            items = Ingresos.bddToArraylist(dbHelper.getAllVentas());
+            items = Ingresos.bddToArraylist(dbHelper.getAllIngresos());
         }
     }
 

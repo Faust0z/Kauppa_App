@@ -1,5 +1,8 @@
 package com.example.kauppa_emp.database.dataObjects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TiposMovimiento {
     public static final String VENTA = "1";
     public static final String SENIA = "2";
@@ -9,7 +12,7 @@ public class TiposMovimiento {
     public static final String VARIOSEGR = "6";
     public static final String PEDIDO = "7";
 
-    public static String getIngreOrEgreById(String id){
+    public static String getTipoMov(String id){
         switch (id) {
             case "1":
             case "2":
@@ -23,6 +26,48 @@ public class TiposMovimiento {
                 return "Pedido";
             default:
                 return "Mov indefinido";
+        }
+    }
+
+    public static String getTipoEgre(String id){
+        switch (id) {
+            case "4":
+                return "Compra";
+            case "5":
+                return "Pago";
+            case "6":
+                return "Varios Egr";
+            default:
+                return "";
+        }
+    }
+
+    public static List<String> relleSpinnerEgresos(){
+        List<String> elementos = new ArrayList<>();
+        elementos.add(getTipoEgre("4"));
+        elementos.add(getTipoEgre("5"));
+        elementos.add(getTipoEgre("6"));
+        return elementos;
+    }
+
+    public static int nombreToId(String nombre){
+        switch (nombre) {
+            case "Venta":
+                return 1;
+            case "Seña":
+                return 2;
+            case "Ingreso":
+                return 3;
+            case "Compra":
+                return 4;
+            case "Pago":
+                return 5;
+            case "Varios Egr":
+                return 6;
+            case "Pedido":
+                return 7;
+            default:
+                return 0;
         }
     }
 }
