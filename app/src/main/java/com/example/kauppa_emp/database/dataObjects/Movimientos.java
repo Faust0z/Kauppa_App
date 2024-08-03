@@ -4,7 +4,11 @@ import android.database.Cursor;
 
 import com.example.kauppa_emp.database.DatabaseHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Movimientos {
     private String id;
@@ -46,12 +50,13 @@ public class Movimientos {
             }
         }
 
-        ArrayList<Movimientos> itemsIngr = Ingresos.bddToArraylistMovimientos(dbHelper.getAllVentas());
+        ArrayList<Movimientos> itemsIngr = Ingresos.bddToArraylistMovimientos(dbHelper.getAllIngresos());
         items.addAll(itemsIngr);
 
-        ArrayList<Movimientos> itemsEgre = Egresos.bddToArraylistMovimientos(dbHelper.getAllCompras());
+        ArrayList<Movimientos> itemsEgre = Egresos.bddToArraylistMovimientos(dbHelper.getAllEgresos());
         items.addAll(itemsEgre);
-        return items;
+
+        return ordenarPorFecha(items);
     }
 
     public static ArrayList<Movimientos> bddToArraylistByFecha(DatabaseHelper dbHelper, String fechaActual){
@@ -70,12 +75,26 @@ public class Movimientos {
             }
         }
 
-        ArrayList<Movimientos> itemsIngr = Ingresos.bddToArraylistMovimientos(dbHelper.getVentasByFecha(fechaActual));
+        ArrayList<Movimientos> itemsIngr = Ingresos.bddToArraylistMovimientos(dbHelper.getIngresosByFecha(fechaActual));
         items.addAll(itemsIngr);
 
-        ArrayList<Movimientos> itemsEgre = Egresos.bddToArraylistMovimientos(dbHelper.getComprasByFecha(fechaActual));
+        ArrayList<Movimientos> itemsEgre = Egresos.bddToArraylistMovimientos(dbHelper.getEgresosByFecha(fechaActual));
         items.addAll(itemsEgre);
 
+        return ordenarPorFecha(items);
+    }
+
+    private static ArrayList<Movimientos> ordenarPorFecha(ArrayList<Movimientos> items){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        items.sort((mov1, mov2) -> {
+            try {
+                Date fecha1 = dateFormat.parse(mov1.getFecha());
+                Date fecha2 = dateFormat.parse(mov2.getFecha());
+                return fecha1.compareTo(fecha2);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
+        });
         return items;
     }
 

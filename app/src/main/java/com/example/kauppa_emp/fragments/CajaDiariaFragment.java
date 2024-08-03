@@ -106,7 +106,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
-            if (itemTipo.equals(TiposMovimiento.VENTA) || itemTipo.equals(TiposMovimiento.SENIA)){
+            if (itemTipo.equals(TiposMovimiento.VENTA) || itemTipo.equals(TiposMovimiento.SENIA) || itemTipo.equals(TiposMovimiento.VARIOSING)){
                 total = total.add(new BigDecimal(item.getMonto()));
             }
         }
@@ -117,7 +117,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         BigDecimal total = new BigDecimal(0);
         for (Movimientos item : items) {
             String itemTipo = item.getIdTipo();
-            if (itemTipo.equals(TiposMovimiento.VARIOSING) || itemTipo.equals(TiposMovimiento.PAGO) || itemTipo.equals(TiposMovimiento.PEDIDO)){
+            if (itemTipo.equals(TiposMovimiento.COMPRA) || itemTipo.equals(TiposMovimiento.PAGO) || itemTipo.equals(TiposMovimiento.VARIOSEGR)){
                 total = total.add(new BigDecimal(item.getMonto()));
             }
         }
@@ -145,17 +145,6 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     protected void bddToArraylist() {
         if (fechaActual != null){
             items = Movimientos.bddToArraylistByFecha(dbHelper, fechaActual);
-
-            items.sort((mov1, mov2) -> {
-                try {
-                    Date fecha1 = dateFormat.parse(mov1.getFecha());
-                    Date fecha2 = dateFormat.parse(mov2.getFecha());
-                    return fecha1.compareTo(fecha2);
-                } catch (ParseException e) {
-                    throw new IllegalArgumentException(e);
-                }
-            });
-            Collections.reverse(items);
         }
     }
 

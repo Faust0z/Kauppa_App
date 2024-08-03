@@ -1,7 +1,6 @@
 package com.example.kauppa_emp.activities;
 
 import android.app.DatePickerDialog;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -11,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
-import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
-import com.example.kauppa_emp.database.dataObjects.Movimientos;
+import com.example.kauppa_emp.database.dataObjects.Egresos;
+import com.example.kauppa_emp.fragments.Adapters.CustomAdapterEgresos;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,33 +19,33 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 
-public class FiltrarPorFechaBalGnral extends AppCompatActivity {
+public class FiltrarPorFechaEgresos extends AppCompatActivity {
     protected RecyclerView recView_FiltrarPorFechaAct;
     protected Button button_Filtrar_FiltrarPorFechaAct, buttonVolver;
 
     protected String fecha;
 
     protected DatabaseHelper dbHelper;
-    protected ArrayList<Movimientos> items;
+    protected ArrayList<Egresos> items;
     protected RecyclerView.Adapter customAdapter;
 
-    protected int getRecyclerViewId() {return R.id.recView_FiltrarPorFechaActBalGnral;}
+    protected int getRecyclerViewId() {return R.id.recView_FiltrarPorFechaActEgresos;}
 
-    protected int getFiltrarButtonId() {return R.id.button_Filtrar_FiltrarPorFechaActBalGnral;}
+    protected int getFiltrarButtonId() {return R.id.button_Filtrar_FiltrarPorFechaActEgresos;}
 
-    protected RecyclerView.Adapter getAdapter() {return new CustomAdapterCajaDiaria(this, this, items);}
+    protected RecyclerView.Adapter getAdapter() {return new CustomAdapterEgresos(this, this, items);}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filtrar_por_fecha_balgnral);
-        dbHelper = new DatabaseHelper(FiltrarPorFechaBalGnral.this);
+        setContentView(R.layout.activity_filtrar_por_fecha_egresos);
+        dbHelper = new DatabaseHelper(FiltrarPorFechaEgresos.this);
         items = new ArrayList<>();
 
         recView_FiltrarPorFechaAct = findViewById(getRecyclerViewId());
         recView_FiltrarPorFechaAct.setLayoutManager(new LinearLayoutManager(this));
 
-        buttonVolver = findViewById(R.id.button_Volver_FiltrarPorFechaActBalGnral);
+        buttonVolver = findViewById(R.id.button_Volver_FiltrarPorFechaActEgresos);
         buttonVolver.setOnClickListener(v -> finish());
 
         getIntentData();
@@ -88,11 +87,12 @@ public class FiltrarPorFechaBalGnral extends AppCompatActivity {
     }
 
     protected void bddToArraylist() {
-        items = Movimientos.bddToArraylist(dbHelper, dbHelper.getAllMovimientos());
+        items = Egresos.bddToArraylist(dbHelper.getAllEgresos());
         Collections.reverse(items);
     }
 
     private void filtrarElementosPorFecha(){
         items.removeIf(item -> !item.getFecha().equals(fecha));
     }
+
 }

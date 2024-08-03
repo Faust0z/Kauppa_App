@@ -44,7 +44,7 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
         holder.textView_Id_FilaCajaDiaria.setText(String.valueOf(movimientos.size() - position));
         holder.textView_Fecha_FilaCajaDiaria.setText(movimientoActual.getFecha());
         holder.textView_Monto_FilaCajaDiaria.setText(movimientoActual.getMonto());
-        holder.textView_Tipo_FilaCajaDiaria.setText(TiposMovimiento.getIngreOrEgreById(movimientoActual.getIdTipo()));
+        holder.textView_Tipo_FilaCajaDiaria.setText(TiposMovimiento.getTipoMov(movimientoActual.getIdTipo()));
         holder.textView_DatoExtra_FilaCajaDiaria.setText(movimientoActual.getDatoExtra());
 
         holder.mainLayout.setOnClickListener(v -> {

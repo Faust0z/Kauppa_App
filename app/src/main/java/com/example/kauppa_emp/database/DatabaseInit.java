@@ -44,7 +44,7 @@ public class DatabaseInit extends SQLiteOpenHelper {
             + "monto TEXT NOT NULL, "
             + "detalle TEXT, "
             + "id_tipo INTEGER NOT NULL, "
-            + "nombre_cliente TEXT) ";
+            + "nom_prov TEXT) ";
     private static final String SQL_TO_CREATE_TABLE_TIPOS_MOVIMIENTO = "CREATE TABLE " + TABLE_TIPOS_MOVIMIENTO + " ("
             + "id_tipo INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "descripcion TEXT NOT NULL)";
@@ -104,7 +104,7 @@ public class DatabaseInit extends SQLiteOpenHelper {
             "(1, '23/07/2024', '100', 'Detalle de ingreso 1', 1, 'Cliente A'), " +
             "(4, '25/04/2023', '300', 'Detalle de ingreso 4', 3, 'Cliente D'), " +
             "(5, '30/05/2023', '250', 'Detalle de ingreso 5', 2, 'Cliente E');";
-    private static final String SQL_INSERT_EGRESOS = "INSERT INTO " + TABLE_EGRESOS + " (id_movimiento, fecha, monto, detalle, id_tipo, nombre_cliente) VALUES " +
+    private static final String SQL_INSERT_EGRESOS = "INSERT INTO " + TABLE_EGRESOS + " (id_movimiento, fecha, monto, detalle, id_tipo, nom_prov) VALUES " +
             "(1, '05/01/2023', '50.0', 'Detalle de egreso 1', 4, 'Prov F'), " +
             "(2, '20/02/2023', '75.0', 'Detalle de egreso 2', 4, 'Prov G'), " +
             "(3, '15/03/2023', '100.0', 'Detalle de egreso 3', 6, 'Prov H'), " +
