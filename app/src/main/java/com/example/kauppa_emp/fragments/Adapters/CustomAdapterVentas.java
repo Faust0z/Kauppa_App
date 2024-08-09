@@ -74,7 +74,7 @@ public class CustomAdapterVentas extends RecyclerView.Adapter<CustomAdapterVenta
             filaVentas_id_txt = itemView.findViewById(R.id.filaVentas_id_txt);
             filaVentas_fecha_txt = itemView.findViewById(R.id.filaVentas_fecha_txt);
             filaVentas_monto_txt = itemView.findViewById(R.id.filaVentas_monto_txt);
-            mainLayout = itemView.findViewById(R.id.mainLayoutFilaVentas);
+            mainLayout = itemView.findViewById(R.id.mainLayoutFilasIngresos);
         }
     }
 }

@@ -216,6 +216,31 @@ public class DatabaseHelper {
     // ------------------ TABLA PRODUCTOS ------------------
 
 
+    public long addProducto(String nombre, String stock, String fechaAct, String precioUnit) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("nombre", nombre);
+        cv.put("stock", stock);
+        cv.put("fecha_actualizacion", fechaAct);
+        cv.put("precio_unitario", precioUnit);
+        return db.insert(DatabaseInit.TABLE_PRODUCTOS, null, cv);
+    }
+
+    public long updtProducto(String id, String nombre, String stock, String fechaAct, String precioUnit) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("nombre", nombre);
+        cv.put("stock", stock);
+        cv.put("fecha_actualizacion", fechaAct);
+        cv.put("precio_unitario", precioUnit);
+        return db.update(DatabaseInit.TABLE_PRODUCTOS, cv, "id_producto=?", new String[]{id});
+    }
+
+    public long delProducto(String movId) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        return db.delete(DatabaseInit.TABLE_PRODUCTOS, "id_producto=?", new String[]{movId});
+    }
+
     public long addProductoIngreso(String idVenta, String idProducto, String cantidad) {
         SQLiteDatabase db = dbInit.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -232,6 +257,17 @@ public class DatabaseHelper {
         cv.put("subtotal", subtotal);
 
         return db.insert(DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO, null, cv);
+    }
+
+    public Cursor getAllProductos(){
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS;
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 
     public Cursor getProductoById(int prodId){
@@ -252,17 +288,6 @@ public class DatabaseHelper {
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery(query, new String[]{String.valueOf(prodNombre)});
-        }
-        return cursor;
-    }
-
-    public Cursor getAllProductos(){
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS;
-        SQLiteDatabase db = dbInit.getReadableDatabase();
-
-        Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(query, null);
         }
         return cursor;
     }
