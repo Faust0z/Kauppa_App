@@ -12,18 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kauppa_emp.activities.MasInfoVentas;
+import com.example.kauppa_emp.activities.MasInfoIngresos;
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.dataObjects.Ingresos;
+import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 
 import java.util.ArrayList;
 
-public class CustomAdapterVentas extends RecyclerView.Adapter<CustomAdapterVentas.MyViewHolder> {
+public class CustomAdapterIngresos extends RecyclerView.Adapter<CustomAdapterIngresos.MyViewHolder> {
     private final Context context;
     private final Activity activity;
     private final ArrayList<Ingresos> ingresos;
 
-    public CustomAdapterVentas(Activity activity, Context context, ArrayList<Ingresos> ingresos){
+    public CustomAdapterIngresos(Activity activity, Context context, ArrayList<Ingresos> ingresos){
         this.activity = activity;
         this.context = context;
         this.ingresos = ingresos;
@@ -33,28 +34,29 @@ public class CustomAdapterVentas extends RecyclerView.Adapter<CustomAdapterVenta
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.fila_ventas, parent, false);
+        View view = inflater.inflate(R.layout.filas_ingresos, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         Ingresos ingresoActual = ingresos.get(position);
-        holder.filaVentas_id_txt.setText(ingresoActual.getId());
-        holder.filaVentas_fecha_txt.setText(ingresoActual.getFecha());
-        holder.filaVentas_monto_txt.setText(ingresoActual.getMonto());
+        holder.textView_Id_FilaIngresos.setText(ingresoActual.getId());
+        holder.textView_Tipo_FilaIngresos.setText(TiposMovimiento.getTipoById(ingresoActual.getIdTipo()));
+        holder.textView_Fecha_FilaIngresos.setText(ingresoActual.getFecha());
+        holder.textView_Monto_FilaIngresos.setText(ingresoActual.getMonto());
 
         holder.mainLayout.setOnClickListener(v -> {
             int currentPosition = holder.getAdapterPosition();
 
             if (currentPosition != RecyclerView.NO_POSITION) {
-                Intent intent = new Intent(context, MasInfoVentas.class);
+                Intent intent = new Intent(context, MasInfoIngresos.class);
                 intent.putExtra("movId", ingresoActual.getId());
+                intent.putExtra("movNomCliente", ingresoActual.getNomCliente());
+                intent.putExtra("movIdTipos", ingresoActual.getIdTipo());
                 intent.putExtra("movFecha", ingresoActual.getFecha());
                 intent.putExtra("movMonto", ingresoActual.getMonto());
                 intent.putExtra("movDetalle", ingresoActual.getDetalle());
-                intent.putExtra("movIdTipos", ingresoActual.getIdTipo());
-                intent.putExtra("movNomCliente", ingresoActual.getIdTipo());
                 activity.startActivityForResult(intent, 1);
             }
         });
@@ -66,14 +68,15 @@ public class CustomAdapterVentas extends RecyclerView.Adapter<CustomAdapterVenta
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView filaVentas_id_txt, filaVentas_fecha_txt, filaVentas_monto_txt;
+        TextView textView_Id_FilaIngresos, textView_Tipo_FilaIngresos, textView_Fecha_FilaIngresos, textView_Monto_FilaIngresos;
         LinearLayout mainLayout;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            filaVentas_id_txt = itemView.findViewById(R.id.filaVentas_id_txt);
-            filaVentas_fecha_txt = itemView.findViewById(R.id.filaVentas_fecha_txt);
-            filaVentas_monto_txt = itemView.findViewById(R.id.filaVentas_monto_txt);
+            textView_Id_FilaIngresos = itemView.findViewById(R.id.textView_Id_FilaIngresos);
+            textView_Tipo_FilaIngresos = itemView.findViewById(R.id.textView_Tipo_FilaIngresos);
+            textView_Fecha_FilaIngresos = itemView.findViewById(R.id.textView_Fecha_FilaIngresos);
+            textView_Monto_FilaIngresos = itemView.findViewById(R.id.textView_Monto_FilaIngresos);
             mainLayout = itemView.findViewById(R.id.mainLayoutFilasIngresos);
         }
     }

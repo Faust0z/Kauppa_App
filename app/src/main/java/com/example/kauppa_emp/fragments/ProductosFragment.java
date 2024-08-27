@@ -28,7 +28,8 @@ import java.util.Collections;
 import java.util.Locale;
 
 public class ProductosFragment extends BaseFragment<Productos> {
-    private TextView textView_totalCant_Prods,
+    protected TextView textView_Titulo_Productos,
+            textView_totalCant_Prods,
             textView_StkBajoCant_Prods,
             textView_SinStkCant_Prods;
 
@@ -64,6 +65,7 @@ public class ProductosFragment extends BaseFragment<Productos> {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
+        textView_Titulo_Productos = view.findViewById(R.id.textView_Titulo_Productos);
         textView_totalCant_Prods = view.findViewById(R.id.textView_totalCant_Prods);
         textView_StkBajoCant_Prods = view.findViewById(R.id.textView_StkBajoCant_Prods);
         textView_SinStkCant_Prods = view.findViewById(R.id.textView_SinStkCant_Prods);
@@ -129,7 +131,7 @@ public class ProductosFragment extends BaseFragment<Productos> {
 
                     String fechaActual = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
 
-                    float result = dbHelper.addProducto(nomProd, cantInic, fechaActual, precUnit);
+                    float result = dbHelper.addProducto(nomProd, cantInic, fechaActual, precUnit, false);
                     if (result != -1) {
                         Toast.makeText(getContext(), "Elemento agregado con éxito", Toast.LENGTH_SHORT).show();
                         addElementsToRecyclerView();

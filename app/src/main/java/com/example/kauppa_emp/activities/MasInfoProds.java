@@ -37,15 +37,14 @@ public class MasInfoProds extends AppCompatActivity {
         prodTextFechaAct = findViewById(R.id.editText_FechaAct_ProdInfo);
         prodTextPrecUnit = findViewById(R.id.editText_PrecUnit_ProdInfo);
 
-        getIntentData();
-
-        setData();
-
         Button actualizarButton = findViewById(R.id.button_Update_ProdInfo);
         actualizarButton.setOnClickListener(v -> createUpdateDialog());
 
         Button anularButton = findViewById(R.id.button_Eliminar_ProdInfo);
         anularButton.setOnClickListener(v -> createDeleteDialog());
+
+        getIntentData();
+        setData();
     }
 
     void getIntentData(){
@@ -57,7 +56,7 @@ public class MasInfoProds extends AppCompatActivity {
             String fechaAct = getIntent().getStringExtra("prodFechaAct");
             String precioUni = getIntent().getStringExtra("prodPrecioUni");
 
-            productoActual = new Productos(id, nombre, stock, fechaAct, precioUni);
+            productoActual = new Productos(id, nombre, stock, fechaAct, precioUni, false);
         }
     }
 

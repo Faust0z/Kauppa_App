@@ -66,13 +66,13 @@ public class DatabaseInit extends SQLiteOpenHelper {
             + "nombre TEXT NOT NULL, "
             + "stock INTEGER, "
             + "fecha_actualizacion TEXT, "
+            + "es_fantasma BOOLEAN, "
             + "precio_unitario TEXT)";
     private static final String SQL_TO_CREATE_TABLE_PRODUCTOS_POR_INGRESO = "CREATE TABLE " + TABLE_PRODUCTOS_POR_INGRESO + " ("
-            + "id_venta INTEGER NOT NULL, "
+            + "id_ingreso INTEGER NOT NULL, "
             + "id_producto INTEGER, "
             + "cantidad INTEGER NOT NULL, "
-            + "subtotal TEXT NOT NULL, "
-            + "PRIMARY KEY (id_venta, id_producto))";
+            + "PRIMARY KEY (id_ingreso, id_producto))";
     private static final String SQL_TO_CREATE_TABLE_PRODUCTOS_POR_PEDIDO = "CREATE TABLE " + TABLE_PRODUCTOS_POR_PEDIDO + " ("
             + "id_pedido INTEGER NOT NULL, "
             + "id_producto INTEGER, "
@@ -94,12 +94,12 @@ public class DatabaseInit extends SQLiteOpenHelper {
             "(3, 'LISTO'), " +
             "(4, 'ENTREGADO');";
     private static final String SQL_INSERT_PRODUCTOS = "INSERT INTO " + TABLE_PRODUCTOS +
-            " (id_producto, nombre, stock, fecha_actualizacion, precio_unitario) VALUES " +
-            "(1, 'Producto A', 100, '2023-07-01', '100'), " +
-            "(2, 'Producto B', 50, '2023-07-01', '150'), " +
-            "(3, 'Producto C', 200, '2023-07-01', '1000'), " +
-            "(4, 'Producto D', 0, '2023-07-01', '3000'), " +
-            "(5, 'Producto E', 150, '2023-07-01', '777');";
+            " (id_producto, nombre, stock, fecha_actualizacion, precio_unitario, es_fantasma) VALUES " +
+            "(1, 'Producto A', 100, '2023-07-01', '100', 0), " +
+            "(2, 'Producto B', 50, '2023-07-01', '150', 0), " +
+            "(3, 'Producto C', 200, '2023-07-01', '1000', 1), " +
+            "(4, 'Producto D', 0, '2023-07-01', '3000', 0), " +
+            "(5, 'Producto E', 150, '2023-07-01', '777', 1);";
     private static final String SQL_INSERT_INGRESOS = "INSERT INTO " + TABLE_INGRESOS + " (id_movimiento, fecha, monto, detalle, id_tipo, nombre_cliente) VALUES " +
             "(1, '23/07/2024', '100', 'Detalle de ingreso 1', 1, 'Cliente A'), " +
             "(4, '25/04/2023', '300', 'Detalle de ingreso 4', 3, 'Cliente D'), " +
@@ -110,6 +110,13 @@ public class DatabaseInit extends SQLiteOpenHelper {
             "(3, '15/03/2023', '100.0', 'Detalle de egreso 3', 6, 'Prov H'), " +
             "(4, '30/04/2023', '200.0', 'Detalle de egreso 4', 6, 'Aramis'), " +
             "(5, '10/05/2023', '125.0', 'Detalle de egreso 5', 5, 'Gato Negro');";
+    private static final String SQL_INSERT_PRODUCTOS_POR_INGRESO = "INSERT INTO " + TABLE_PRODUCTOS_POR_INGRESO + " (id_ingreso, id_producto, cantidad) VALUES " +
+            "(1, 1, 6), " +
+            "(1, 2, 7), " +
+            "(1, 3, 8), " +
+            "(4, 4, 9), " +
+            "(5, 5, 10);";
+
 
 
 
@@ -134,6 +141,7 @@ public class DatabaseInit extends SQLiteOpenHelper {
         db.execSQL(SQL_INSERT_PRODUCTOS);
         db.execSQL(SQL_INSERT_INGRESOS);
         db.execSQL(SQL_INSERT_EGRESOS);
+        db.execSQL(SQL_INSERT_PRODUCTOS_POR_INGRESO);
     }
 
     @Override

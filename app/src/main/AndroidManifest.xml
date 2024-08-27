@@ -22,7 +22,7 @@
             android:name=".activities.FiltrarPorFechaBalGnral"
             android:exported="false" />
         <activity
-            android:name=".activities.MasInfoVentas"
+            android:name=".activities.MasInfoIngresos"
             android:exported="false" />
         <activity
             android:name=".activities.MasInfoCajaDiaria"

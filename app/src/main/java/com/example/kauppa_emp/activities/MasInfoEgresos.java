@@ -47,11 +47,6 @@ public class MasInfoEgresos extends AppCompatActivity {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipo.setAdapter(arrayAdapter);
 
-        getIntentData();
-
-        setData();
-
-        // Mostrar el DatePickerDialog al hacer clic en el campo de fecha
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         movTextoFecha.setOnClickListener(v -> {
@@ -71,6 +66,9 @@ public class MasInfoEgresos extends AppCompatActivity {
 
         Button anularButton = findViewById(R.id.button_Eliminar_EgresoInfo);
         anularButton.setOnClickListener(v -> createDeleteDialog());
+
+        getIntentData();
+        setData();
     }
 
     void getIntentData(){
@@ -90,7 +88,7 @@ public class MasInfoEgresos extends AppCompatActivity {
     void setData(){
         movTitulo.setText("Compra N° " + egresoActual.getId());
         movTextoNomProv.setText(egresoActual.getNomProv());
-        setSpinnerToValue(spinnerTipo, TiposMovimiento.getTipoEgre(egresoActual.getIdTipo()));
+        setSpinnerToValue(spinnerTipo, TiposMovimiento.getTipoById(egresoActual.getIdTipo()));
         movTextoFecha.setText(egresoActual.getFecha());
         movTextoMonto.setText(egresoActual.getMonto());
         movTextoDetalle.setText(egresoActual.getDetalle());

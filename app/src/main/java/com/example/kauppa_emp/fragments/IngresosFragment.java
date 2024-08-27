@@ -1,51 +1,43 @@
 package com.example.kauppa_emp.fragments;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.database.Cursor;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.kauppa_emp.R;
-import com.example.kauppa_emp.fragments.Adapters.CustomAdapterProductosVentasDialog;
-import com.example.kauppa_emp.fragments.Adapters.CustomAdapterVentas;
+import com.example.kauppa_emp.fragments.Adapters.CustomAdapterIngresos;
 import com.example.kauppa_emp.database.dataObjects.Ingresos;
-import com.example.kauppa_emp.database.dataObjects.ProductosEnIngresos;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
+import java.util.Collections;
 
-public class VentasFragment extends BaseFragment<Ingresos> {
+public class IngresosFragment extends BaseFragment<Ingresos> {
+    private FloatingActionButton addButton;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_ventas;
+        return R.layout.fragment_ingresos;
     }
 
     @Override
     protected int getRecyclerViewId() {
-        return R.id.recyclerViewVentas;
-    }
-
-    protected int getAddButtonId() {
-        return R.id.addButtonVentas;
+        return R.id.recView_Ingresos;
     }
 
     @Override
     protected int getFiltrarButtonId() {
-        return R.id.buttonFiltrarVentas;
+        return R.id.button_Filtrar_Ingresos;
+    }
+
+    protected int getAddButtonId() {
+        return R.id.floatButton_add_Ingresos;
     }
 
     @Override
@@ -54,22 +46,30 @@ public class VentasFragment extends BaseFragment<Ingresos> {
     }
 
     @Override
-    protected void bddToArraylist() {
-        if (!buttonFiltrar.getText().toString().isEmpty()) {
-            items = Ingresos.bddToArraylist(dbHelper.getIngresosByFecha(buttonFiltrar.getText().toString()));
-        } else {
-            items = Ingresos.bddToArraylist(dbHelper.getAllIngresos());
-        }
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        addButton = view.findViewById(getAddButtonId());
+        addButton.setOnClickListener(v -> openAddDialog());
+
+        return view;
     }
 
     @Override
     protected RecyclerView.Adapter getAdapter() {
-        return new CustomAdapterVentas(getActivity(), getContext(), items);
+        return new CustomAdapterIngresos(getActivity(), getContext(), items);
+    }
+
+    @Override
+    protected void bddToArraylist() {
+        items = Ingresos.bddToArraylist(dbHelper.getAllIngresos());
+        Collections.reverse(items);
     }
 
     protected void openAddDialog() {
+        /*
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_add_ventas, null);
+        View dialogView = inflater.inflate(R.layout.dialog_add_ingreso, null);
 
         TextView textViewTitulo = dialogView.findViewById(R.id.textViewTituloVenta);
         EditText editTextFecha = dialogView.findViewById(R.id.editTextFechaVenta);
@@ -89,7 +89,7 @@ public class VentasFragment extends BaseFragment<Ingresos> {
 
         // Inicializar el RecyclerView
         RecyclerView recyclerViewProductos = dialogView.findViewById(R.id.recyclerViewProductosVenta);
-        CustomAdapterProductosVentasDialog adapter = new CustomAdapterProductosVentasDialog(getContext(), arrayProdNombre);
+        CustomAdapterProdsIngresoDialog adapter = new CustomAdapterProdsIngresoDialog(getContext(), arrayProdNombre);
         recyclerViewProductos.setAdapter(adapter);
         recyclerViewProductos.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -128,7 +128,8 @@ public class VentasFragment extends BaseFragment<Ingresos> {
                     String detalle = editTextDetalle.getText().toString();
                     ArrayList<String> IdProductos = null;
 
-                    if (insertBDD(fecha, detalle, String.valueOf(campoTotal.getText()), prodsEnIngresos) != -1) {
+                    float result = dbHelper.addIngreso(fecha, String.valueOf(campoTotal.getText()), detalle, 2, prodsEnIngresos);
+                    if (result != -1) {
                         Toast.makeText(getContext(), "Elemento agregado con éxito", Toast.LENGTH_SHORT).show();
                         addElementsToRecyclerView();
                     } else {
@@ -137,10 +138,6 @@ public class VentasFragment extends BaseFragment<Ingresos> {
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
-    }
-
-    private long insertBDD(String fecha, String detalle, String monto, ArrayList<ProductosEnIngresos> prodsEnIngresos){
-        int idTipo = 2;
-        return dbHelper.addIngreso(fecha, monto, detalle, idTipo, prodsEnIngresos);
+         */
     }
 }

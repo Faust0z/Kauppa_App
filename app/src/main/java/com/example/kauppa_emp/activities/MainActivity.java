@@ -17,7 +17,7 @@ import com.example.kauppa_emp.fragments.CajaDiariaFragment;
 import com.example.kauppa_emp.fragments.EgresosFragment;
 import com.example.kauppa_emp.fragments.HerramientasFragment;
 import com.example.kauppa_emp.fragments.PedidosFragment;
-import com.example.kauppa_emp.fragments.VentasFragment;
+import com.example.kauppa_emp.fragments.IngresosFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.caja_diaria) {
                 changeFragment(new CajaDiariaFragment());
             } else if (item.getItemId() == R.id.ingresos) {
-                changeFragment(new VentasFragment());
+                changeFragment(new IngresosFragment());
             } else if (item.getItemId() == R.id.pedidos) {
                 changeFragment(new PedidosFragment());
             } else if (item.getItemId() == R.id.egresos) {
