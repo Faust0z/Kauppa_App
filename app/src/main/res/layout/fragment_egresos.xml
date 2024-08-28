@@ -54,7 +54,6 @@
         app:srcCompat="@drawable/add_24px" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_Filtrar_Egresoss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

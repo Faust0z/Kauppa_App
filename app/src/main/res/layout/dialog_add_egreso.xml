@@ -38,7 +38,9 @@
             android:hint="Fecha"
             android:inputType="date"
             android:drawableStart="@drawable/calendar_month_24px"
-            android:drawablePadding="16dp">
+            android:drawablePadding="16dp"
+            android:clickable="false"
+            android:focusable="false">
         </com.google.android.material.textfield.TextInputEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
