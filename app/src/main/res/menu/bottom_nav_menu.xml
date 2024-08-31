@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/caja_diaria"
-        android:title="Inicio"
-        android:icon="@drawable/home_24px" />
+        android:title="Caja Diaria"
+        android:icon="@drawable/point_of_sale_24px" />
 
     <item
         android:id="@+id/pedidos"

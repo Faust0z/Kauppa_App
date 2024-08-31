@@ -44,10 +44,10 @@ public class ReporteMensualFragment extends Fragment {
         btnVolverReporteMensual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, new HerramientasFragment())
-                        .addToBackStack(null)
-                        .commit();
+                // Pop fragment from stack
+                if (getParentFragmentManager().getBackStackEntryCount() > 0) {
+                    getParentFragmentManager().popBackStack();
+                }
             }
         });
 

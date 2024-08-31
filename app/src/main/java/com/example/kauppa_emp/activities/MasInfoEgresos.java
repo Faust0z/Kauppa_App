@@ -82,7 +82,7 @@ public class MasInfoEgresos extends AppCompatActivity {
     }
 
     void setData(){
-        movTitulo.setText("Información - Egreso N°" + egresoActual.getId());
+        movTitulo.setText("Información - Egreso #" + egresoActual.getId());
         movTextoNomProv.setText(egresoActual.getNomProv());
         movTextoFecha.setText(egresoActual.getFecha());
         movTextoMonto.setText(egresoActual.getMonto());
