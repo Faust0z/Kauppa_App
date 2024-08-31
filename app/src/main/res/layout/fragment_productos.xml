@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Completa los campos con los datos correspondientes del producto y obtén el precio final adecuado."
+            android:text="Mantén el control de tu inventario de forma sencilla. Visualiza tus productos y realiza modificaciones."
             android:textSize="14sp"
             android:layout_marginBottom="16dp">
         </TextView>
