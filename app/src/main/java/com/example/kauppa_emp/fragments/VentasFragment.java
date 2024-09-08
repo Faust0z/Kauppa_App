@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -16,7 +18,9 @@ import com.example.kauppa_emp.fragments.Adapters.CustomAdapterVentas;
 import com.example.kauppa_emp.database.dataObjects.Ingresos;
 import com.example.kauppa_emp.database.dataObjects.ProductosEnIngresos;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +32,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class VentasFragment extends BaseFragment<Ingresos> {
+
+    private FloatingActionButton addButton;
 
     @Override
     protected int getLayoutId() {
@@ -51,6 +57,16 @@ public class VentasFragment extends BaseFragment<Ingresos> {
     @Override
     protected Activity getFiltrarActivity() {
         return null;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        addButton = view.findViewById(getAddButtonId());
+        addButton.setOnClickListener(v -> openAddDialog());
+
+        return view;
     }
 
     @Override
