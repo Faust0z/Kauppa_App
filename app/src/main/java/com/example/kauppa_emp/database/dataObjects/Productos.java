@@ -15,7 +15,9 @@ public class Productos {
     private boolean esFantasma;
 
     private int cantidad; //Valor sólo usado para los prods asociados a ingresos o pedidos
-    private int stockEditable; //Valor sólo usado para controlar el stock antes de editarlo
+    private int stockSinEditar; //Valor sólo usado para controlar el stock antes de editarlo
+
+    private boolean recienAgregado; //Valor sólo usado para controlar los prods recién agregados
 
     public Productos(String id, String nombre, String stock, String fechaActualiz, String precioUnitario, boolean esFantasma) {
         this.id = id;
@@ -62,12 +64,16 @@ public class Productos {
 
                     Productos prod = new Productos(id, nombre, stock, fechaActualiz, precioUnitario, esFantasma);
                     prod.setCant(Integer.parseInt(cursorProdPorIngr.getString(2)));
+                    // Esto es para que, cuando se actualice un prod, su stock se actualice correctamente
+                    prod.setStockSinEditar(Integer.parseInt(stock) + prod.getCant());
                     items.add(prod);
                 }
             }
         }
         return items;
     }
+
+    //Todo:crear método getProdsPorPedid
 
     public static Productos getUltimoProducto(Cursor cursor){
         Productos prod = null;
@@ -114,11 +120,19 @@ public class Productos {
 
     public boolean esFantasma() { return esFantasma; }
 
-    public int getStockEditable() {
-        return stockEditable;
+    public int getStockSinEditar() {
+        return stockSinEditar;
     }
 
-    public void setStockEditable(int stockEditable) {
-        this.stockEditable = stockEditable;
+    public void setStockSinEditar(int stockSinEditar) {
+        this.stockSinEditar = stockSinEditar;
+    }
+
+    public boolean esRecienAgregado() {
+        return recienAgregado;
+    }
+
+    public void setRecienAgregado(boolean recienAgregado) {
+        this.recienAgregado = recienAgregado;
     }
 }

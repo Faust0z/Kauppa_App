@@ -96,7 +96,7 @@
                 android:hint="Detalle"
                 android:inputType="textPersonName" />
 
-            <TextView
+            <EditText
                 android:id="@+id/editText_Total_IngresoInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

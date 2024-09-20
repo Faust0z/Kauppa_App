@@ -39,10 +39,6 @@ public class CustomAdapterProdsAsociados extends RecyclerView.Adapter<CustomAdap
         this.listener = listener;
     }
 
-    public ArrayList<Productos> getProdsAsociados(){
-        return prodsAsociados;
-    }
-
     public ArrayList<Productos> getProdsEliminados(){
         return prodsEliminados;
     }
@@ -89,8 +85,10 @@ public class CustomAdapterProdsAsociados extends RecyclerView.Adapter<CustomAdap
                 if (!isUserInput) return;
                 if (editText_Cant.isEmpty()) return;
 
+                // Se compara con el "stockSinEditar" porque esa es la cantidad REAL restante de stock de ese
+                // prod: la cantidad previamente elegida + el stock actual.
                 int cantidad = Integer.parseInt(editText_Cant);
-                if (!prodActual.esFantasma() && cantidad > Integer.parseInt((prodActual.getStock()))){
+                if (!prodActual.esFantasma() && cantidad > (prodActual.getStockSinEditar())){
                     Toast.makeText(context, "La cantidad del producto debe ser menor al stock existente", Toast.LENGTH_SHORT).show();
                     buttonActualizar.setEnabled(false);
                     holder.editText_Cant_ProdsAsociados.setTextColor(Color.RED);
