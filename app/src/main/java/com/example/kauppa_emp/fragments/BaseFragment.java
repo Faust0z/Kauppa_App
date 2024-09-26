@@ -42,6 +42,7 @@ public abstract class BaseFragment<T> extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
+
         createButtonFiltrar(view);
 
         recyclerView = view.findViewById(getRecyclerViewId());

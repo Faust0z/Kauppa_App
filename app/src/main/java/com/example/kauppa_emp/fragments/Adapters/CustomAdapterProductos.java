@@ -16,9 +16,7 @@ import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.activities.MasInfoProds;
 import com.example.kauppa_emp.database.dataObjects.Productos;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CustomAdapterProductos extends RecyclerView.Adapter<CustomAdapterProductos.MyViewHolder> {
     private final Context context;
@@ -42,15 +40,10 @@ public class CustomAdapterProductos extends RecyclerView.Adapter<CustomAdapterPr
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         Productos prodActual = productos.get(position);
-
-        NumberFormat format = NumberFormat.getInstance(new Locale("es", "ES"));
-        format.setMinimumFractionDigits(0);
-        format.setMaximumFractionDigits(0);
-
         holder.textView_Id_FilaProds.setText(prodActual.getId());
         holder.textView_Nombre_FilaProds.setText(prodActual.getNombre());
         holder.textView_CantStock_FilaProds.setText(prodActual.getStock());
-        holder.textView_PrecioUni_FilaProds.setText(format.format(Double.parseDouble(prodActual.getPrecioUnitario())));
+        holder.textView_PrecioUni_FilaProds.setText(prodActual.getPrecioUnitario());
 
         holder.mainLayout.setOnClickListener(v -> {
             int currentPosition = holder.getAdapterPosition();

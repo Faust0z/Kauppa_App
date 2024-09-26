@@ -17,9 +17,7 @@ import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.database.dataObjects.Movimientos;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterCajaDiaria.MyViewHolder> {
     private final Context context;
@@ -43,14 +41,9 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Movimientos movimientoActual = movimientos.get(position);
-
-        NumberFormat format = NumberFormat.getInstance(new Locale("es", "ES"));
-        format.setMinimumFractionDigits(0);
-        format.setMaximumFractionDigits(0);
-
         holder.textView_Id_FilaCajaDiaria.setText(String.valueOf(movimientos.size() - position));
         holder.textView_Fecha_FilaCajaDiaria.setText(movimientoActual.getFecha());
-        holder.textView_Monto_FilaCajaDiaria.setText(format.format(Double.parseDouble(movimientoActual.getMonto())));
+        holder.textView_Monto_FilaCajaDiaria.setText(movimientoActual.getMonto());
         holder.textView_Tipo_FilaCajaDiaria.setText(TiposMovimiento.getTipoMov(movimientoActual.getIdTipo()));
         holder.textView_DatoExtra_FilaCajaDiaria.setText(movimientoActual.getDatoExtra());
 

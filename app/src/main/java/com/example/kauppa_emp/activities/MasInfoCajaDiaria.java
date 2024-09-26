@@ -15,8 +15,6 @@ import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.database.dataObjects.Movimientos;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,7 +25,7 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
     private DatabaseHelper dbHelper;
 
     private TextView movTitulo;
-    private TextInputEditText movTextoFecha, movTextoMonto, movTextoDetalle, movTextoIdPedidos, movTextoIdTipos;
+    private EditText movTextoFecha, movTextoMonto, movTextoDetalle, movTextoIdPedidos, movTextoIdTipos;
     private Movimientos movimiento;
 
     @Override
@@ -65,8 +63,8 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
     }
 
     private void comprobarDelUpdtButtons() {
-        MaterialButton actualizarButton = findViewById(R.id.buttonCajaDiariaUpdate);
-        MaterialButton anularButton = findViewById(R.id.buttonCajaDiariaAnular);
+        Button actualizarButton = findViewById(R.id.buttonCajaDiariaUpdate);
+        Button anularButton = findViewById(R.id.buttonCajaDiariaAnular);
         String intentIdTipos = getIntent().getStringExtra("movIdTipos");
 
         if (Objects.equals(intentIdTipos, TiposMovimiento.VARIOSEGR) || Objects.equals(intentIdTipos, TiposMovimiento.VARIOSING)){
@@ -93,7 +91,7 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText("Información - " + dbHelper.getTipoMovById(movimiento.getIdTipo()) + " #" + movimiento.getId());
+        movTitulo.setText(dbHelper.getTipoMovById(movimiento.getIdTipo()) + " N° " + movimiento.getId());
         movTextoFecha.setText(movimiento.getFecha());
         movTextoMonto.setText(movimiento.getMonto());
         movTextoDetalle.setText(movimiento.getDetalle());
@@ -102,9 +100,9 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
     private void createUpdateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Actualizar Movimiento");
-        builder.setMessage("Ten en cuenta que esta acción no se puede deshacer.");
-        builder.setPositiveButton("Actualizar", (dialogInterface, i) -> {
+        builder.setTitle("Actualizar " + movimiento.getIdTipo() + " N° " + movimiento.getId() +  "?");
+        builder.setMessage("Desea actualizar la " + movimiento.getIdTipo() + " " + movimiento.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
             String fecha = movTextoFecha.getText().toString().trim();
             String monto = movTextoMonto.getText().toString().trim();
             String detalle = movTextoDetalle.getText().toString().trim();
@@ -113,20 +111,20 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
             finish(); // Hacemos finish para cerrar el intent
         });
 
-        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {});
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
         builder.create().show();
     }
 
     private void createDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Eliminar Movimiento");
-        builder.setMessage("Ten en cuenta que esta acción no se puede deshacer.");
-        builder.setPositiveButton("Eliminar", (dialogInterface, i) -> {
+        builder.setTitle("Eliminar " + movimiento.getIdTipo() + " " + movimiento.getId() + "?");
+        builder.setMessage("Desea eliminar la " + movimiento.getIdTipo() + " " + movimiento.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
             dbHelper.delMovimiento(movimiento.getId());
             finish(); // Hacemos finish para cerrar el intent
         });
-        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {});
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
 
         builder.create().show();
     }

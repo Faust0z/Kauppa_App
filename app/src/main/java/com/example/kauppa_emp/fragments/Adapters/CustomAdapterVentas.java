@@ -16,9 +16,7 @@ import com.example.kauppa_emp.activities.MasInfoVentas;
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.dataObjects.Ingresos;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CustomAdapterVentas extends RecyclerView.Adapter<CustomAdapterVentas.MyViewHolder> {
     private final Context context;
@@ -42,14 +40,9 @@ public class CustomAdapterVentas extends RecyclerView.Adapter<CustomAdapterVenta
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         Ingresos ingresoActual = ingresos.get(position);
-
-        NumberFormat format = NumberFormat.getInstance(new Locale("es", "ES"));
-        format.setMinimumFractionDigits(0);
-        format.setMaximumFractionDigits(0);
-
         holder.filaVentas_id_txt.setText(ingresoActual.getId());
         holder.filaVentas_fecha_txt.setText(ingresoActual.getFecha());
-        holder.filaVentas_monto_txt.setText(format.format(Double.parseDouble(ingresoActual.getMonto())));
+        holder.filaVentas_monto_txt.setText(ingresoActual.getMonto());
 
         holder.mainLayout.setOnClickListener(v -> {
             int currentPosition = holder.getAdapterPosition();
@@ -81,7 +74,7 @@ public class CustomAdapterVentas extends RecyclerView.Adapter<CustomAdapterVenta
             filaVentas_id_txt = itemView.findViewById(R.id.filaVentas_id_txt);
             filaVentas_fecha_txt = itemView.findViewById(R.id.filaVentas_fecha_txt);
             filaVentas_monto_txt = itemView.findViewById(R.id.filaVentas_monto_txt);
-            mainLayout = itemView.findViewById(R.id.mainLayoutFilaVentas);
+            mainLayout = itemView.findViewById(R.id.mainLayoutFilasIngresos);
         }
     }
 }

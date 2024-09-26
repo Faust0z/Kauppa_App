@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.database.dataObjects.Ingresos;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,7 +23,7 @@ public class MasInfoVentas extends AppCompatActivity {
     private DatabaseHelper dbHelper;
 
     private TextView movTitulo;
-    private TextInputEditText movTextoFecha, movTextoMonto, movTextoDetalle, movTextoNomCliente;
+    private EditText movTextoFecha, movTextoMonto, movTextoDetalle, movTextoIdPedidos, movTextoIdTipos, movTextoNomCliente;
     private Ingresos ingreso;
 
     @Override
@@ -91,7 +90,7 @@ public class MasInfoVentas extends AppCompatActivity {
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText("Información - Ingreso #" + ingreso.getId());
+        movTitulo.setText("Venta N° " + ingreso.getId());
         movTextoFecha.setText(ingreso.getFecha());
         movTextoMonto.setText(ingreso.getMonto());
         movTextoDetalle.setText(ingreso.getDetalle());
@@ -101,19 +100,19 @@ public class MasInfoVentas extends AppCompatActivity {
     private void createUpdateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Actualizar Ingreso");
-        builder.setMessage("Ten en cuenta que esta acción no se puede deshacer.");
-        builder.setPositiveButton("Actualizar", (dialogInterface, i) -> {
-            String fecha = String.valueOf(movTextoFecha.getText()).trim();
-            String monto = String.valueOf(movTextoMonto.getText()).trim();
-            String detalle = String.valueOf(movTextoDetalle.getText()).trim();
-            String nomCliente =  String.valueOf(movTextoNomCliente.getText()).trim();
+        builder.setTitle("Actualizar la venta N° " + ingreso.getId() + "?");
+        builder.setMessage("Desea actualizar la " + ingreso.getIdTipo() + " " + ingreso.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
+            String fecha = movTextoFecha.getText().toString().trim();
+            String monto = movTextoMonto.getText().toString().trim();
+            String detalle = movTextoDetalle.getText().toString().trim();
+            String nomCliente =  movTextoNomCliente.getText().toString().trim();
 
             dbHelper.updtIngreso(ingreso.getId(), fecha, monto, detalle, nomCliente);
             finish(); // Con finish se cierra el intent
         });
 
-        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {});
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
 
         builder.create().show();
     }
@@ -121,13 +120,13 @@ public class MasInfoVentas extends AppCompatActivity {
     private void createDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Eliminar Ingreso");
-        builder.setMessage("Ten en cuenta que esta acción no se puede deshacer.");
-        builder.setPositiveButton("Eliminar", (dialogInterface, i) -> {
+        builder.setTitle("Eliminar la venta " + ingreso.getId() + "?");
+        builder.setMessage("Desea eliminar la venta " + ingreso.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
             dbHelper.delIngreso(ingreso.getId());
             finish(); // Con finish se cierra el intent
         });
-        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {});
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
 
         builder.create().show();
     }

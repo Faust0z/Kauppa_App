@@ -36,7 +36,7 @@ public class TiposMovimiento {
             case "5":
                 return "Pago";
             case "6":
-                return "Varios";
+                return "Varios Egr";
             default:
                 return "";
         }
@@ -62,7 +62,7 @@ public class TiposMovimiento {
                 return 4;
             case "Pago":
                 return 5;
-            case "Varios":
+            case "Varios Egr":
                 return 6;
             case "Pedido":
                 return 7;

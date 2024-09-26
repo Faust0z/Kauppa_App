@@ -5,75 +5,16 @@
     android:id="@+id/frameLayout_ventas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/material_dynamic_tertiary100"
     tools:context=".fragments.VentasFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="32dp"
-        android:layout_marginTop="36dp">
-
-        <!-- Título -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ingresos"
-            android:textStyle="bold"
-            android:textSize="30sp">
-        </TextView>
-
-        <!-- Descripción -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aqui podras ver todos tus ingresos de dinero, ya sean ventas a clientes como tambien otro tipo de ingreso."
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp">
-        </TextView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewVentas"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            tools:listitem="" >
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButtonVentas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
-        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
-        app:srcCompat="@drawable/add_24px" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="85dp"
-        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
-        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
-        app:srcCompat="@drawable/filter_alt_24px"
-        android:focusable="false"
-        android:clickable="false" />
-
+    <!-- Lo puse con un button porque me pareció que quedaría bien, pero se puede usar cualquier tipo    -->
+    <!-- de dato que tenga el método setOnClickListener. Cuidado con ponerle propiedad "texto"   -->
+    <!-- ya que el fragmento usa ese valor para filtrar los elementos   -->
     <Button
         android:id="@+id/buttonFiltrarVentas"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="85dp"
-        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
-        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
         android:background="?android:attr/selectableItemBackground"
         android:hint="filtrar"
         android:stateListAnimator="@null" />
@@ -83,7 +24,25 @@
         android:id="@+id/buttonResetFiltroVentas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset filtro"
-        android:visibility="gone"/>
+        android:text="Reset filtro" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewVentas"
+        android:layout_width="match_parent"
+        android:layout_height="643dp"
+        android:layout_gravity="bottom"
+        tools:listitem="" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButtonVentas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
+        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
+        app:srcCompat="@drawable/baseline_add_24" />
+
 
 </FrameLayout>

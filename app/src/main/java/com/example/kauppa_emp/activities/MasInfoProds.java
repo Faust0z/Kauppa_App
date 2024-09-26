@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.database.dataObjects.Productos;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,8 +20,8 @@ import java.util.Locale;
 public class MasInfoProds extends AppCompatActivity {
     private DatabaseHelper dbHelper;
 
-    private TextView movTitulo;
-    private TextInputEditText prodTextNombre, prodTextStock, prodTextPrecUnit, prodTextFechaAct;
+    private TextView movTitulo, prodTextFechaAct;
+    private EditText prodTextNombre, prodTextStock, prodTextPrecUnit;
 
     private Productos productoActual;
 
@@ -63,7 +62,7 @@ public class MasInfoProds extends AppCompatActivity {
     }
 
     void setData(){
-        movTitulo.setText("Información - Producto #" + productoActual.getId());
+        movTitulo.setText("Producto N° " + productoActual.getId());
         prodTextNombre.setText(productoActual.getNombre());
         prodTextStock.setText(productoActual.getStock());
         prodTextFechaAct.setText(productoActual.getFechaActualiz());
@@ -72,12 +71,12 @@ public class MasInfoProds extends AppCompatActivity {
 
     private void createUpdateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Actualizar Producto");
-        builder.setMessage("Ten en cuenta que esta acción no se puede deshacer.");
-        builder.setPositiveButton("Actualizar", (dialogInterface, i) -> {
-            String nombre = String.valueOf(prodTextNombre.getText()).trim();
-            String stock = String.valueOf(prodTextStock.getText()).trim();
-            String precioUni = String.valueOf(prodTextPrecUnit.getText()).trim();
+        builder.setTitle("Actualizar el producto N° " + productoActual.getId() + "?");
+        builder.setMessage("Desea actualizar el producto " + productoActual.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
+            String nombre =  prodTextNombre.getText().toString().trim();
+            String stock = prodTextStock.getText().toString().trim();
+            String precioUni = prodTextPrecUnit.getText().toString().trim();
 
             String fechaActual = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
 
@@ -85,20 +84,20 @@ public class MasInfoProds extends AppCompatActivity {
             finish(); // Con finish se cierra el intent
         });
 
-        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {});
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
         builder.create().show();
     }
 
     private void createDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Eliminar Producto");
-        builder.setMessage("Ten en cuenta que esta acción no se puede deshacer.");
-        builder.setPositiveButton("Eliminar", (dialogInterface, i) -> {
+        builder.setTitle("Eliminar el producto  " + productoActual.getId() + "?");
+        builder.setMessage("Desea eliminar el producto " + productoActual.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
             dbHelper.delProducto(productoActual.getId());
             finish(); // Con finish se cierra el intent
         });
-        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {});
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
 
         builder.create().show();
     }

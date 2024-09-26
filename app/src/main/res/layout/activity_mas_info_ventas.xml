@@ -1,152 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="32dp"
     tools:context=".activities.MasInfoVentas">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-        <!-- Titulo  -->
-        <TextView
-            android:id="@+id/textViewTituloVentaInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Información de Ingreso"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center">
-        </TextView>
-
-        <!-- Separador  -->
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="110dp"
-            android:layout_height="3dp"
-            android:layout_marginBottom="16dp">
-        </com.google.android.material.divider.MaterialDivider>
-
-        <!-- Input Layout - Fecha  -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <!-- Input -->
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextFechaVentaInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Fecha"
-                android:inputType="date"
-                android:drawableStart="@drawable/calendar_month_24px"
-                android:drawablePadding="16dp"
-                android:clickable="false"
-                android:focusable="false">
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Input Layout - Cliente  -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <!-- Input -->
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextClienteVentaInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Cliente"
-                android:inputType="text"
-                android:drawableStart="@drawable/person_24px"
-                android:drawablePadding="16dp">
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Input Layout - Monto  -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <!-- Input -->
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextMontoVentaInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Monto"
-                android:inputType="numberDecimal"
-                android:drawableStart="@drawable/attach_money_bold_24px"
-                android:drawablePadding="16dp">
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Input Layout - Detalle  -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <!-- Input -->
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextDetalleVentaInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Detalle"
-                android:inputType="textMultiLine"
-                android:drawableStart="@drawable/sticky_note_2_24px"
-                android:drawablePadding="16dp">
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-    <!-- Layout Acciones  -->
-    <LinearLayout
+    <TextView
+        android:id="@+id/textViewTituloVentaInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="Venta"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Boton - Eliminar  -->
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:id="@+id/buttonVentaAnular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Eliminar"
-            app:cornerRadius="8dp"
-            android:layout_weight="1">
-        </com.google.android.material.button.MaterialButton>
+    <EditText
+        android:id="@+id/editTextFechaVentaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:gravity="center"
+        android:hint="Fecha"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTituloVentaInfo" />
 
-        <Space
-            android:layout_width="16dp"
-            android:layout_height="match_parent">
-        </Space>
+    <EditText
+        android:id="@+id/editTextMontoVentaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:hint="Monto"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFechaVentaInfo" />
 
-        <!-- Boton - Actualizar  -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonVentaUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Actualizar"
-            app:cornerRadius="8dp"
-            android:layout_weight="1">
-        </com.google.android.material.button.MaterialButton>
+    <EditText
+        android:id="@+id/editTextClienteVentaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:hint="Cliente"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMontoVentaInfo" />
 
-    </LinearLayout>
+    <EditText
+        android:id="@+id/editTextDetalleVentaInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="Detalle"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextClienteVentaInfo" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/buttonVentaUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Actualizar"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDetalleVentaInfo" />
+
+    <Button
+        android:id="@+id/buttonVentaAnular"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="Borrar"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonVentaUpdate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
