@@ -146,6 +146,7 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Productos -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/button_AccesoProds_Herrs"
                     android:layout_width="match_parent"
@@ -168,7 +169,7 @@
                             android:layout_height="50dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="char icon"
-                            android:src="@drawable/chart_50"
+                            android:src="@drawable/shelves_24px"
                             app:tint="@color/md_theme_primary"></ImageView>
 
                         <LinearLayout
@@ -189,7 +190,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Acceder al listado de todos los productos registrados"
+                                android:text="Acceder al listado de todos los productos registrados."
                                 android:textSize="14sp"></TextView>
                         </LinearLayout>
                     </LinearLayout>

@@ -4,27 +4,27 @@
     <item
         android:id="@+id/caja_diaria"
         android:title="Caja Diaria"
-        android:icon="@drawable/baseline_home_24" />
-
-    <item
-        android:id="@+id/ventas"
-        android:title="Ventas"
-        android:icon="@drawable/baseline_sell_24"/>
+        android:icon="@drawable/point_of_sale_24px" />
 
     <item
         android:id="@+id/pedidos"
         android:title="Pedidos"
-        android:icon="@drawable/baseline_move_to_inbox_24"/>
+        android:icon="@drawable/orders_24px"/>
+
+    <item
+        android:id="@+id/ventas"
+        android:title="Ingresos"
+        android:icon="@drawable/south_west_24px"/>
 
     <item
         android:id="@+id/compras"
-        android:title="Compras"
-        android:icon="@drawable/baseline_shopping_cart_24"/>
+        android:title="Egresos"
+        android:icon="@drawable/north_east_24px"/>
 
     <item
         android:id="@+id/herramientas"
         android:title="Herramientas"
-        android:icon="@drawable/baseline_garage_24"/>
+        android:icon="@drawable/home_repair_service_24px"/>
 
 
 </menu>

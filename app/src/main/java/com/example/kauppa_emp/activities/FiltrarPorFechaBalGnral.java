@@ -13,6 +13,7 @@ import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
 import com.example.kauppa_emp.database.dataObjects.Movimientos;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ import java.util.Locale;
 
 public class FiltrarPorFechaBalGnral extends AppCompatActivity {
     protected RecyclerView recView_FiltrarPorFechaAct;
-    protected Button button_Filtrar_FiltrarPorFechaAct, buttonVolver;
+    protected Button button_Filtrar_FiltrarPorFechaAct;
+    protected MaterialButton buttonVolver;
 
     protected String fecha;
 
