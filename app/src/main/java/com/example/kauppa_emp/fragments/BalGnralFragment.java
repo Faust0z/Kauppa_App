@@ -19,7 +19,6 @@ import com.example.kauppa_emp.database.dataObjects.Movimientos;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -67,8 +66,8 @@ public class BalGnralFragment extends BaseFragment<Movimientos> {
 
         calcularIngEgrTotal();
 
-        textView_PdidoPndienCant_Balgnral.setText("0");
-        textView_ProdBajoStockCant_Balgnral.setText("0");
+        textView_PdidoPndienCant_Balgnral.setText("");
+        textView_ProdBajoStockCant_Balgnral.setText("");
 
         return view;
     }
@@ -82,14 +81,9 @@ public class BalGnralFragment extends BaseFragment<Movimientos> {
     private void calcularIngEgrTotal(){
         bigDeciTotalIngres = calcularTextViewIngresos();
         bigDeciTotalEgres = calcularTextViewEgresos();
-
-        NumberFormat format = NumberFormat.getInstance(new Locale("es", "ES"));
-        format.setMinimumFractionDigits(0);
-        format.setMaximumFractionDigits(0);
-
-        textView_IngresosCant_Balgnral.setText("$" + format.format(bigDeciTotalIngres));
-        textView_EgresosCant_Balgnral.setText("$-" + format.format(bigDeciTotalEgres));
-        textView_TotalCant_BalGnral.setText("$" + format.format(bigDeciTotalIngres.subtract(bigDeciTotalEgres)));
+        textView_IngresosCant_Balgnral.setText("$" + bigDeciTotalIngres);
+        textView_EgresosCant_Balgnral.setText("$-" + bigDeciTotalEgres);
+        textView_TotalCant_BalGnral.setText("$" + bigDeciTotalIngres.subtract(bigDeciTotalEgres));
     }
 
     private BigDecimal calcularTextViewIngresos(){

@@ -2,123 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingTop="32dp"
-    android:paddingHorizontal="32dp">
+    android:padding="16dp"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/textView_Titulo_Egreso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar Egreso"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginBottom="8dp"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"
         android:gravity="center" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="110dp"
-        android:layout_height="3dp"
-        android:layout_marginBottom="16dp">
-    </com.google.android.material.divider.MaterialDivider>
-
-    <!-- Input Layout - Fecha  -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/editText_NomProv_Egreso"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:hint="Proveedor"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
 
-        <!-- Input -->
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_Fecha_Egreso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Fecha"
-            android:inputType="date"
-            android:drawableStart="@drawable/calendar_month_24px"
-            android:drawablePadding="16dp"
-            android:clickable="false"
-            android:focusable="false">
-        </com.google.android.material.textfield.TextInputEditText>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Input Layout - Proveedor  -->
-    <com.google.android.material.textfield.TextInputLayout
+    <Spinner
+        android:id="@+id/spinner_Tipo_Egreso"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/editText_Fecha_Egreso"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:hint="Fecha"
+        android:focusable="false"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
 
-        <!-- Input -->
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_NomProv_Egreso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Proveedor"
-            android:inputType="text"
-            android:drawableStart="@drawable/person_24px"
-            android:drawablePadding="16dp">
-        </com.google.android.material.textfield.TextInputEditText>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Input Layout - Categoria  -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/editText_Monto_Egreso"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        android:hint="Monto"
+        android:inputType="numberDecimal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
 
-        <!-- Dropdown -->
-        <AutoCompleteTextView
-            android:id="@+id/spinner_Tipo_Egreso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:hint="Categoria"
-            android:drawableStart="@drawable/category_24px"
-            android:drawablePadding="16dp">
-        </AutoCompleteTextView>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Input Layout - Monto  -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/editText_Detalle_Egreso"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
-
-        <!-- Input -->
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_Monto_Egreso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Monto"
-            android:inputType="numberDecimal"
-            android:drawableStart="@drawable/attach_money_bold_24px"
-            android:drawablePadding="16dp">
-        </com.google.android.material.textfield.TextInputEditText>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Input Layout - Detalle  -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
-
-        <!-- Input -->
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_Detalle_Egreso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Detalle"
-            android:inputType="textMultiLine"
-            android:drawableStart="@drawable/sticky_note_2_24px"
-            android:drawablePadding="16dp">
-        </com.google.android.material.textfield.TextInputEditText>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
+        android:hint="Detalle"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
 </LinearLayout>

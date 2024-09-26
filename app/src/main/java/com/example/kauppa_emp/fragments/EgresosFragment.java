@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ import com.example.kauppa_emp.fragments.Adapters.CustomAdapterEgresos;
 import com.example.kauppa_emp.database.dataObjects.Egresos;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -82,26 +80,26 @@ public class EgresosFragment extends BaseFragment<Egresos> {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_egreso, null);
 
-        TextInputEditText editText_NomProv_Egreso = dialogView.findViewById(R.id.editText_NomProv_Egreso);
-        TextInputEditText editText_Fecha_Egreso = dialogView.findViewById(R.id.editText_Fecha_Egreso);
-        TextInputEditText editText_Monto_Egreso = dialogView.findViewById(R.id.editText_Monto_Egreso);
-        TextInputEditText editText_Detalle_Egreso = dialogView.findViewById(R.id.editText_Detalle_Egreso);
+        EditText editText_NomProv_Egreso = dialogView.findViewById(R.id.editText_NomProv_Egreso);
+        EditText editText_Fecha_Egreso = dialogView.findViewById(R.id.editText_Fecha_Egreso);
+        EditText editText_Monto_Egreso = dialogView.findViewById(R.id.editText_Monto_Egreso);
+        EditText editText_Detalle_Egreso = dialogView.findViewById(R.id.editText_Detalle_Egreso);
 
+        Spinner spinner_Tipo_Egreso = dialogView.findViewById(R.id.spinner_Tipo_Egreso);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, TiposMovimiento.relleSpinnerEgresos());
-        AutoCompleteTextView tipoEgresoDropdown = (AutoCompleteTextView) dialogView.findViewById(R.id.spinner_Tipo_Egreso);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        tipoEgresoDropdown.setAdapter(arrayAdapter);
+        spinner_Tipo_Egreso.setAdapter(arrayAdapter);
 
         createTextFechaYDialog(editText_Fecha_Egreso);
 
         new MaterialAlertDialogBuilder(getContext())
                 .setView(dialogView)
                 .setPositiveButton("Agregar", (dialog, which) -> {
-                    String nomProv = String.valueOf(editText_NomProv_Egreso.getText());
-                    String fecha = String.valueOf(editText_Fecha_Egreso.getText());
-                    String monto = String.valueOf(editText_Monto_Egreso.getText());
-                    String detalle = String.valueOf(editText_Detalle_Egreso.getText());
-                    String tipo = tipoEgresoDropdown.getEditableText().toString();
+                    String nomProv = editText_NomProv_Egreso.getText().toString();
+                    String fecha = editText_Fecha_Egreso.getText().toString();
+                    String monto = editText_Monto_Egreso.getText().toString();
+                    String detalle = editText_Detalle_Egreso.getText().toString();
+                    String tipo = spinner_Tipo_Egreso.getSelectedItem().toString();
 
                     int id = TiposMovimiento.nombreToId(tipo);
                     float result = dbHelper.addEgreso(fecha, monto, detalle, id, nomProv);

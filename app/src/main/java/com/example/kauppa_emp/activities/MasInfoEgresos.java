@@ -26,6 +26,7 @@ public class MasInfoEgresos extends AppCompatActivity {
 
     private TextView movTitulo;
     private EditText movTextoNomProv, movTextoFecha, movTextoMonto, movTextoDetalle;
+    private Spinner spinnerTipo;
 
     private Egresos egresoActual;
 
@@ -40,6 +41,11 @@ public class MasInfoEgresos extends AppCompatActivity {
         movTextoMonto = findViewById(R.id.editText_Monto_EgresoInfo);
         movTextoNomProv = findViewById(R.id.editText_NomProv_EgresoInfo);
         movTextoDetalle = findViewById(R.id.editText_Detalle_EgresoInfo);
+
+        spinnerTipo = findViewById(R.id.spinner_Tipo_EgresoInfo);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TiposMovimiento.relleSpinnerEgresos());
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTipo.setAdapter(arrayAdapter);
 
         getIntentData();
 
@@ -82,8 +88,9 @@ public class MasInfoEgresos extends AppCompatActivity {
     }
 
     void setData(){
-        movTitulo.setText("Información - Egreso #" + egresoActual.getId());
+        movTitulo.setText("Compra N° " + egresoActual.getId());
         movTextoNomProv.setText(egresoActual.getNomProv());
+        setSpinnerToValue(spinnerTipo, TiposMovimiento.getTipoEgre(egresoActual.getIdTipo()));
         movTextoFecha.setText(egresoActual.getFecha());
         movTextoMonto.setText(egresoActual.getMonto());
         movTextoDetalle.setText(egresoActual.getDetalle());
@@ -101,9 +108,9 @@ public class MasInfoEgresos extends AppCompatActivity {
 
     private void createUpdateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Actualizar Egreso");
-        builder.setMessage("Ten en cuenta que esta acción no se puede deshacer.");
-        builder.setPositiveButton("Actualizar", (dialogInterface, i) -> {
+        builder.setTitle("Actualizar la compra N° " + egresoActual.getId() + "?");
+        builder.setMessage("Desea actualizar la compra " + egresoActual.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
             String fecha = movTextoFecha.getText().toString().trim();
             String monto = movTextoMonto.getText().toString().trim();
             String detalle = movTextoDetalle.getText().toString().trim();
@@ -113,20 +120,20 @@ public class MasInfoEgresos extends AppCompatActivity {
             finish(); // Con finish se cierra el intent
         });
 
-        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {});
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
         builder.create().show();
     }
 
     private void createDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Eliminar Egreso");
-        builder.setMessage("Ten en cuenta que esta acción no se puede deshacer.");
-        builder.setPositiveButton("Eliminar", (dialogInterface, i) -> {
+        builder.setTitle("Eliminar la venta " + egresoActual.getId() + "?");
+        builder.setMessage("Desea eliminar la venta " + egresoActual.getId() + "?");
+        builder.setPositiveButton("Si", (dialogInterface, i) -> {
             dbHelper.delEgreso(egresoActual.getId());
             finish(); // Con finish se cierra el intent
         });
-        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {});
+        builder.setNegativeButton("No", (dialogInterface, i) -> {});
 
         builder.create().show();
     }
