@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class VentasFragment extends BaseFragment<Ingresos> {
+public class IngresosFragment extends BaseFragment<Ingresos> {
 
     private FloatingActionButton addButton;
 

@@ -12,12 +12,12 @@
         android:icon="@drawable/orders_24px"/>
 
     <item
-        android:id="@+id/ventas"
+        android:id="@+id/ingresos"
         android:title="Ingresos"
         android:icon="@drawable/south_west_24px"/>
 
     <item
-        android:id="@+id/compras"
+        android:id="@+id/egresos"
         android:title="Egresos"
         android:icon="@drawable/north_east_24px"/>
 
@@ -25,6 +25,5 @@
         android:id="@+id/herramientas"
         android:title="Herramientas"
         android:icon="@drawable/home_repair_service_24px"/>
-
 
 </menu>
