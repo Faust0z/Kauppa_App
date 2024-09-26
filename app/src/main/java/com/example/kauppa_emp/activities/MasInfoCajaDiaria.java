@@ -40,10 +40,6 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
         movTextoDetalle = findViewById(R.id.editTextDetalleCajaDiariaInfo);
         movTextoIdPedidos = findViewById(R.id.editTextIdPedidosCajaDiariaInfo);
 
-        getIntentData();
-        setIntentDataInTxt();
-
-        // Mostrar el DatePickerDialog al hacer clic en el campo de fecha
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         movTextoFecha.setOnClickListener(v -> {
@@ -59,6 +55,8 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
             datePickerDialog.show();
         });
 
+        getIntentData();
+        setIntentDataInTxt();
         comprobarDelUpdtButtons();
     }
 

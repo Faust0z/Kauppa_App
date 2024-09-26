@@ -29,8 +29,14 @@ public class TiposMovimiento {
         }
     }
 
-    public static String getTipoEgre(String id){
+    public static String getTipoById(String id){
         switch (id) {
+            case "1":
+                return "Venta";
+            case "2":
+                return "Seña";
+            case "3":
+                return "Varios Ing";
             case "4":
                 return "Compra";
             case "5":
@@ -42,11 +48,19 @@ public class TiposMovimiento {
         }
     }
 
+    public static List<String> relleSpinnerIngresos(){
+        List<String> elementos = new ArrayList<>();
+        elementos.add(getTipoById("1"));
+        elementos.add(getTipoById("2"));
+        elementos.add(getTipoById("3"));
+        return elementos;
+    }
+
     public static List<String> relleSpinnerEgresos(){
         List<String> elementos = new ArrayList<>();
-        elementos.add(getTipoEgre("4"));
-        elementos.add(getTipoEgre("5"));
-        elementos.add(getTipoEgre("6"));
+        elementos.add(getTipoById("4"));
+        elementos.add(getTipoById("5"));
+        elementos.add(getTipoById("6"));
         return elementos;
     }
 
@@ -56,7 +70,7 @@ public class TiposMovimiento {
                 return 1;
             case "Seña":
                 return 2;
-            case "Ingreso":
+            case "Varios Ing":
                 return 3;
             case "Compra":
                 return 4;

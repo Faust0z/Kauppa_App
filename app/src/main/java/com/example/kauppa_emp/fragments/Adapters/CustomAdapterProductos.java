@@ -19,9 +19,9 @@ import com.example.kauppa_emp.database.dataObjects.Productos;
 import java.util.ArrayList;
 
 public class CustomAdapterProductos extends RecyclerView.Adapter<CustomAdapterProductos.MyViewHolder> {
-    private final Context context;
-    private final Activity activity;
-    private final ArrayList<Productos> productos;
+    protected final Context context;
+    protected final Activity activity;
+    protected final ArrayList<Productos> productos;
 
     public CustomAdapterProductos(Activity activity, Context context, ArrayList<Productos> productos){
         this.activity = activity;
@@ -45,19 +45,20 @@ public class CustomAdapterProductos extends RecyclerView.Adapter<CustomAdapterPr
         holder.textView_CantStock_FilaProds.setText(prodActual.getStock());
         holder.textView_PrecioUni_FilaProds.setText(prodActual.getPrecioUnitario());
 
-        holder.mainLayout.setOnClickListener(v -> {
-            int currentPosition = holder.getAdapterPosition();
+        holder.mainLayout.setOnClickListener(v -> clickEnFila(holder, prodActual));
+    }
 
-            if (currentPosition != RecyclerView.NO_POSITION) {
-                Intent intent = new Intent(context, MasInfoProds.class);
-                intent.putExtra("prodId", prodActual.getId());
-                intent.putExtra("prodNombre", prodActual.getNombre());
-                intent.putExtra("prodStock", prodActual.getStock());
-                intent.putExtra("prodFechaAct", prodActual.getFechaActualiz());
-                intent.putExtra("prodPrecioUni", prodActual.getPrecioUnitario());
-                activity.startActivityForResult(intent, 1);
-            }
-        });
+    protected void clickEnFila(@NonNull MyViewHolder holder, Productos prodActual) {
+        int currentPosition = holder.getAdapterPosition();
+        if (currentPosition != RecyclerView.NO_POSITION) {
+            Intent intent = new Intent(context, MasInfoProds.class);
+            intent.putExtra("prodId", prodActual.getId());
+            intent.putExtra("prodNombre", prodActual.getNombre());
+            intent.putExtra("prodStock", prodActual.getStock());
+            intent.putExtra("prodFechaAct", prodActual.getFechaActualiz());
+            intent.putExtra("prodPrecioUni", prodActual.getPrecioUnitario());
+            activity.startActivityForResult(intent, 1);
+        }
     }
 
     @Override

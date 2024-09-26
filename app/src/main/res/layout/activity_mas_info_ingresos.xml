@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MasInfoIngresos">
+
+    <!--  Esta pantalla tiene 2 layouts principales diferentes, uno para mostrar la información
+      de los Ingresos, y otro para mostrar la lista de productos en stock disponibles
+      para agregar. Dentro de la activity se alterna entre estos 2 layouts haciendo invisible
+      a uno cuando se lo hace visible al otro y viceversa-->
+
+    <FrameLayout
+        android:id="@+id/frameLay_ProdsEnStock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/button_Volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volver" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLay_MasInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView_Titulo_IngresoInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Venta"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinner_Tipo_IngresoInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/editText_NomClient_IngresoInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Cliente"
+                android:inputType="textPersonName" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recView_IngresosInfo"
+                android:layout_width="match_parent"
+                android:layout_height="226dp"
+                android:minHeight="60dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_AddProdPerso_IngresosInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Agregar prod personalizado" />
+
+                <Button
+                    android:id="@+id/button_AddProdStock_IngresosInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Agregar prod en stock" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editText_Fecha_IngresoInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="Fecha"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/editText_Detalle_IngresoInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Detalle"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editText_Total_IngresoInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Total"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_Update_IngresoInfo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="Actualizar"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button_Eliminar_IngresoInfo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:text="Borrar"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,10 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
 
-import com.example.kauppa_emp.database.dataObjects.ProductosEnIngresos;
-
-import java.util.ArrayList;
-
 public class DatabaseHelper {
     private DatabaseInit dbInit;
 
@@ -30,12 +26,12 @@ public class DatabaseHelper {
         return db.insert(DatabaseInit.TABLE_MOVIMIENTOS, null, cv);
     }
 
-    public Cursor getAllMovimientos(){
+    public Cursor getAllMovimientos() {
         String query = "SELECT * FROM " + DatabaseInit.TABLE_MOVIMIENTOS;
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
@@ -70,34 +66,23 @@ public class DatabaseHelper {
     // ------------------ TABLA INGRESO ------------------
 
 
-    public long addIngreso(String fecha, String monto, @Nullable String detalle, int idTipo, ArrayList<ProductosEnIngresos> prodsEnIngresos) {
+    public long addIngreso(String fecha, String monto, @Nullable String detalle, int idTipo, String nombreCliente) {
         SQLiteDatabase db = dbInit.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("fecha", fecha);
         cv.put("monto", monto);
         cv.put("detalle", detalle);
         cv.put("id_tipo", idTipo);
-        db.insert(DatabaseInit.TABLE_MOVIMIENTOS, null, cv);
-
-        Cursor cursor = getLastIngreso();
-        String idVenta = "";
-        if (cursor.getCount() > 0){idVenta = cursor.getString(0);}
-
-        long result = 0;
-        if (!idVenta.isEmpty() && !prodsEnIngresos.isEmpty()){
-            for (int i = 0; i < prodsEnIngresos.size(); i++) {
-                result = addProductoIngreso(idVenta, prodsEnIngresos.get(i).getIdProducto(), prodsEnIngresos.get(i).getIdProducto());
-            }
-        }
-        return result;
+        cv.put("nombre_cliente", nombreCliente);
+        return db.insert(DatabaseInit.TABLE_INGRESOS, null, cv);
     }
 
-    public Cursor getAllIngresos(){
+    public Cursor getAllIngresos() {
         String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS;
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
@@ -114,18 +99,8 @@ public class DatabaseHelper {
         return cursor;
     }
 
-    public long updtIngreso(String id, String fecha, String monto, @Nullable String detalle, @Nullable String nomCliente) {
-        SQLiteDatabase db = dbInit.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("fecha", fecha);
-        cv.put("monto", monto);
-        cv.put("detalle", detalle);
-        cv.put("nombre_cliente", nomCliente);
-        return db.update(DatabaseInit.TABLE_INGRESOS, cv, "id_movimiento=?", new String[]{id});
-    }
-
-    private Cursor getLastIngreso() {
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS + " ORDER BY id DESC LIMIT 1";
+    public Cursor getUltimoIngreso() {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS + " ORDER BY id_movimiento DESC LIMIT 1";
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
@@ -135,9 +110,21 @@ public class DatabaseHelper {
         return cursor;
     }
 
-    public long delIngreso(String movId) {
+    public long updtIngreso(String id, String fecha, String total, @Nullable String detalle, int idTipo, @Nullable String nomCliente) {
         SQLiteDatabase db = dbInit.getWritableDatabase();
-        return db.delete(DatabaseInit.TABLE_INGRESOS, "id_movimiento=?", new String[]{String.valueOf(movId)});
+        ContentValues cv = new ContentValues();
+        cv.put("fecha", fecha);
+        cv.put("monto", total);
+        cv.put("detalle", detalle);
+        cv.put("id_tipo", idTipo);
+        cv.put("nombre_cliente", nomCliente);
+        return db.update(DatabaseInit.TABLE_INGRESOS, cv, "id_movimiento=?", new String[]{id});
+    }
+
+    public long delIngreso(String id) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        delALLProductosByIngrId(id);
+        return db.delete(DatabaseInit.TABLE_INGRESOS, "id_movimiento=?", new String[]{id});
     }
 
 
@@ -181,12 +168,12 @@ public class DatabaseHelper {
         return cursor;
     }
 
-    public Cursor getAllEgresos(){
+    public Cursor getAllEgresos() {
         String query = "SELECT * FROM " + DatabaseInit.TABLE_EGRESOS;
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
@@ -196,7 +183,7 @@ public class DatabaseHelper {
     // ------------------ TABLA TIPOS MOVIMIENTOS ------------------
 
 
-    public String getTipoMovById(String tipoMovId){
+    public String getTipoMovById(String tipoMovId) {
         String query = "SELECT descripcion FROM " + DatabaseInit.TABLE_TIPOS_MOVIMIENTO + " WHERE id_tipo=?";
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
@@ -216,13 +203,15 @@ public class DatabaseHelper {
     // ------------------ TABLA PRODUCTOS ------------------
 
 
-    public long addProducto(String nombre, String stock, String fechaAct, String precioUnit) {
+    public long addProducto(String nombre, String stock, String fechaAct, String precioUnit, boolean esFantasma) {
         SQLiteDatabase db = dbInit.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("nombre", nombre);
         cv.put("stock", stock);
         cv.put("fecha_actualizacion", fechaAct);
         cv.put("precio_unitario", precioUnit);
+        cv.put("es_fantasma", esFantasma ? 1 : 0);
+
         return db.insert(DatabaseInit.TABLE_PRODUCTOS, null, cv);
     }
 
@@ -241,37 +230,19 @@ public class DatabaseHelper {
         return db.delete(DatabaseInit.TABLE_PRODUCTOS, "id_producto=?", new String[]{movId});
     }
 
-    public long addProductoIngreso(String idVenta, String idProducto, String cantidad) {
-        SQLiteDatabase db = dbInit.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("id_venta", Integer.parseInt(idVenta));
-        cv.put("id_producto", Integer.parseInt(idProducto));
-        cv.put("cantidad", Integer.parseInt(cantidad));
-
-        Cursor cursor = getProductoById(Integer.parseInt(idProducto));
-        String valorProducto = "";
-        if (cursor.getCount() > 0){
-            valorProducto = cursor.getString(6);
-        }
-        String subtotal = String.valueOf((Double.parseDouble(valorProducto) * Integer.parseInt(cantidad)));
-        cv.put("subtotal", subtotal);
-
-        return db.insert(DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO, null, cv);
-    }
-
-    public Cursor getAllProductos(){
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS;
+    public Cursor getAllProductos() {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS + " WHERE es_fantasma=0 ";
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
     }
 
-    public Cursor getProductoById(int prodId){
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS + " WHERE id_movimiento=? ";
+    public Cursor getProductoById(String prodId) {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS + " WHERE id_producto=? ";
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
@@ -281,13 +252,71 @@ public class DatabaseHelper {
         return cursor;
     }
 
-    public Cursor getProductoByNombre(String prodNombre){
+    public Cursor getProductoByNombre(String prodNombre) {
         String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS + " WHERE nombre=? ";
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery(query, new String[]{String.valueOf(prodNombre)});
+        }
+        return cursor;
+    }
+
+    public Cursor getUltimoProducto() {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS + " ORDER BY id_producto DESC LIMIT 1 ";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+
+
+    // ------------------ TABLA PRODUCTOS_POR_INGRESO ------------------
+
+    public long addProductosIngr(String idIngreso, String idProducto, int cantidad) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id_ingreso", Integer.parseInt(idIngreso));
+        cv.put("id_producto", Integer.parseInt(idProducto));
+        cv.put("cantidad", cantidad);
+        return db.insert(DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO, null, cv);
+    }
+
+    public long updtProductosIngr(String idIngreso, String idProducto, int cantidad) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id_ingreso", Integer.parseInt(idIngreso));
+        cv.put("id_producto", Integer.parseInt(idProducto));
+        cv.put("cantidad", cantidad);
+
+            return db.update(DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO, cv,
+                    "id_ingreso=? AND id_producto=?", new String[]{idIngreso, idProducto});
+    }
+
+    public long delProductosIngr(String idIngreso, String idProducto) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        return db.delete(DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO,
+                "id_ingreso=? AND id_producto=?",
+                new String[]{idIngreso, idProducto});
+    }
+
+    public long delALLProductosByIngrId(String idIngreso) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        return db.delete(DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO, "id_ingreso=?", new String[]{idIngreso});
+    }
+
+    public Cursor getProductosIngrById(String ingreId) {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO + " WHERE id_ingreso=? ";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(ingreId)});
         }
         return cursor;
     }

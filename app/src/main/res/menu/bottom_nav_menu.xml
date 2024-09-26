@@ -7,8 +7,8 @@
         android:icon="@drawable/baseline_home_24" />
 
     <item
-        android:id="@+id/ventas"
-        android:title="Ventas"
+        android:id="@+id/ingresos"
+        android:title="Ingresos"
         android:icon="@drawable/baseline_sell_24"/>
 
     <item
@@ -17,8 +17,8 @@
         android:icon="@drawable/baseline_move_to_inbox_24"/>
 
     <item
-        android:id="@+id/compras"
-        android:title="Compras"
+        android:id="@+id/egresos"
+        android:title="Egresos"
         android:icon="@drawable/baseline_shopping_cart_24"/>
 
     <item
