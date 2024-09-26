@@ -78,7 +78,6 @@
         android:hint="filtrar"
         android:stateListAnimator="@null" />
 
-    <!-- Se puede configurar que no sea visible el botón hasta que se introduzca una fecha filtro -->
     <Button
         android:id="@+id/buttonResetFiltroVentas"
         android:layout_width="wrap_content"
