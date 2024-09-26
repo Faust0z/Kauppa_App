@@ -57,6 +57,23 @@ public class Ingresos {
         return items;
     }
 
+    public static Ingresos getUltimoIngreso(Cursor cursor){
+        Ingresos ingreso = null;
+        if (cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(0);
+                String fecha = cursor.getString(1);
+                String monto = cursor.getString(2);
+                String detalle = cursor.getString(3);
+                String idTipo = cursor.getString(4);
+                String nomCliente = cursor.getString(5);
+
+                ingreso = new Ingresos(id, fecha, monto, detalle, idTipo, nomCliente);
+            }
+        }
+        return ingreso;
+    }
+
     public String getId() {
         return id;
     }

@@ -22,6 +22,9 @@
             android:name=".activities.FiltrarPorFechaBalGnral"
             android:exported="false" />
         <activity
+            android:name=".activities.AgregarIngreso"
+            android:exported="false" />
+        <activity
             android:name=".activities.MasInfoIngresos"
             android:exported="false" />
         <activity

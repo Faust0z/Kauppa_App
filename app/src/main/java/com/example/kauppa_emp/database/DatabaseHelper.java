@@ -7,10 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
 
-import com.example.kauppa_emp.database.dataObjects.Productos;
-
-import java.util.ArrayList;
-
 public class DatabaseHelper {
     private DatabaseInit dbInit;
 
@@ -70,27 +66,15 @@ public class DatabaseHelper {
     // ------------------ TABLA INGRESO ------------------
 
 
-    public long addIngreso(String fecha, String monto, @Nullable String detalle, int idTipo, ArrayList<Productos> prodsEnIngresos) {
+    public long addIngreso(String fecha, String monto, @Nullable String detalle, int idTipo, String nombreCliente) {
         SQLiteDatabase db = dbInit.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("fecha", fecha);
         cv.put("monto", monto);
         cv.put("detalle", detalle);
         cv.put("id_tipo", idTipo);
-        db.insert(DatabaseInit.TABLE_MOVIMIENTOS, null, cv);
-
-        Cursor cursor = getLastIngreso();
-        String idVenta = "";
-        if (cursor.getCount() > 0) {
-            idVenta = cursor.getString(0);
-        }
-
-        long result = 0;
-        if (!idVenta.isEmpty() && !prodsEnIngresos.isEmpty()) {
-            for (int i = 0; i < prodsEnIngresos.size(); i++) { // Todo arreglar esto
-            }
-        }
-        return result;
+        cv.put("nombre_cliente", nombreCliente);
+        return db.insert(DatabaseInit.TABLE_INGRESOS, null, cv);
     }
 
     public Cursor getAllIngresos() {
@@ -115,8 +99,8 @@ public class DatabaseHelper {
         return cursor;
     }
 
-    private Cursor getLastIngreso() {
-        String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS + " ORDER BY id DESC LIMIT 1";
+    public Cursor getUltimoIngreso() {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_INGRESOS + " ORDER BY id_movimiento DESC LIMIT 1";
         SQLiteDatabase db = dbInit.getReadableDatabase();
 
         Cursor cursor = null;
