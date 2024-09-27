@@ -37,7 +37,7 @@ public class IngresosFragment extends BaseFragment<Ingresos> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_ventas;
+        return R.layout.fragment_ingresos;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class IngresosFragment extends BaseFragment<Ingresos> {
 
     protected void openAddDialog() {
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_add_ventas, null);
+        View dialogView = inflater.inflate(R.layout.dialog_add_ingresos, null);
 
         TextView textViewTitulo = dialogView.findViewById(R.id.textViewTituloVenta);
         EditText editTextFecha = dialogView.findViewById(R.id.editTextFechaVenta);

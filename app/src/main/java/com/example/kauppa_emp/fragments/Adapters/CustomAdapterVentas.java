@@ -35,7 +35,7 @@ public class CustomAdapterVentas extends RecyclerView.Adapter<CustomAdapterVenta
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.fila_ventas, parent, false);
+        View view = inflater.inflate(R.layout.filas_ingresos, parent, false);
         return new MyViewHolder(view);
     }
 
