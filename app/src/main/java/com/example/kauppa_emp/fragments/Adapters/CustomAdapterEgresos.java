@@ -17,7 +17,11 @@ import com.example.kauppa_emp.activities.MasInfoEgresos;
 import com.example.kauppa_emp.database.dataObjects.Egresos;
 import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CustomAdapterEgresos extends RecyclerView.Adapter<CustomAdapterEgresos.MyViewHolder> {
     private final Context context;
@@ -41,10 +45,15 @@ public class CustomAdapterEgresos extends RecyclerView.Adapter<CustomAdapterEgre
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         Egresos egresoActual = egresos.get(position);
+
+        NumberFormat format = NumberFormat.getInstance(new Locale("es", "ES"));
+        format.setMinimumFractionDigits(0);
+        format.setMaximumFractionDigits(0);
+
         holder.textView_Id_FilaEgresos.setText(egresoActual.getId());
         holder.textView_Fecha_FilaEgresos.setText(egresoActual.getFecha());
-        holder.textView_Monto_FilaEgresos.setText(egresoActual.getMonto());
-        holder.textView_Tipo_FilaEgresos.setText(TiposMovimiento.getTipoById(egresoActual.getIdTipo()));
+        holder.textView_Monto_FilaEgresos.setText(format.format(Double.parseDouble(egresoActual.getMonto())));
+        holder.textView_Tipo_FilaEgresos.setText(TiposMovimiento.getTipoEgre(egresoActual.getIdTipo()));
 
         holder.mainLayout.setOnClickListener(v -> {
             int currentPosition = holder.getAdapterPosition();

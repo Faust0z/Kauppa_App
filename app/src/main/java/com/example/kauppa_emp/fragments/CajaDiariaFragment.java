@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,8 +18,10 @@ import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterCajaDiaria;
 import com.example.kauppa_emp.database.dataObjects.Movimientos;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,11 +32,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class CajaDiariaFragment extends BaseFragment<Movimientos> {
@@ -42,7 +48,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
             textView_TotalCant_CajaDiaria;
 
     private FloatingActionButton addButton;
-    private Button button_irBalGnral_CajaDiaria;
+    private FloatingActionButton button_irBalGnral_CajaDiaria;
 
     SimpleDateFormat dateFormat;
     String fechaActual;
@@ -95,11 +101,17 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     }
 
     private void calcularIngEgrTotal() {
+
+        NumberFormat format = NumberFormat.getInstance(new Locale("es", "ES"));
+        format.setMinimumFractionDigits(0);
+        format.setMaximumFractionDigits(0);
+
         bigDeciTotalIngres = calcularTextViewIngresos();
         bigDeciTotalEgres = calcularTextViewEgresos();
-        textView_IngresosCant_CajaDiaria.setText("$" + bigDeciTotalIngres);
-        textView_EgresosCant_CajaDiaria.setText("$-" + bigDeciTotalEgres);
-        textView_TotalCant_CajaDiaria.setText("$" + bigDeciTotalIngres.subtract(bigDeciTotalEgres));
+
+        textView_IngresosCant_CajaDiaria.setText("$" + format.format(bigDeciTotalIngres));
+        textView_EgresosCant_CajaDiaria.setText("$-" + format.format(bigDeciTotalEgres));
+        textView_TotalCant_CajaDiaria.setText("$" + format.format(bigDeciTotalIngres.subtract(bigDeciTotalEgres)));
     }
 
     private BigDecimal calcularTextViewIngresos(){
@@ -158,8 +170,8 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         View dialogView = inflater.inflate(R.layout.dialog_add_cajadiaria, null);
 
         TextView textView_Titulo_CajaDiaria = dialogView.findViewById(R.id.textView_Titulo_CajaDiaria);
-        EditText editText_Monto_CajaDiaria = dialogView.findViewById(R.id.editText_Monto_CajaDiaria);
-        EditText editText_Detalle_CajaDiaria = dialogView.findViewById(R.id.editText_Detalle_CajaDiaria);
+        TextInputEditText editText_Monto_CajaDiaria = dialogView.findViewById(R.id.editText_Monto_CajaDiaria);
+        TextInputEditText editText_Detalle_CajaDiaria = dialogView.findViewById(R.id.editText_Detalle_CajaDiaria);
         RadioGroup radGroup_Tipo_CajaDiaria = dialogView.findViewById(R.id.radGroup_Tipo_CajaDiaria);
         RadioButton radButton_Entrada_CajaDiaria = dialogView.findViewById(R.id.radButton_Entrada_CajaDiaria);
 
@@ -168,9 +180,11 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         new MaterialAlertDialogBuilder(getContext())
                 .setView(dialogView)
                 .setPositiveButton("Agregar", (dialog, which) -> {
-                    String monto = editText_Monto_CajaDiaria.getText().toString();
-                    String detalle = editText_Detalle_CajaDiaria.getText().toString();
+                    String monto = String.valueOf(editText_Monto_CajaDiaria.getText());
+                    String detalle = String.valueOf(editText_Detalle_CajaDiaria.getText());
                     boolean esEntrada = radButton_Entrada_CajaDiaria.isChecked();
+
+
 
                     if (insertBDD(monto, detalle, esEntrada) != -1) {
                         Toast.makeText(getContext(), "Elemento agregado con éxito", Toast.LENGTH_SHORT).show();
