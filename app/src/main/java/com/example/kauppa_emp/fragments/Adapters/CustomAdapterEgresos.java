@@ -53,7 +53,7 @@ public class CustomAdapterEgresos extends RecyclerView.Adapter<CustomAdapterEgre
         holder.textView_Id_FilaEgresos.setText(egresoActual.getId());
         holder.textView_Fecha_FilaEgresos.setText(egresoActual.getFecha());
         holder.textView_Monto_FilaEgresos.setText(format.format(Double.parseDouble(egresoActual.getMonto())));
-        holder.textView_Tipo_FilaEgresos.setText(TiposMovimiento.getTipoEgre(egresoActual.getIdTipo()));
+        holder.textView_Tipo_FilaEgresos.setText(TiposMovimiento.getTipoById(egresoActual.getIdTipo()));
 
         holder.mainLayout.setOnClickListener(v -> {
             int currentPosition = holder.getAdapterPosition();
