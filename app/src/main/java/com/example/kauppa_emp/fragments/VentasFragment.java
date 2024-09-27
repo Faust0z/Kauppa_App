@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class IngresosFragment extends BaseFragment<Ingresos> {
+public class VentasFragment extends BaseFragment<Ingresos> {
 
     private FloatingActionButton addButton;
 
@@ -42,16 +42,16 @@ public class IngresosFragment extends BaseFragment<Ingresos> {
 
     @Override
     protected int getRecyclerViewId() {
-        return R.id.recyclerViewVentas;
+        return R.id.recView_Ingresos;
     }
 
     protected int getAddButtonId() {
-        return R.id.addButtonVentas;
+        return R.id.floatButton_add_Ingresos;
     }
 
     @Override
     protected int getFiltrarButtonId() {
-        return R.id.buttonFiltrarVentas;
+        return R.id.button_Filtrar_Ingresos;
     }
 
     @Override
