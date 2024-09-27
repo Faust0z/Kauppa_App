@@ -73,7 +73,32 @@ public class Productos {
         return items;
     }
 
-    //Todo:crear método getProdsPorPedid
+    public static ArrayList<Productos> getProdsPorPedid(DatabaseHelper dbHelper, String pdidId){
+        ArrayList<Productos> items = new ArrayList<>();
+        Cursor cursorProdPorPdid = dbHelper.getProductosPdidById(pdidId);
+        if (cursorProdPorPdid.getCount() != 0) {
+            while (cursorProdPorPdid.moveToNext()) {
+                Cursor cursorProd = dbHelper.getProductoById(cursorProdPorPdid.getString(1));
+
+                if (cursorProd.moveToNext()) {
+                    String id = cursorProd.getString(0);
+                    String nombre = cursorProd.getString(1);
+                    String stock = cursorProd.getString(2);
+                    String fechaActualiz = cursorProd.getString(3);
+                    boolean esFantasma = cursorProd.getInt(4) == 1;
+                    String precioUnitario = cursorProd.getString(5);
+
+                    Productos prod = new Productos(id, nombre, stock, fechaActualiz, precioUnitario, esFantasma);
+                    prod.setCant(Integer.parseInt(cursorProdPorPdid.getString(2)));
+                    // Esto es para que, cuando se actualice un prod, su stock se actualice correctamente
+                    prod.setStockSinEditar(Integer.parseInt(stock) + prod.getCant());
+                    items.add(prod);
+                }
+            }
+        }
+        return items;
+    }
+
 
     public static Productos getUltimoProducto(Cursor cursor){
         Productos prod = null;

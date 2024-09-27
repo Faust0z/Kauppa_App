@@ -2,9 +2,10 @@ package com.example.kauppa_emp.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,24 +25,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
-import com.example.kauppa_emp.database.dataObjects.Ingresos;
+import com.example.kauppa_emp.database.dataObjects.Pedidos;
 import com.example.kauppa_emp.database.dataObjects.Productos;
 import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterProdsAsociados;
 import com.example.kauppa_emp.fragments.ProdsAsociadosFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MasInfoIngresos extends AppCompatActivity {
+public class MasInfoPedidos extends AppCompatActivity {
     protected DatabaseHelper dbHelper;
 
     protected TextView movTitulo;
-    protected EditText movTextoNomCliente, movTextoFecha, movTextoDetalle, movTextoTotal;
-    protected Button button_Volver, button_AddProdPerso_IngresosInfo, button_AddProdStock_IngresosInfo, actualizarButton, anularButton;
+    protected EditText movTextoNomCliente, movTextoFechaEntrega, movTextoDetalle, movTextoTotal, movTextoCelCliente, movTextoSenia, movTextoResto;
+    protected Button button_Volver, button_AddProdPerso_PedidosInfo, button_AddProdStock_PedidosInfo, actualizarButton, anularButton;
     protected Spinner spinnerTipo;
     protected RecyclerView recyclerView;
     protected CustomAdapterProdsAsociados customAdapterProdsAsociados;
@@ -49,17 +51,18 @@ public class MasInfoIngresos extends AppCompatActivity {
     private LinearLayout linearLay_MasInfo;
     private FrameLayout frameLay_ProdsEnStock;
 
-    protected Ingresos ingresoActual;
+    protected Pedidos pedidoActual;
     private ArrayList<Productos> prodsAsociados;
     private ArrayList<Productos> prodsAgregados;
     protected boolean prodsModificados = false;
     private boolean layoutMasInfoVisible = true;
+    private boolean isUserInput = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mas_info_ingresos);
-        dbHelper = new DatabaseHelper(MasInfoIngresos.this);
+        setContentView(R.layout.activity_mas_info_pedidos);
+        dbHelper = new DatabaseHelper(MasInfoPedidos.this);
         prodsAgregados = new ArrayList<>();
 
         vincularComponentes();
@@ -73,60 +76,117 @@ public class MasInfoIngresos extends AppCompatActivity {
         setData();
 
         button_Volver.setOnClickListener(v -> alternarLayouts());
-        button_AddProdPerso_IngresosInfo.setOnClickListener(v -> openAddDialogProdPerso());
-        button_AddProdStock_IngresosInfo.setOnClickListener(v -> alternarLayouts());
+        button_AddProdPerso_PedidosInfo.setOnClickListener(v -> openAddDialogProdPerso());
+        button_AddProdStock_PedidosInfo.setOnClickListener(v -> alternarLayouts());
         actualizarButton.setOnClickListener(v -> createUpdateDialog());
         anularButton.setOnClickListener(v -> createDeleteDialog());
 
-        if (spinnerTipo.getSelectedItem().toString().equals("Venta")){
-            movTextoTotal.setText(customAdapterProdsAsociados.getPrecioTotal());
+        // Es necesario desvincularle cualquier TextWatcher al campo de cantidad primero
+        if (movTextoSenia.getTag() instanceof TextWatcher) {
+            movTextoSenia.removeTextChangedListener((TextWatcher) movTextoSenia.getTag());
         }
+
+        movTextoSenia.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                isUserInput = after > 0;  // Esto es para asegurarnos de que es input del usuario y no del código que disparó la llamada
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (movTextoSenia.getText().toString().isEmpty()){
+                    movTextoResto.setText(customAdapterProdsAsociados.getPrecioTotal());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!isUserInput) return;
+                calcularTotalYResto();
+            }
+        });
+
+        // Es necesario desvincularle cualquier TextWatcher al campo de cantidad primero
+        if (movTextoTotal.getTag() instanceof TextWatcher) {
+            movTextoTotal.removeTextChangedListener((TextWatcher) movTextoTotal.getTag());
+        }
+
+        movTextoTotal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                isUserInput = after > 0;  // Esto es para asegurarnos de que es input del usuario y no del código que disparó la llamada
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!isUserInput) return;
+                calcularTotalYResto();
+            }
+        });
+
+        movTextoTotal.setText(customAdapterProdsAsociados.getPrecioTotal());
+        calcularTotalYResto();
+    }
+
+    private void calcularTotalYResto() {
+        String seniaStr = movTextoSenia.getText().toString();
+        String totalStr = movTextoTotal.getText().toString();
+
+        if (!totalStr.isEmpty()){
+            BigDecimal resto = new BigDecimal(totalStr).subtract(new BigDecimal(seniaStr));
+            movTextoResto.setText(resto.toString());
+        } else{
+            movTextoResto.setText(customAdapterProdsAsociados.getPrecioTotal());
+        }
+
     }
 
     void vincularComponentes(){
-        movTitulo = findViewById(R.id.textView_Titulo_IngresoInfo);
-        movTextoNomCliente = findViewById(R.id.editText_NomClient_IngresoInfo);
-        movTextoFecha = findViewById(R.id.editText_Fecha_IngresoInfo);
-        movTextoDetalle = findViewById(R.id.editText_Detalle_IngresoInfo);
-        movTextoTotal = findViewById(R.id.editText_Total_IngresoInfo);
-        spinnerTipo = findViewById(R.id.spinner_Tipo_IngresoInfo);
-        recyclerView = findViewById(R.id.recView_IngresosInfo);
+        movTitulo = findViewById(R.id.textView_Titulo_PedidoInfo);
+        movTextoNomCliente = findViewById(R.id.editText_NomClient_PedidoInfo);
+        movTextoCelCliente = findViewById(R.id.editText_CelClient_PedidoInfo);
+        movTextoFechaEntrega = findViewById(R.id.editText_FechaEnt_PedidoInfo);
+        movTextoDetalle = findViewById(R.id.editText_Detalle_PedidoInfo);
+        movTextoSenia = findViewById(R.id.editText_Senia_PedidoInfo);
+        movTextoResto = findViewById(R.id.editText_Resto_PedidoInfo);
+        movTextoTotal = findViewById(R.id.editText_Total_PedidoInfo);
+        spinnerTipo = findViewById(R.id.spinner_Estado_PedidoInfo);
+        recyclerView = findViewById(R.id.recView_PedidoInfo);
         frameLay_ProdsEnStock = findViewById(R.id.frameLay_ProdsEnStock);
         linearLay_MasInfo = findViewById(R.id.linearLay_MasInfo);
         button_Volver = findViewById(R.id.button_Volver);
-        button_AddProdPerso_IngresosInfo = findViewById(R.id.button_AddProdPerso_IngresosInfo);
-        button_AddProdStock_IngresosInfo = findViewById(R.id.button_AddProdStock_IngresosInfo);
-        actualizarButton = findViewById(R.id.button_Update_IngresoInfo);
-        anularButton = findViewById(R.id.button_Eliminar_IngresoInfo);
+        button_AddProdPerso_PedidosInfo = findViewById(R.id.button_AddProdPerso_PedidoInfo);
+        button_AddProdStock_PedidosInfo = findViewById(R.id.button_AddProdStock_PedidoInfo);
+        actualizarButton = findViewById(R.id.button_Update_PedidoInfo);
+        anularButton = findViewById(R.id.button_Eliminar_PedidoInfo);
     }
 
-    protected void getIntentData(){
+    protected void getIntentData() {
         // Compruebo que el intent haya traído datos. Asumo que si está el id están todos
-        if (getIntent().hasExtra("movId")){
+        if (getIntent().hasExtra("movId")) {
             String id = getIntent().getStringExtra("movId");
-            String nomCliente = getIntent().getStringExtra("movNomCliente");
-            String idTipos = getIntent().getStringExtra("movIdTipos");
             String fecha = getIntent().getStringExtra("movFecha");
-            String monto = getIntent().getStringExtra("movMonto");
+            String fechaEntrega = getIntent().getStringExtra("movFechaEntrega");
             String detalle = getIntent().getStringExtra("movDetalle");
+            String resto = getIntent().getStringExtra("movResto");
+            String senia = getIntent().getStringExtra("movSenia");
+            String total = getIntent().getStringExtra("movTotal");
+            String nomCliente = getIntent().getStringExtra("movNomCliente");
+            String celCliente = getIntent().getStringExtra("movCelCliente");
+            String idTipos = getIntent().getStringExtra("movIdTipos");
 
-            ingresoActual = new Ingresos(id, fecha, monto, detalle, idTipos, nomCliente);
+            pedidoActual = new Pedidos(id, fecha, fechaEntrega, detalle, senia, total, resto, nomCliente, celCliente, idTipos);
         }
     }
 
+
     private void configurarSpinner() {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TiposMovimiento.relleSpinnerIngresos());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TiposMovimiento.relleSpinnerPedidos());
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipo.setAdapter(arrayAdapter);
-
-        spinnerTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                habDesProdsAsociados();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
     }
 
     private void setSpinnerToValue(Spinner spinner, String value) {
@@ -140,44 +200,28 @@ public class MasInfoIngresos extends AppCompatActivity {
     }
 
     private void configurarRecView() {
-        prodsAsociados = Productos.getProdsPorIngr(dbHelper, ingresoActual.getId());
+        prodsAsociados = Productos.getProdsPorPedid(dbHelper, pedidoActual.getId());
 
         customAdapterProdsAsociados = new CustomAdapterProdsAsociados(this, prodsAsociados, actualizarButton);
         customAdapterProdsAsociados.setProdEditadoListener(() -> {
             movTextoTotal.setText(customAdapterProdsAsociados.getPrecioTotal());
             prodsModificados = true;
-
         });
         recyclerView.setAdapter(customAdapterProdsAsociados);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        habDesProdsAsociados();
-    }
-
-    private void habDesProdsAsociados() {
-        if (spinnerTipo.getSelectedItem().toString().equals("Venta")) { // Si el ingreso es una venta, mostramos sus prods asociados
-            recyclerView.setVisibility(View.VISIBLE);
-            button_AddProdPerso_IngresosInfo.setVisibility(View.VISIBLE);
-            button_AddProdStock_IngresosInfo.setVisibility(View.VISIBLE);
-        }
-        else { // Si el prod no es una venta, no mostramos lo relacionado a productos
-            recyclerView.setVisibility(View.GONE);
-            button_AddProdPerso_IngresosInfo.setVisibility(View.GONE);
-            button_AddProdStock_IngresosInfo.setVisibility(View.GONE);
-        }
     }
 
     private void configurarCampoFecha() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        movTextoFecha.setOnClickListener(v -> {
+        movTextoFechaEntrega.setOnClickListener(v -> {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(MasInfoIngresos.this, (view, year1, month1, dayOfMonth) -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(MasInfoPedidos.this, (view, year1, month1, dayOfMonth) -> {
                 calendar.set(year1, month1, dayOfMonth);
-                movTextoFecha.setText(dateFormat.format(calendar.getTime()));
+                movTextoFechaEntrega.setText(dateFormat.format(calendar.getTime()));
             }, year, month, day);
 
             datePickerDialog.show();
@@ -208,35 +252,35 @@ public class MasInfoIngresos extends AppCompatActivity {
     }
 
     protected void setData(){
-        movTitulo.setText("Ingreso N° " + ingresoActual.getId());
-        movTextoNomCliente.setText(ingresoActual.getNomCliente().equals("null") ? "Cliente sin registrar" : ingresoActual.getNomCliente());
-        setSpinnerToValue(spinnerTipo, TiposMovimiento.getTipoById(ingresoActual.getIdTipo()));
-        movTextoFecha.setText(ingresoActual.getFecha());
-        movTextoTotal.setText(ingresoActual.getMonto());
-        movTextoDetalle.setText(ingresoActual.getDetalle());
+        movTitulo.setText("Pedido N° " + pedidoActual.getId());
+        setSpinnerToValue(spinnerTipo, TiposMovimiento.getEstadoById(pedidoActual.getIdEstado()));
+        movTextoNomCliente.setText(pedidoActual.getNomCliente().equals("null") ? "Cliente sin registrar" : pedidoActual.getNomCliente());
+        movTextoCelCliente.setText(pedidoActual.getCelCliente().equals("null") ? "Celular sin registrar" : pedidoActual.getCelCliente());
+        movTextoFechaEntrega.setText(pedidoActual.getFechaEntrega());
+        movTextoDetalle.setText(pedidoActual.getDetalle());
+        movTextoSenia.setText(pedidoActual.getSenia());
     }
 
     private void createUpdateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Actualizar el Ingreso N° " + ingresoActual.getId() + "?");
+        builder.setTitle("Actualizar el Pedido N° " + pedidoActual.getId() + "?");
         builder.setPositiveButton("Si", (dialogInterface, i) -> {
-            String fecha = movTextoFecha.getText().toString().trim();
-            String total = movTextoTotal.getText().toString().trim();
-            String detalle = movTextoDetalle.getText().toString().trim();
             String nomCliente =  movTextoNomCliente.getText().toString().trim();
+            String celCliente =  movTextoCelCliente.getText().toString().trim();
+            String fecha_entrega = movTextoFechaEntrega.getText().toString().trim();
+            String detalle = movTextoDetalle.getText().toString().trim();
+            String senia = movTextoSenia.getText().toString().trim();
+            String resto = movTextoSenia.getText().toString().trim();
+            String total = movTextoTotal.getText().toString().trim();
 
-            int tipo = TiposMovimiento.nombreToId(spinnerTipo.getSelectedItem().toString());
-            dbHelper.updtIngreso(ingresoActual.getId(), fecha, total, detalle, tipo, nomCliente);
+            int estado = TiposMovimiento.estadoToId(spinnerTipo.getSelectedItem().toString());
+            dbHelper.updtPedido(pedidoActual.getId(), fecha_entrega, detalle, senia, resto, total, nomCliente, celCliente, estado);
 
             String fechaActual = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
 
-            if (tipo == 1){ //Si el tipo es una venta
-                if (prodsModificados){
-                    gestionarProdsAsociados(fechaActual, ingresoActual.getId());
-                }
-            } else { //Si se actualizó el tipo de ingreso y ya no es una venta, borrar los prods asociados de la BDD
-                dbHelper.delALLProductosByIngrId(ingresoActual.getId());
+            if (prodsModificados){
+                gestionarProdsAsociados(fechaActual, pedidoActual.getId());
             }
             finish(); // Con finish se cierra el intent
         });
@@ -246,20 +290,20 @@ public class MasInfoIngresos extends AppCompatActivity {
         builder.create().show();
     }
 
-    protected void gestionarProdsAsociados(String fechaActual, String idIngresoActual){
+    protected void gestionarProdsAsociados(String fechaActual, String idPedidoActual){
         for (Productos prod: prodsAgregados) {
             if (prod.esFantasma()) { // Si el prod es fantasma, entonces no existe y lo agregamos a la tabla prods primero
                 dbHelper.addProducto(prod.getNombre(), prod.getStock(), fechaActual, prod.getPrecioUnitario(), prod.esFantasma());
                 Productos ultimoProdInsertado = Productos.getUltimoProducto(dbHelper.getUltimoProducto());
-                dbHelper.addProductosIngr(idIngresoActual, ultimoProdInsertado.getId(), prod.getCant());
+                dbHelper.addProductosPdid(idPedidoActual, ultimoProdInsertado.getId(), prod.getCant());
             } else{ // Sino ya es un prod existente, por lo que modificamos su stock
                 String nuevoStock = String.valueOf(Integer.parseInt(prod.getStock()) - prod.getCant());
                 dbHelper.updtProducto(prod.getId(), prod.getNombre(), nuevoStock, fechaActual, prod.getPrecioUnitario());
-                dbHelper.addProductosIngr(idIngresoActual, prod.getId(), prod.getCant());
+                dbHelper.addProductosPdid(idPedidoActual, prod.getId(), prod.getCant());
             }
         }
         for (Productos prod: prodsAsociados){
-            dbHelper.updtProductosIngr(idIngresoActual, prod.getId(), prod.getCant());
+            dbHelper.updtProductosPdid(idPedidoActual, prod.getId(), prod.getCant());
 
             String nuevoStock = String.valueOf(prod.getStockSinEditar() - prod.getCant());
             if (prod.esRecienAgregado()){
@@ -268,7 +312,7 @@ public class MasInfoIngresos extends AppCompatActivity {
             dbHelper.updtProducto(prod.getId(), prod.getNombre(), nuevoStock, fechaActual, prod.getPrecioUnitario());
         }
         for (Productos prod: customAdapterProdsAsociados.getProdsEliminados()){
-            dbHelper.delProductosIngr(idIngresoActual, prod.getId());
+            dbHelper.delProductosPdid(idPedidoActual, prod.getId());
             String nuevoStock = String.valueOf(prod.getStockSinEditar());
             dbHelper.updtProducto(prod.getId(), prod.getNombre(), nuevoStock, fechaActual, prod.getPrecioUnitario());
         }
@@ -277,11 +321,11 @@ public class MasInfoIngresos extends AppCompatActivity {
     private void createDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Eliminar el Ingreso " + ingresoActual.getId() + "?");
+        builder.setTitle("Eliminar el Pedido " + pedidoActual.getId() + "?");
         builder.setPositiveButton("Si", (dialogInterface, i) -> {
-            dbHelper.delIngreso(ingresoActual.getId());
+            dbHelper.delPedido(pedidoActual.getId());
             for (Productos prod: prodsAsociados){
-                dbHelper.delProductosIngr(ingresoActual.getId(), prod.getId());
+                dbHelper.delProductosPdid(pedidoActual.getId(), prod.getId());
             }
             prodsModificados = true;
             finish(); // Con finish se cierra el intent

@@ -53,8 +53,9 @@ public class DatabaseInit extends SQLiteOpenHelper {
             + "fecha TEXT NOT NULL, "
             + "fecha_entrega TEXT NOT NULL, "
             + "detalle TEXT, "
-            + "senia TEXT NOT NULL, "
-            + "resto TEXT NOT NULL, "
+            + "senia TEXT, "
+            + "resto TEXT, "
+            + "total TEXT NOT NULL, "
             + "nombre_cliente TEXT, "
             + "celular_cliente TEXT, "
             + "id_estado INTEGER NOT NULL)";
@@ -77,7 +78,6 @@ public class DatabaseInit extends SQLiteOpenHelper {
             + "id_pedido INTEGER NOT NULL, "
             + "id_producto INTEGER, "
             + "cantidad INTEGER NOT NULL, "
-            + "subtotal TEXT NOT NULL, "
             + "PRIMARY KEY (id_pedido, id_producto))";
 
     private static final String SQL_INSERT_TIPOS_MOVIMIENTO = "INSERT INTO TIPOS_MOVIMIENTO (id_tipo, descripcion) VALUES " +
@@ -116,6 +116,23 @@ public class DatabaseInit extends SQLiteOpenHelper {
             "(1, 3, 8), " +
             "(4, 4, 9), " +
             "(5, 5, 10);";
+    private static final String SQL_INSERT_PEDIDOS = "INSERT INTO " + TABLE_PEDIDOS + " (fecha, fecha_entrega, detalle, senia, resto, total, nombre_cliente, celular_cliente, id_estado) VALUES " +
+            "('2024-09-26', '2024/09/30', 'Pedido de productos electrónicos', '100', '300', '400', 'Juan Pérez', '5551234567', 1), " +
+            "('2024-09-25', '2024/09/29', 'Pedido de muebles', '150', '450', '600', 'Ana García', '5559876543', 2), " +
+            "('2024-09-24', '2024/09/28', 'Pedido de artículos de oficina', '50', '200', '250', 'Carlos López', '5554567890', 1), " +
+            "('2024-09-23', '2024/09/27', 'Pedido de productos de limpieza', '75', '125', '200', 'María González', '5551122334', 3), " +
+            "('2024-09-22', '2024/09/26', 'Pedido de juguetes', '120', '180', '300', 'Roberto Martínez', '5556677889', 2);";
+    private static final String SQL_INSERT_PRODUCTOS_POR_PEDIDO = "INSERT INTO " + TABLE_PRODUCTOS_POR_PEDIDO + " (id_pedido, id_producto, cantidad) VALUES " +
+            "(1, 1, 2), " +
+            "(1, 2, 1), " +
+            "(2, 3, 4), " +
+            "(2, 4, 3), " +
+            "(3, 1, 5), " +
+            "(3, 5, 2), " +
+            "(4, 2, 6), " +
+            "(4, 3, 7), " +
+            "(5, 4, 1), " +
+            "(5, 5, 8);";
 
 
 
@@ -142,6 +159,8 @@ public class DatabaseInit extends SQLiteOpenHelper {
         db.execSQL(SQL_INSERT_INGRESOS);
         db.execSQL(SQL_INSERT_EGRESOS);
         db.execSQL(SQL_INSERT_PRODUCTOS_POR_INGRESO);
+        db.execSQL(SQL_INSERT_PEDIDOS);
+        db.execSQL(SQL_INSERT_PRODUCTOS_POR_PEDIDO);
     }
 
     @Override

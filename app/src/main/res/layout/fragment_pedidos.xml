@@ -7,8 +7,23 @@
     tools:context=".fragments.PedidosFragment"
     android:background="@color/material_dynamic_tertiary90">
 
+    <Button
+        android:id="@+id/button_Filtrar_Pedidos"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:hint="filtrar"
+        android:stateListAnimator="@null" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recView_Pedidos"
+        android:layout_width="match_parent"
+        android:layout_height="643dp"
+        android:layout_gravity="bottom"
+        tools:listitem="" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButton_pedidos"
+        android:id="@+id/floatButton_add_Pedidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
