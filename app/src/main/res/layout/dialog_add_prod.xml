@@ -3,41 +3,82 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center">
+    android:paddingTop="32dp"
+    android:paddingHorizontal="32dp">
 
+    <!-- Titulo  -->
     <TextView
         android:id="@+id/textView_Titulo_Prod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar Producto"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center" />
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center">
+    </TextView>
 
-    <EditText
-        android:id="@+id/editText_NombreProd_Prod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Nombre Producto"
-        android:gravity="center"
-        android:layout_marginBottom="16dp" />
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="110dp"
+        android:layout_height="3dp"
+        android:layout_marginBottom="16dp">
+    </com.google.android.material.divider.MaterialDivider>
 
-    <EditText
-        android:id="@+id/editText_CantInic_Prod"
-        android:layout_width="wrap_content"
+    <!-- Input Layout - Nombre Prodcuto  -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0"
-        android:inputType="numberDecimal"
-        android:gravity="center"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="8dp">
 
-    <EditText
-        android:id="@+id/editText_PrecUnit_Prod"
-        android:layout_width="wrap_content"
+        <!-- Input -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_NombreProd_Prod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre Producto"
+            android:inputType="text"
+            android:drawableStart="@drawable/package_2_24px"
+            android:drawablePadding="16dp">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Input Layout - Cantidad  -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Precio Unitario"
-        android:inputType="numberDecimal"
-        android:gravity="center"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="8dp">
+
+        <!-- Input -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_CantInic_Prod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cantidad"
+            android:inputType="numberDecimal"
+            android:drawableStart="@drawable/tag_24px"
+            android:drawablePadding="16dp">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Input Layout - Precio  -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <!-- Input -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_PrecUnit_Prod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Precio"
+            android:inputType="numberDecimal"
+            android:drawableStart="@drawable/attach_money_bold_24px"
+            android:drawablePadding="16dp">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

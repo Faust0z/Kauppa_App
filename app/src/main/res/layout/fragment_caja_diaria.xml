@@ -5,105 +5,279 @@
     android:id="@+id/frameLayout_cajaDiaria"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_tertiary60"
     tools:context=".fragments.CajaDiariaFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="666dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="36dp"
+        android:padding="32dp">
 
-        <LinearLayout
-            android:id="@+id/layout_EntSalTotal_CajaDiaria"
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Caja Diaria"
+            android:textStyle="bold"
+            android:textSize="30sp">
+        </TextView>
+
+        <!-- Descripción -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gestiona tus ingresos y gastos diarios fácilmente. Registra y visualiza tu flujo de efectivo al instante."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp">
+        </TextView>
+
+        <!-- Card - Cantidad Productos -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="4dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/md_theme_onSecondaryContainer">
 
-            <TextView
-                android:id="@+id/textView_Ingresos_CajaDiaria"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ingresos:" />
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-            <TextView
-                android:id="@+id/textView_IngresosCant_CajaDiaria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="$" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/textView_Egresos_CajaDiaria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Egresos" />
+                    <TextView
+                        android:id="@+id/textView_TotalCant_CajaDiaria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$24.000"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_inverseOnSurface"
+                        android:textIsSelectable="true"
+                        android:layout_weight="1">
+                    </TextView>
 
-            <TextView
-                android:id="@+id/textView_EgresosCant_CajaDiaria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="$" />
+                    <!-- Card - Titulo  -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Balance Diario"
+                        android:textSize="14sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/md_theme_inverseOnSurface">
+                    </TextView>
 
-            <TextView
-                android:id="@+id/textView_Total_CajaDiaria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Total" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView_TotalCant_CajaDiaria"
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/payments_24px"
+                    app:tint="@color/md_theme_inverseOnSurface"
+                    android:contentDescription="package icon">
+                </ImageView>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <!-- Card - Cantidad Productos -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="$" />
+                android:layout_marginRight="2dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/md_theme_outline_mediumContrast">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView_IngresosCant_CajaDiaria"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$32.000"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_theme_inverseOnSurface"
+                            android:textIsSelectable="true"
+                            android:layout_weight="1">
+                        </TextView>
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/south_west_24px"
+                            app:tint="@color/md_theme_inverseOnSurface"
+                            android:contentDescription="package icon">
+                        </ImageView>
+
+                    </LinearLayout>
+
+                    <!-- Card - Titulo  -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ingresos"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/md_theme_inverseOnSurface">
+                    </TextView>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card - Cantidad Productos -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/md_theme_outline_mediumContrast">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView_EgresosCant_CajaDiaria"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$8.000"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_theme_inverseOnSurface"
+                            android:textIsSelectable="true"
+                            android:layout_weight="1">
+                        </TextView>
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/north_east_24px"
+                            app:tint="@color/md_theme_inverseOnSurface"
+                            android:contentDescription="package icon">
+                        </ImageView>
+
+                    </LinearLayout>
+
+                    <!-- Card - Titulo  -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Egresos"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/md_theme_inverseOnSurface">
+                    </TextView>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
-        <!-- Es necesario que este botón esté como "gone" en vez de eliminarlo directamente -->
-        <Button
-            android:id="@+id/button_Filtrar_CajaDiaria"
+        <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_height="87dp"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/button_irBalGnral_CajaDiaria"
-            android:layout_width="45dp"
-            android:layout_height="44dp"
-            android:drawableBottom="@drawable/baseline_home_24" />
+            android:layout_height="3dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="12dp"
+            app:dividerColor="@color/md_theme_outline">
+        </com.google.android.material.divider.MaterialDivider>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recView_CajaDiaria"
             android:layout_width="match_parent"
-            android:layout_height="492dp"
-            android:layout_gravity="bottom"
+            android:layout_height="match_parent"
             tools:listitem="">
-
         </androidx.recyclerview.widget.RecyclerView>
 
-        <LinearLayout
+        <include
+            android:id="@+id/empty_movimiento_view"
+            layout="@layout/empty_movimiento_view"
             android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:visibility="gone">
+        </include>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatButton_Whatsapp_CajaDiaria"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:src="@drawable/baseline_message_24" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatButton_add_CajaDiaria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
-                app:layout_constraintEnd_toEndOf="@+id/frame_layout"
-                app:srcCompat="@drawable/baseline_add_24" />
-        </LinearLayout>
     </LinearLayout>
+
+    <!-- Es necesario que este botón esté como "gone" en vez de eliminarlo directamente -->
+    <Button
+        android:id="@+id/button_Filtrar_CajaDiaria"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:visibility="gone" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatButton_Whatsapp_CajaDiaria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="85dp"
+        android:src="@drawable/baseline_message_24">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_irBalGnral_CajaDiaria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="85dp"
+        android:src="@drawable/account_balance_wallet_24px"
+        android:contentDescription="boton balance general">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatButton_add_CajaDiaria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/add_24px"
+        android:contentDescription="boton agregar movimiento">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
 </FrameLayout>

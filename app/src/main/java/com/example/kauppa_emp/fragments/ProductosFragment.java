@@ -18,8 +18,10 @@ import com.example.kauppa_emp.database.dataObjects.Movimientos;
 import com.example.kauppa_emp.database.dataObjects.Productos;
 import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterProductos;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -32,6 +34,8 @@ public class ProductosFragment extends BaseFragment<Productos> {
             textView_totalCant_Prods,
             textView_StkBajoCant_Prods,
             textView_SinStkCant_Prods;
+
+    private MaterialButton btnVolverListaProductos;
 
     private FloatingActionButton addButton;
 
@@ -72,6 +76,17 @@ public class ProductosFragment extends BaseFragment<Productos> {
 
         addButton = view.findViewById(getAddButtonId());
         addButton.setOnClickListener(v -> openAddDialog());
+
+        btnVolverListaProductos = view.findViewById(R.id.btnVolverListaProductos);
+        btnVolverListaProductos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pop fragment from stack
+                if (getParentFragmentManager().getBackStackEntryCount() > 0) {
+                    getParentFragmentManager().popBackStack();
+                }
+            }
+        });
 
         return view;
     }
@@ -118,25 +133,25 @@ public class ProductosFragment extends BaseFragment<Productos> {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_prod, null);
 
-        EditText editText_NombreProd_Prod = dialogView.findViewById(R.id.editText_NombreProd_Prod);
-        EditText editText_CantInic_Prod = dialogView.findViewById(R.id.editText_CantInic_Prod);
-        EditText editText_PrecUnit_Prod = dialogView.findViewById(R.id.editText_PrecUnit_Prod);
+        TextInputEditText editText_NombreProd_Prod = dialogView.findViewById(R.id.editText_NombreProd_Prod);
+        TextInputEditText editText_CantInic_Prod = dialogView.findViewById(R.id.editText_CantInic_Prod);
+        TextInputEditText editText_PrecUnit_Prod = dialogView.findViewById(R.id.editText_PrecUnit_Prod);
 
         new MaterialAlertDialogBuilder(getContext())
                 .setView(dialogView)
                 .setPositiveButton("Agregar", (dialog, which) -> {
-                    String nomProd = editText_NombreProd_Prod.getText().toString();
-                    String cantInic = editText_CantInic_Prod.getText().toString();
-                    String precUnit = editText_PrecUnit_Prod.getText().toString();
+                    String nomProd = String.valueOf(editText_NombreProd_Prod.getText());
+                    String cantInic = String.valueOf(editText_CantInic_Prod.getText());
+                    String precUnit = String.valueOf(editText_PrecUnit_Prod.getText());
 
                     String fechaActual = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
 
                     float result = dbHelper.addProducto(nomProd, cantInic, fechaActual, precUnit, false);
                     if (result != -1) {
-                        Toast.makeText(getContext(), "Elemento agregado con éxito", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Producto agregado con éxito", Toast.LENGTH_SHORT).show();
                         addElementsToRecyclerView();
                     } else {
-                        Toast.makeText(getContext(), "Error al ingresar elemento", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error al ingresar el producto", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancelar", null)

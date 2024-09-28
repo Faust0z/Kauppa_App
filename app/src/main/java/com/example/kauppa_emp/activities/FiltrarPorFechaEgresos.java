@@ -3,6 +3,7 @@ package com.example.kauppa_emp.activities;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.database.dataObjects.Egresos;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterEgresos;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import java.util.Locale;
 
 public class FiltrarPorFechaEgresos extends AppCompatActivity {
     protected RecyclerView recView_FiltrarPorFechaAct;
-    protected Button button_Filtrar_FiltrarPorFechaAct, buttonVolver;
+    protected MaterialButton button_Filtrar_FiltrarPorFechaAct, buttonVolver, button_titulo_Fecha_Filtrar_Egreso;
 
     protected String fecha;
 
@@ -48,12 +50,15 @@ public class FiltrarPorFechaEgresos extends AppCompatActivity {
         buttonVolver = findViewById(R.id.button_Volver_FiltrarPorFechaActEgresos);
         buttonVolver.setOnClickListener(v -> finish());
 
+
         getIntentData();
         createButtonFiltrar();
         addElementsToRecyclerView();
     }
 
     protected void createButtonFiltrar() {
+        button_titulo_Fecha_Filtrar_Egreso = findViewById(R.id.button_titulo_Fecha_Filtrar_Egreso);
+        button_titulo_Fecha_Filtrar_Egreso.setText(fecha);
         button_Filtrar_FiltrarPorFechaAct = findViewById(getFiltrarButtonId());
         button_Filtrar_FiltrarPorFechaAct.setText(fecha);
         button_Filtrar_FiltrarPorFechaAct.setOnClickListener(v -> {

@@ -42,11 +42,10 @@ public class CalcularPrecioFragment extends Fragment {
         btnVolverCalcularPrecio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace fragment
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, new HerramientasFragment())
-                        .addToBackStack(null)
-                        .commit();
+                // Pop fragment from stack
+                if (getParentFragmentManager().getBackStackEntryCount() > 0) {
+                    getParentFragmentManager().popBackStack();
+                }
             }
         });
 
