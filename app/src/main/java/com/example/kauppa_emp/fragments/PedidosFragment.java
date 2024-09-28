@@ -70,10 +70,10 @@ public class PedidosFragment extends BaseFragment<Pedidos> {
     @Override
     public void onResume(){
         super.onResume();
-        calcularIngEgrTotal();
+        calcularTextViewPedidos();
     }
 
-    private void calcularIngEgrTotal() {
+    private void calcularTextViewPedidos() {
         int totalPedidos = 0, totalPendientes = 0, totalListos = 0;
         for (Pedidos item : items) {
             String idEstado = item.getIdEstado();
@@ -89,17 +89,6 @@ public class PedidosFragment extends BaseFragment<Pedidos> {
             textView_PendientesCant_Pdid.setText(String.valueOf(totalPendientes));
             textView_ListosCant_Pdid.setText(String.valueOf(totalListos));
         }
-    }
-
-    private BigDecimal calcularTextViewPedidos(){
-        BigDecimal total = new BigDecimal(0);
-        for (Pedidos item : items) {
-            String itemEstado = item.getIdEstado();
-            if (!itemEstado.equals("4")){
-                total = total.add(new BigDecimal(item.getTotal()));
-            }
-        }
-        return total;
     }
 
     @Override

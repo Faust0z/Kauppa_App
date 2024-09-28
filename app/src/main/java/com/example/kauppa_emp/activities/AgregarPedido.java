@@ -42,7 +42,7 @@ public class AgregarPedido extends MasInfoPedidos {
     private void insertBDD() {
         String fechaEntrega = movTextoFechaEntrega.getText().toString();
         String detalle = movTextoDetalle.getText().toString();
-        String senia = movTextoSenia.getText().toString();
+        String senia = movTextoSenia.getText().toString().trim();
         String total = movTextoTotal.getText().toString();
         String nomCliente = movTextoNomCliente.getText().toString();
         String celCliente = movTextoCelCliente.getText().toString();
@@ -53,6 +53,10 @@ public class AgregarPedido extends MasInfoPedidos {
 
         Pedidos ultimoPedido = Pedidos.getUltimoPedido(dbHelper.getUltimoPedido());
         gestionarProdsAsociados(fechaActual, ultimoPedido.getId());
+
+        if (!senia.isEmpty() && !senia.equals("0")){
+            dbHelper.addIngreso(fechaActual, senia, "Seña del pedido N°: " + ultimoPedido.getId(), 2, nomCliente);
+        }
 
         finish();
     }

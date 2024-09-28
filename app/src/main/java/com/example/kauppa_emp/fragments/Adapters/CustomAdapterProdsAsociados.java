@@ -81,22 +81,27 @@ public class CustomAdapterProdsAsociados extends RecyclerView.Adapter<CustomAdap
 
             @Override
             public void afterTextChanged(Editable s) {
-                String editText_Cant = s.toString();
                 if (!isUserInput) return;
+                String editText_Cant = s.toString().trim();
                 if (editText_Cant.isEmpty()) return;
 
                 // Se compara con el "stockSinEditar" porque esa es la cantidad REAL restante de stock de ese
                 // prod: la cantidad previamente elegida + el stock actual.
-                int cantidad = Integer.parseInt(editText_Cant);
-                if (!prodActual.esFantasma() && cantidad > (prodActual.getStockSinEditar())){
-                    Toast.makeText(context, "La cantidad del producto debe ser menor al stock existente", Toast.LENGTH_SHORT).show();
-                    buttonActualizar.setEnabled(false);
-                    holder.editText_Cant_ProdsAsociados.setTextColor(Color.RED);
-                } else if (listener != null) {
-                    prodActual.setCant(cantidad);
-                    listener.seEditoProd();
-                    buttonActualizar.setEnabled(true);
-                    holder.editText_Cant_ProdsAsociados.setTextColor(Color.BLACK);
+                try {
+                    int cantidad = Integer.parseInt(editText_Cant);
+                    // Compara contra el stock real sin editar
+                    if (!prodActual.esFantasma() && cantidad > prodActual.getStockSinEditar()) {
+                        Toast.makeText(context, "La cantidad del producto debe ser menor al stock existente", Toast.LENGTH_SHORT).show();
+                        buttonActualizar.setEnabled(false);
+                        holder.editText_Cant_ProdsAsociados.setTextColor(Color.RED);
+                    } else {
+                        prodActual.setCant(cantidad);
+                        if (listener != null) listener.seEditoProd();
+                        buttonActualizar.setEnabled(true);
+                        holder.editText_Cant_ProdsAsociados.setTextColor(Color.BLACK);
+                    }
+                } catch (NumberFormatException e) {
+                    Toast.makeText(context, "Ingrese un número válido", Toast.LENGTH_SHORT).show();
                 }
             }
         };
