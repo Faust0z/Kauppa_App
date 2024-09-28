@@ -275,8 +275,8 @@ public class DatabaseHelper {
     }
 
 
-
     // ------------------ TABLA PRODUCTOS_POR_INGRESO ------------------
+
 
     public long addProductosIngr(String idIngreso, String idProducto, int cantidad) {
         SQLiteDatabase db = dbInit.getWritableDatabase();
@@ -317,6 +317,124 @@ public class DatabaseHelper {
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery(query, new String[]{String.valueOf(ingreId)});
+        }
+        return cursor;
+    }
+
+
+    // ------------------ TABLA PEDIDOS ------------------
+
+
+    public long addPedido(String fecha, String fechaEntrega, @Nullable String detalle, @Nullable String senia, String total, @Nullable String nombreCliente, @Nullable String celularCliente, int idEstado) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("fecha", fecha);
+        cv.put("fecha_entrega", fechaEntrega);
+        cv.put("detalle", detalle);
+        cv.put("senia", senia);
+        cv.put("total", total);
+        cv.put("nombre_cliente", nombreCliente);
+        cv.put("celular_cliente", celularCliente);
+        cv.put("id_estado", idEstado);
+        return db.insert(DatabaseInit.TABLE_PEDIDOS, null, cv);
+    }
+
+    public Cursor getAllPedidos() {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PEDIDOS;
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor getPedidosByFecha(String movFecha) {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PEDIDOS + " WHERE fecha_entrega=?";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{movFecha});
+        }
+        return cursor;
+    }
+
+    public Cursor getUltimoPedido() {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PEDIDOS + " ORDER BY id_pedido DESC LIMIT 1";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public long updtPedido(String id, String fechaEntrega, @Nullable String detalle, String senia, String total, String resto, @Nullable String nomCliente, @Nullable String celCliente, int idEstado) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("fecha_entrega", fechaEntrega);
+        cv.put("detalle", detalle);
+        cv.put("senia", senia);
+        cv.put("resto", resto);
+        cv.put("total", total);
+        cv.put("nombre_cliente", nomCliente);
+        cv.put("celular_cliente", celCliente);
+        cv.put("id_estado", idEstado);
+        return db.update(DatabaseInit.TABLE_PEDIDOS, cv, "id_pedido=?", new String[]{id});
+    }
+
+    public long delPedido(String id) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        delALLProductosByPdidId(id);
+        return db.delete(DatabaseInit.TABLE_PEDIDOS, "id_pedido=?", new String[]{id});
+    }
+
+
+    // ------------------ TABLA PRODUCTOS_POR_INGRESO ------------------
+
+
+    public long addProductosPdid(String idPedido, String idProducto, int cantidad) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id_pedido", Integer.parseInt(idPedido));
+        cv.put("id_producto", Integer.parseInt(idProducto));
+        cv.put("cantidad", cantidad);
+        return db.insert(DatabaseInit.TABLE_PRODUCTOS_POR_PEDIDO, null, cv);
+    }
+
+    public long updtProductosPdid(String idPedido, String idProducto, int cantidad) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id_pedido", Integer.parseInt(idPedido));
+        cv.put("id_producto", Integer.parseInt(idProducto));
+        cv.put("cantidad", cantidad);
+
+        return db.update(DatabaseInit.TABLE_PRODUCTOS_POR_PEDIDO, cv,
+                "id_pedido=? AND id_producto=?", new String[]{idPedido, idProducto});
+    }
+
+    public long delProductosPdid(String idPedido, String idProducto) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        return db.delete(DatabaseInit.TABLE_PRODUCTOS_POR_PEDIDO,
+                "id_pedido=? AND id_producto=?",
+                new String[]{idPedido, idProducto});
+    }
+
+    public long delALLProductosByPdidId(String idPedido) {
+        SQLiteDatabase db = dbInit.getWritableDatabase();
+        return db.delete(DatabaseInit.TABLE_PRODUCTOS_POR_PEDIDO, "id_pedido=?", new String[]{idPedido});
+    }
+
+    public Cursor getProductosPdidById(String pedidId) {
+        String query = "SELECT * FROM " + DatabaseInit.TABLE_PRODUCTOS_POR_PEDIDO + " WHERE id_pedido=? ";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(pedidId)});
         }
         return cursor;
     }

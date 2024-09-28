@@ -227,7 +227,8 @@
             android:id="@+id/recView_CajaDiaria"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="">
+            tools:listitem=""
+            android:visibility="visible">
         </androidx.recyclerview.widget.RecyclerView>
 
         <include

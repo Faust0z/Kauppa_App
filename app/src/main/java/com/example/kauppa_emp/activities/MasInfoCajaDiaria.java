@@ -2,7 +2,6 @@ package com.example.kauppa_emp.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -85,13 +84,19 @@ public class MasInfoCajaDiaria extends AppCompatActivity {
             String monto = getIntent().getStringExtra("movMonto");
             String detalle = getIntent().getStringExtra("movDetalle");
             String idTipos = getIntent().getStringExtra("movIdTipos");
+            boolean esPedido = getIntent().getBooleanExtra("esPedido", false);
 
             movimiento = new Movimientos(id, fecha, monto, detalle, idTipos);
+            if (esPedido){movimiento.setEsPedido(true);}
         }
     }
 
     void setIntentDataInTxt(){
-        movTitulo.setText("Información - " + dbHelper.getTipoMovById(movimiento.getIdTipo()) + " #" + movimiento.getId());
+        if (movimiento.isPedido()){
+            movTitulo.setText("Pedido N°" + movimiento.getId());
+        }else{
+            movTitulo.setText("Información - " + dbHelper.getTipoMovById(movimiento.getIdTipo()) + " #" + movimiento.getId());
+        }
         movTextoFecha.setText(movimiento.getFecha());
         movTextoMonto.setText(movimiento.getMonto());
         movTextoDetalle.setText(movimiento.getDetalle());

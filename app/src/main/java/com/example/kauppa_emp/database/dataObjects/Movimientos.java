@@ -18,6 +18,8 @@ public class Movimientos {
     private String idTipo;
     private String datoExtra = "";
 
+    private boolean esPedido; // Sólo para poder representar correctamente los pedidos en la caja diaria
+
     public Movimientos(String id, String fecha, String monto, String detalle, String idTipo) {
         this.id = id;
         this.fecha = fecha;
@@ -56,6 +58,9 @@ public class Movimientos {
         ArrayList<Movimientos> itemsEgre = Egresos.bddToArraylistMovimientos(dbHelper.getAllEgresos());
         items.addAll(itemsEgre);
 
+        ArrayList<Movimientos> itemsPdid = Pedidos.bddToArraylistMovimientos(dbHelper.getAllPedidos());
+        items.addAll(itemsPdid);
+
         return ordenarPorFecha(items);
     }
 
@@ -80,6 +85,9 @@ public class Movimientos {
 
         ArrayList<Movimientos> itemsEgre = Egresos.bddToArraylistMovimientos(dbHelper.getEgresosByFecha(fechaActual));
         items.addAll(itemsEgre);
+
+        ArrayList<Movimientos> itemsPdid = Pedidos.bddToArraylistMovimientos(dbHelper.getPedidosByFecha(fechaActual));
+        items.addAll(itemsPdid);
 
         return ordenarPorFecha(items);
     }
@@ -122,4 +130,11 @@ public class Movimientos {
         return datoExtra;
     }
 
+    public boolean isPedido() {
+        return esPedido;
+    }
+
+    public void setEsPedido(boolean esPedido) {
+        this.esPedido = esPedido;
+    }
 }

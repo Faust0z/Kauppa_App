@@ -51,8 +51,12 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
         holder.textView_Id_FilaCajaDiaria.setText(String.valueOf(movimientos.size() - position));
         holder.textView_Fecha_FilaCajaDiaria.setText(movimientoActual.getFecha());
         holder.textView_Monto_FilaCajaDiaria.setText(format.format(Double.parseDouble(movimientoActual.getMonto())));
-        holder.textView_Tipo_FilaCajaDiaria.setText(TiposMovimiento.getTipoMov(movimientoActual.getIdTipo()));
         holder.textView_DatoExtra_FilaCajaDiaria.setText(movimientoActual.getDatoExtra());
+        if (movimientoActual.isPedido()){
+            holder.textView_Tipo_FilaCajaDiaria.setText("Pedido");
+        }else{
+            holder.textView_Tipo_FilaCajaDiaria.setText(TiposMovimiento.getTipoMov(movimientoActual.getIdTipo()));
+        }
 
         holder.mainLayout.setOnClickListener(v -> {
             int currentPosition = holder.getAdapterPosition();
@@ -64,6 +68,7 @@ public class CustomAdapterCajaDiaria extends RecyclerView.Adapter<CustomAdapterC
                 intent.putExtra("movMonto", movimientoActual.getMonto());
                 intent.putExtra("movDetalle", movimientoActual.getDetalle());
                 intent.putExtra("movIdTipos", movimientoActual.getIdTipo());
+                intent.putExtra("esPedido", movimientoActual.isPedido());
                 activity.startActivityForResult(intent, 1);
             }
         });

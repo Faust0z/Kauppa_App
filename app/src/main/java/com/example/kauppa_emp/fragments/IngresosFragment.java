@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.activities.AgregarIngreso;
+import com.example.kauppa_emp.activities.FiltrarPorFechaIngresos;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterIngresos;
 import com.example.kauppa_emp.database.dataObjects.Ingresos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,7 +45,7 @@ public class IngresosFragment extends BaseFragment<Ingresos> {
 
     @Override
     protected Activity getFiltrarActivity() {
-        return null;
+        return new FiltrarPorFechaIngresos();
     }
 
     @Override

@@ -48,6 +48,21 @@ public class TiposMovimiento {
         }
     }
 
+    public static String getEstadoById(String id){
+        switch (id) {
+            case "1":
+                return "Sin Empezar";
+            case "2":
+                return "En Curso";
+            case "3":
+                return "Listo";
+            case "4":
+                return "Entregado";
+            default:
+                return "";
+        }
+    }
+
     public static List<String> relleSpinnerIngresos(){
         List<String> elementos = new ArrayList<>();
         elementos.add(getTipoById("1"));
@@ -61,6 +76,15 @@ public class TiposMovimiento {
         elementos.add(getTipoById("4"));
         elementos.add(getTipoById("5"));
         elementos.add(getTipoById("6"));
+        return elementos;
+    }
+
+    public static List<String> relleSpinnerPedidos(){
+        List<String> elementos = new ArrayList<>();
+        elementos.add(getEstadoById("1"));
+        elementos.add(getEstadoById("2"));
+        elementos.add(getEstadoById("3"));
+        elementos.add(getEstadoById("4"));
         return elementos;
     }
 
@@ -80,6 +104,21 @@ public class TiposMovimiento {
                 return 6;
             case "Pedido":
                 return 7;
+            default:
+                return 0;
+        }
+    }
+
+    public static int estadoToId(String nombre){
+        switch (nombre) {
+            case "Sin Empezar":
+                return 1;
+            case "En Curso":
+                return 2;
+            case "Listo":
+                return 3;
+            case "Entregado":
+                return 4;
             default:
                 return 0;
         }
