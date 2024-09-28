@@ -117,11 +117,11 @@ public class DatabaseInit extends SQLiteOpenHelper {
             "(4, 4, 9), " +
             "(5, 5, 10);";
     private static final String SQL_INSERT_PEDIDOS = "INSERT INTO " + TABLE_PEDIDOS + " (fecha, fecha_entrega, detalle, senia, resto, total, nombre_cliente, celular_cliente, id_estado) VALUES " +
-            "('2024-09-26', '2024/09/30', 'Pedido de productos electrónicos', '100', '300', '400', 'Juan Pérez', '5551234567', 1), " +
-            "('2024-09-25', '2024/09/29', 'Pedido de muebles', '150', '450', '600', 'Ana García', '5559876543', 2), " +
-            "('2024-09-24', '2024/09/28', 'Pedido de artículos de oficina', '50', '200', '250', 'Carlos López', '5554567890', 1), " +
-            "('2024-09-23', '2024/09/27', 'Pedido de productos de limpieza', '75', '125', '200', 'María González', '5551122334', 3), " +
-            "('2024-09-22', '2024/09/26', 'Pedido de juguetes', '120', '180', '300', 'Roberto Martínez', '5556677889', 2);";
+            "('26/09/2024', '30/09/2024', 'Pedido de productos electrónicos', '100', '300', '400', 'Juan Pérez', '5551234567', 1), " +
+            "('25/09/2024', '29/09/2024', 'Pedido de muebles', '150', '450', '600', 'Ana García', '5559876543', 2), " +
+            "('24/09/2024', '28/09/2024', 'Pedido de artículos de oficina', '50', '200', '250', 'Carlos López', '5554567890', 1), " +
+            "('23/09/2024', '27/09/2024', 'Pedido de productos de limpieza', '75', '125', '200', 'María González', '5551122334', 3), " +
+            "('22/09/2024', '26/09/2024', 'Pedido de juguetes', '120', '180', '300', 'Roberto Martínez', '5556677889', 2);";
     private static final String SQL_INSERT_PRODUCTOS_POR_PEDIDO = "INSERT INTO " + TABLE_PRODUCTOS_POR_PEDIDO + " (id_pedido, id_producto, cantidad) VALUES " +
             "(1, 1, 2), " +
             "(1, 2, 1), " +
