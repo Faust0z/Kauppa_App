@@ -6,12 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -29,7 +30,9 @@ import com.example.kauppa_emp.database.dataObjects.Productos;
 import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterProdsAsociados;
 import com.example.kauppa_emp.fragments.ProdsAsociadosFragment;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,9 +43,9 @@ public class MasInfoIngresos extends AppCompatActivity {
     protected DatabaseHelper dbHelper;
 
     protected TextView movTitulo;
-    protected EditText movTextoNomCliente, movTextoFecha, movTextoDetalle, movTextoTotal;
-    protected Button button_Volver, button_AddProdPerso_IngresosInfo, button_AddProdStock_IngresosInfo, actualizarButton, anularButton;
-    protected Spinner spinnerTipo;
+    protected TextInputEditText movTextoNomCliente, movTextoFecha, movTextoDetalle, movTextoTotal;
+    protected MaterialButton button_AddProdPerso_IngresosInfo, button_AddProdStock_IngresosInfo, actualizarButton, anularButton, button_Volver;
+    protected AutoCompleteTextView spinnerTipo;
     protected RecyclerView recyclerView;
     protected CustomAdapterProdsAsociados customAdapterProdsAsociados;
 
@@ -64,13 +67,12 @@ public class MasInfoIngresos extends AppCompatActivity {
 
         vincularComponentes();
         getIntentData();
+        setData();
 
         configurarSpinner();
         configurarRecView();
         configurarCampoFecha();
         configurarLayoutProds();
-
-        setData();
 
         button_Volver.setOnClickListener(v -> alternarLayouts());
         button_AddProdPerso_IngresosInfo.setOnClickListener(v -> openAddDialogProdPerso());
@@ -78,7 +80,7 @@ public class MasInfoIngresos extends AppCompatActivity {
         actualizarButton.setOnClickListener(v -> createUpdateDialog());
         anularButton.setOnClickListener(v -> createDeleteDialog());
 
-        if (spinnerTipo.getSelectedItem().toString().equals("Venta")){
+        if (spinnerTipo.getEditableText().toString().equals("Venta")){
             movTextoTotal.setText(customAdapterProdsAsociados.getPrecioTotal());
         }
     }
@@ -129,7 +131,7 @@ public class MasInfoIngresos extends AppCompatActivity {
         });
     }
 
-    private void setSpinnerToValue(Spinner spinner, String value) {
+    private void setSpinnerToValue(AutoCompleteTextView spinner, String value) {
         ArrayAdapter<String> arrayAdapter = (ArrayAdapter<String>) spinner.getAdapter();
         for (int i = 0; i < arrayAdapter.getCount(); i++) {
             if (arrayAdapter.getItem(i).equals(value)) {
@@ -155,12 +157,11 @@ public class MasInfoIngresos extends AppCompatActivity {
     }
 
     private void habDesProdsAsociados() {
-        if (spinnerTipo.getSelectedItem().toString().equals("Venta")) { // Si el ingreso es una venta, mostramos sus prods asociados
+        if (spinnerTipo.getEditableText().toString().equals("Venta")) { // Si el ingreso es una venta, mostramos sus prods asociados
             recyclerView.setVisibility(View.VISIBLE);
             button_AddProdPerso_IngresosInfo.setVisibility(View.VISIBLE);
             button_AddProdStock_IngresosInfo.setVisibility(View.VISIBLE);
-        }
-        else { // Si el prod no es una venta, no mostramos lo relacionado a productos
+        } else { // Si el prod no es una venta, no mostramos lo relacionado a productos
             recyclerView.setVisibility(View.GONE);
             button_AddProdPerso_IngresosInfo.setVisibility(View.GONE);
             button_AddProdStock_IngresosInfo.setVisibility(View.GONE);
@@ -208,9 +209,9 @@ public class MasInfoIngresos extends AppCompatActivity {
     }
 
     protected void setData(){
-        movTitulo.setText("Ingreso N° " + ingresoActual.getId());
+        movTitulo.setText("Información - Ingreso #" + ingresoActual.getId());
         movTextoNomCliente.setText(ingresoActual.getNomCliente().equals("null") ? "Cliente sin registrar" : ingresoActual.getNomCliente());
-        setSpinnerToValue(spinnerTipo, TiposMovimiento.getTipoById(ingresoActual.getIdTipo()));
+        spinnerTipo.setText(TiposMovimiento.getTipoById(ingresoActual.getIdTipo()), false);
         movTextoFecha.setText(ingresoActual.getFecha());
         movTextoTotal.setText(ingresoActual.getMonto());
         movTextoDetalle.setText(ingresoActual.getDetalle());
@@ -221,12 +222,12 @@ public class MasInfoIngresos extends AppCompatActivity {
 
         builder.setTitle("Actualizar el Ingreso N° " + ingresoActual.getId() + "?");
         builder.setPositiveButton("Si", (dialogInterface, i) -> {
-            String fecha = movTextoFecha.getText().toString().trim();
-            String total = movTextoTotal.getText().toString().trim();
-            String detalle = movTextoDetalle.getText().toString().trim();
-            String nomCliente =  movTextoNomCliente.getText().toString().trim();
+            String fecha = String.valueOf(movTextoFecha.getText()).trim();
+            String total = String.valueOf(movTextoTotal.getText()).trim();
+            String detalle = String.valueOf(movTextoDetalle.getText()).trim();
+            String nomCliente = String.valueOf(movTextoNomCliente.getText()).trim();
 
-            int tipo = TiposMovimiento.nombreToId(spinnerTipo.getSelectedItem().toString());
+            int tipo = TiposMovimiento.nombreToId(spinnerTipo.getEditableText().toString());
             dbHelper.updtIngreso(ingresoActual.getId(), fecha, total, detalle, tipo, nomCliente);
 
             String fechaActual = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());

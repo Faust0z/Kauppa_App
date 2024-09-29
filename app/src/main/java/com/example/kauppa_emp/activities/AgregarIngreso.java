@@ -31,15 +31,15 @@ public class AgregarIngreso extends MasInfoIngresos {
     @Override
     protected void setData(){
         super.setData();
-        movTitulo.setText("Ingrese los datos del nuevo Ingreso");
+        movTitulo.setText("Agregar Ingreso");
     }
 
     private void insertBDD() {
-        String fecha = movTextoFecha.getText().toString();
-        String monto = movTextoTotal.getText().toString();
-        String detalle = movTextoDetalle.getText().toString();
-        int idTipo = TiposMovimiento.nombreToId(spinnerTipo.getSelectedItem().toString());
-        String nomCliente = movTextoNomCliente.getText().toString();
+        String fecha = String.valueOf(movTextoFecha.getText());
+        String monto = String.valueOf(movTextoTotal.getText());
+        String detalle = String.valueOf(movTextoDetalle.getText());
+        int idTipo = TiposMovimiento.nombreToId(spinnerTipo.getEditableText().toString());
+        String nomCliente = String.valueOf(movTextoNomCliente.getText());
 
         dbHelper.addIngreso(fecha, monto, detalle, idTipo, nomCliente);
 

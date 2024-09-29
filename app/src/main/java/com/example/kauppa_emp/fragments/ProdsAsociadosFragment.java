@@ -56,11 +56,10 @@ public class ProdsAsociadosFragment extends ProductosFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        textView_Titulo_Productos.setText("Agregar producto en stock");
-
-        textView_totalCant_Prods.setVisibility(View.GONE);
-        textView_StkBajoCant_Prods.setVisibility(View.GONE);
-        textView_SinStkCant_Prods.setVisibility(View.GONE);
+        textView_Titulo_Productos.setText("Productos");
+        textView_Descripcion_Productos.setText("Elige aquel producto que quieras agregar al ingreso, o tambien puedes agregar un nuevo producto antes de seleccionarlo.");
+        linearLayout_estadisticas_Prods.setVisibility(View.GONE);
+        btnVolverListaProductos.setVisibility(View.GONE);
 
         return view;
     }

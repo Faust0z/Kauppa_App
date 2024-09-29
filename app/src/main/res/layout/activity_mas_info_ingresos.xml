@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,118 +12,246 @@
       para agregar. Dentro de la activity se alterna entre estos 2 layouts haciendo invisible
       a uno cuando se lo hace visible al otro y viceversa-->
 
+    <LinearLayout
+        android:id="@+id/linearLay_MasInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- Titulo  -->
+        <TextView
+            android:id="@+id/textView_Titulo_IngresoInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Información de Ingreso"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center">
+        </TextView>
+
+        <!-- Separador  -->
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="110dp"
+            android:layout_height="3dp"
+            android:layout_marginBottom="16dp">
+        </com.google.android.material.divider.MaterialDivider>
+
+        <!-- Input Layout - Cliente  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <!-- Input -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_NomClient_IngresoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:hint="Cliente"
+                android:inputType="text"
+                android:drawableStart="@drawable/person_24px"
+                android:drawablePadding="16dp">
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Input Layout - Fecha  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="0.5">
+
+                <!-- Input -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_Fecha_IngresoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:hint="Fecha"
+                    android:inputType="date"
+                    android:drawableStart="@drawable/calendar_month_24px"
+                    android:drawablePadding="16dp"
+                    android:clickable="false"
+                    android:focusable="false">
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Input Layout - Tipo Ingreso  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_weight="0.5"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <!-- Dropdown -->
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_Tipo_IngresoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:inputType="none"
+                    android:hint="Tipo"
+                    android:drawableStart="@drawable/category_24px"
+                    android:drawablePadding="16dp">
+                </AutoCompleteTextView>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Input Layout - Monto  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <!-- Input -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_Total_IngresoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:hint="Monto"
+                android:inputType="numberDecimal"
+                android:drawableStart="@drawable/attach_money_bold_24px"
+                android:drawablePadding="16dp">
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Input Layout - Detalle  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <!-- Input -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_Detalle_IngresoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:hint="Detalle"
+                android:inputType="textMultiLine"
+                android:drawableStart="@drawable/sticky_note_2_24px"
+                android:drawablePadding="16dp">
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <!-- Boton - Actualizar  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_AddProdPerso_IngresosInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prod. Unico"
+                app:cornerRadius="8dp"
+                android:layout_weight="0.5"
+                app:icon="@drawable/add_24px"
+                app:backgroundTint="@color/md_theme_outline">
+            </com.google.android.material.button.MaterialButton>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <!-- Boton - Actualizar  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_AddProdStock_IngresosInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prod. Existente"
+                app:cornerRadius="8dp"
+                android:layout_weight="0.5"
+                app:icon="@drawable/add_24px"
+                app:backgroundTint="@color/md_theme_outline">
+            </com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recView_IngresosInfo"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:minHeight="60dp"
+            android:layout_weight="1">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <!-- Layout Acciones  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Boton - Eliminar  -->
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:id="@+id/button_Eliminar_IngresoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eliminar"
+                app:cornerRadius="8dp"
+                android:layout_weight="1">
+            </com.google.android.material.button.MaterialButton>
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <!-- Boton - Actualizar  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_Update_IngresoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Actualizar"
+                app:cornerRadius="8dp"
+                android:layout_weight="1">
+            </com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/frameLay_ProdsEnStock"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible">
 
-        <Button
+        <!-- Boton Atras -->
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:id="@+id/button_Volver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Volver" />
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="32dp"
+            app:icon="@drawable/arrow_back_24px"
+            app:iconSize="25dp"
+            app:rippleColor="@color/md_theme_surfaceContainer">
+        </com.google.android.material.button.MaterialButton>
+
     </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLay_MasInfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView_Titulo_IngresoInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Venta"
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Spinner
-                android:id="@+id/spinner_Tipo_IngresoInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/editText_NomClient_IngresoInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Cliente"
-                android:inputType="textPersonName" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recView_IngresosInfo"
-                android:layout_width="match_parent"
-                android:layout_height="226dp"
-                android:minHeight="60dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button_AddProdPerso_IngresosInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Agregar prod personalizado" />
-
-                <Button
-                    android:id="@+id/button_AddProdStock_IngresosInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Agregar prod en stock" />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/editText_Fecha_IngresoInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:hint="Fecha"
-                android:inputType="numberDecimal" />
-
-            <EditText
-                android:id="@+id/editText_Detalle_IngresoInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Detalle"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/editText_Total_IngresoInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Total"
-                android:focusable="true"
-                android:inputType="numberDecimal" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button_Update_IngresoInfo"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:text="Actualizar"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/button_Eliminar_IngresoInfo"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="20dp"
-            android:text="Borrar"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
-    </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

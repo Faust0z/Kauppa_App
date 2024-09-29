@@ -37,6 +37,7 @@
 
         <!-- Descripción -->
         <TextView
+            android:id="@+id/textView_Descripcion_Productos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mantén el control de tu inventario de forma sencilla. Visualiza tus productos y realiza modificaciones."
@@ -45,6 +46,7 @@
         </TextView>
 
         <LinearLayout
+            android:id="@+id/linearLayout_estadisticas_Prods"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp">

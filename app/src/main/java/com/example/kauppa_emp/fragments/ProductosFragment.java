@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +32,14 @@ import java.util.Locale;
 
 public class ProductosFragment extends BaseFragment<Productos> {
     protected TextView textView_Titulo_Productos,
+            textView_Descripcion_Productos,
             textView_totalCant_Prods,
             textView_StkBajoCant_Prods,
             textView_SinStkCant_Prods;
 
-    private MaterialButton btnVolverListaProductos;
+    protected LinearLayout linearLayout_estadisticas_Prods;
+
+    protected MaterialButton btnVolverListaProductos;
 
     private FloatingActionButton addButton;
 
@@ -70,9 +74,11 @@ public class ProductosFragment extends BaseFragment<Productos> {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         textView_Titulo_Productos = view.findViewById(R.id.textView_Titulo_Productos);
+        textView_Descripcion_Productos = view.findViewById(R.id.textView_Descripcion_Productos);
         textView_totalCant_Prods = view.findViewById(R.id.textView_totalCant_Prods);
         textView_StkBajoCant_Prods = view.findViewById(R.id.textView_StkBajoCant_Prods);
         textView_SinStkCant_Prods = view.findViewById(R.id.textView_SinStkCant_Prods);
+        linearLayout_estadisticas_Prods = view.findViewById(R.id.linearLayout_estadisticas_Prods);
 
         addButton = view.findViewById(getAddButtonId());
         addButton.setOnClickListener(v -> openAddDialog());

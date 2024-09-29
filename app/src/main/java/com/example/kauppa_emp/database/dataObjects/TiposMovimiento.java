@@ -25,7 +25,7 @@ public class TiposMovimiento {
             case "7":
                 return "Pedido";
             default:
-                return "Mov indefinido";
+                return "Indefinido";
         }
     }
 
@@ -36,13 +36,12 @@ public class TiposMovimiento {
             case "2":
                 return "Seña";
             case "3":
-                return "Varios Ing";
+            case "6":
+                return "Varios";
             case "4":
                 return "Compra";
             case "5":
                 return "Pago";
-            case "6":
-                return "Varios";
             default:
                 return "";
         }
