@@ -8,28 +8,58 @@
     android:background="@color/material_dynamic_tertiary100"
     tools:context=".fragments.IngresosFragment">
 
-    <Button
-        android:id="@+id/button_Filtrar_Ingresos"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:hint="filtrar"
-        android:stateListAnimator="@null" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="36sp"
+        android:orientation="vertical"
+        android:padding="32sp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recView_Ingresos"
-        android:layout_width="match_parent"
-        android:layout_height="643dp"
-        android:layout_gravity="bottom"
-        tools:listitem="" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingresos"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16sp"
+            android:text="Filtrar por ..."
+            android:textSize="14sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recView_Ingresos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="#FFFFFF"
+            tools:listitem="" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="85dp"
+        android:clickable="false"
+        android:focusable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
+        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
+        app:srcCompat="@drawable/filter_alt_24px" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatButton_add_Ingresos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
         app:layout_constraintEnd_toEndOf="@+id/frame_layout"
         app:srcCompat="@drawable/baseline_add_24" />
