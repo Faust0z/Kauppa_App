@@ -158,7 +158,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="8dp">
 
-            <!-- Boton - Actualizar  -->
+            <!-- Boton - Producto Unico  -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_AddProdPerso_IngresosInfo"
                 android:layout_width="match_parent"
@@ -175,7 +175,7 @@
                 android:layout_height="match_parent">
             </Space>
 
-            <!-- Boton - Actualizar  -->
+            <!-- Boton - Producto Existente  -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_AddProdStock_IngresosInfo"
                 android:layout_width="match_parent"

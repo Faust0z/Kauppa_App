@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,140 +12,344 @@
   para agregar. Dentro de la activity se alterna entre estos 2 layouts haciendo invisible
   a uno cuando se lo hace visible al otro y viceversa-->
 
-<FrameLayout
-    android:id="@+id/frameLay_ProdsEnStock"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="invisible">
-
-    <Button
-        android:id="@+id/button_Volver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Volver" />
-</FrameLayout>
-
-<LinearLayout
-    android:id="@+id/linearLay_MasInfo"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/textView_Titulo_PedidoInfo"
+    <FrameLayout
+        android:id="@+id/frameLay_ProdsEnStock"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pedido"
-        android:textSize="18sp" />
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <!-- Boton Atras -->
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:id="@+id/button_Volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="32dp"
+            app:icon="@drawable/arrow_back_24px"
+            app:iconSize="25dp"
+            app:rippleColor="@color/md_theme_surfaceContainer">
+        </com.google.android.material.button.MaterialButton>
+
+    </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/linearLay_MasInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="32dp">
 
-        <Spinner
-            android:id="@+id/spinner_Estado_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/editText_NomClient_PedidoInfo"
+        <!-- Titulo  -->
+        <TextView
+            android:id="@+id/textView_Titulo_PedidoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Cliente"
-            android:inputType="textPersonName" />
+            android:text="Información de Pedido"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center">
+        </TextView>
 
-        <EditText
-            android:id="@+id/editText_CelClient_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Celular"
-            android:inputType="textPersonName" />
+        <!-- Separador  -->
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="110dp"
+            android:layout_height="3dp"
+            android:layout_marginBottom="16dp">
+        </com.google.android.material.divider.MaterialDivider>
 
-        <EditText
-            android:id="@+id/editText_FechaEnt_PedidoInfo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:hint="Fecha de Entrega"
-            android:inputType="numberDecimal" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editText_Senia_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Seña"
-            android:inputType="numberDecimal" />
+            <!-- Input Layout - Cliente  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="0.5">
 
-        <EditText
-            android:id="@+id/editText_Resto_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Resto"
-            android:focusable="false"
-            android:inputType="none" />
+                <!-- Input -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_NomClient_PedidoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:hint="Cliente"
+                    android:inputType="text"
+                    android:drawableStart="@drawable/person_24px"
+                    android:drawablePadding="16dp">
+                </com.google.android.material.textfield.TextInputEditText>
 
-        <EditText
-            android:id="@+id/editText_Total_PedidoInfo"
-            android:layout_width="wrap_content"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <!-- Input Layout - Celular  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="0.6">
+
+                <!-- Input -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_CelClient_PedidoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:hint="Celular"
+                    android:inputType="phone"
+                    android:drawableStart="@drawable/call_24px"
+                    android:drawablePadding="16dp">
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:hint="Total"
-            android:inputType="none" />
+            android:orientation="horizontal">
+
+            <!-- Input Layout - Fecha  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="0.65">
+
+                <!-- Input -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_FechaEnt_PedidoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:hint="Entrega"
+                    android:inputType="date"
+                    android:drawableStart="@drawable/calendar_month_24px"
+                    android:drawablePadding="8dp"
+                    android:clickable="false"
+                    android:focusable="false">
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <!-- Input Layout - Estado Pedido  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/spinner_Estado_PedidoInfo_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="0.5"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <!-- Dropdown -->
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_Estado_PedidoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:inputType="none"
+                    android:hint="Estado"
+                    android:drawableStart="@drawable/category_24px"
+                    android:drawablePadding="8dp">
+                </AutoCompleteTextView>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Input Layout - Total  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="0.3">
+
+                <!-- Input -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_Total_PedidoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:hint="Total"
+                    android:inputType="numberDecimal"
+                    android:drawableStart="@drawable/attach_money_bold_24px"
+                    android:drawablePadding="8dp">
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <!-- Input Layout - Seña  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="0.3">
+
+                <!-- Input -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_Senia_PedidoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:hint="Seña"
+                    android:inputType="numberDecimal"
+                    android:drawableStart="@drawable/attach_money_bold_24px"
+                    android:drawablePadding="8dp">
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <!-- Input Layout - Resto  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="0.3">
+
+                <!-- Input -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_Resto_PedidoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:hint="Resto"
+                    android:inputType="numberDecimal"
+                    android:drawableStart="@drawable/attach_money_bold_24px"
+                    android:drawablePadding="8dp">
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Input Layout - Detalle  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <!-- Input -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_Detalle_PedidoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:hint="Detalle"
+                android:inputType="textMultiLine"
+                android:drawableStart="@drawable/sticky_note_2_24px"
+                android:drawablePadding="16dp">
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <!-- Boton - Producto Unico  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_AddProdPerso_PedidoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prod. Unico"
+                app:cornerRadius="8dp"
+                android:layout_weight="0.5"
+                app:icon="@drawable/add_24px"
+                app:backgroundTint="@color/md_theme_outline">
+            </com.google.android.material.button.MaterialButton>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <!-- Boton - Producto Existente  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_AddProdStock_PedidoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prod. Existente"
+                app:cornerRadius="8dp"
+                android:layout_weight="0.5"
+                app:icon="@drawable/add_24px"
+                app:backgroundTint="@color/md_theme_outline">
+            </com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recView_PedidoInfo"
             android:layout_width="match_parent"
-            android:layout_height="226dp"
-            android:minHeight="60dp" />
+            android:layout_height="120dp"
+            android:minHeight="60dp"
+            android:layout_weight="1">
+        </androidx.recyclerview.widget.RecyclerView>
 
+        <!-- Layout Acciones  -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_AddProdPerso_PedidoInfo"
-                android:layout_width="wrap_content"
+            <!-- Boton - Eliminar  -->
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:id="@+id/button_Eliminar_PedidoInfo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Agregar prod personalizado" />
+                android:text="Eliminar"
+                app:cornerRadius="8dp"
+                android:layout_weight="1">
+            </com.google.android.material.button.MaterialButton>
 
-            <Button
-                android:id="@+id/button_AddProdStock_PedidoInfo"
-                android:layout_width="wrap_content"
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <!-- Boton - Actualizar  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_Update_PedidoInfo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Agregar prod en stock" />
+                android:text="Actualizar"
+                app:cornerRadius="8dp"
+                android:layout_weight="1">
+            </com.google.android.material.button.MaterialButton>
+
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editText_Detalle_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Detalle"
-            android:inputType="textPersonName" />
-
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_Update_PedidoInfo"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="Actualizar"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/button_Eliminar_PedidoInfo"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="20dp"
-        android:text="Borrar"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
-</LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

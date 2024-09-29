@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -30,7 +31,10 @@ import com.example.kauppa_emp.database.dataObjects.Productos;
 import com.example.kauppa_emp.database.dataObjects.TiposMovimiento;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterProdsAsociados;
 import com.example.kauppa_emp.fragments.ProdsAsociadosFragment;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -42,9 +46,11 @@ public class MasInfoPedidos extends AppCompatActivity {
     protected DatabaseHelper dbHelper;
 
     protected TextView movTitulo;
-    protected EditText movTextoNomCliente, movTextoFechaEntrega, movTextoDetalle, movTextoTotal, movTextoCelCliente, movTextoSenia, movTextoResto;
-    protected Button button_Volver, button_AddProdPerso_PedidosInfo, button_AddProdStock_PedidosInfo, actualizarButton, anularButton;
-    protected Spinner spinnerTipo;
+
+    protected TextInputLayout spinner_Estado_PedidoInfo_box;
+    protected TextInputEditText movTextoNomCliente, movTextoFechaEntrega, movTextoDetalle, movTextoTotal, movTextoCelCliente, movTextoSenia, movTextoResto;
+    protected MaterialButton button_Volver, button_AddProdPerso_PedidosInfo, button_AddProdStock_PedidosInfo, actualizarButton, anularButton;
+    protected AutoCompleteTextView spinnerTipo;
     protected RecyclerView recyclerView;
     protected CustomAdapterProdsAsociados customAdapterProdsAsociados;
 
@@ -67,13 +73,13 @@ public class MasInfoPedidos extends AppCompatActivity {
 
         vincularComponentes();
         getIntentData();
+        setData();
 
         configurarSpinner();
         configurarRecView();
         configurarCampoFecha();
         configurarLayoutProds();
 
-        setData();
 
         button_Volver.setOnClickListener(v -> alternarLayouts());
         button_AddProdPerso_PedidosInfo.setOnClickListener(v -> openAddDialogProdPerso());
@@ -94,7 +100,7 @@ public class MasInfoPedidos extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (movTextoSenia.getText().toString().isEmpty()){
+                if (String.valueOf(movTextoSenia.getText()).isEmpty()){
                     movTextoResto.setText(customAdapterProdsAsociados.getPrecioTotal());
                 }
             }
@@ -132,8 +138,8 @@ public class MasInfoPedidos extends AppCompatActivity {
     }
 
     private void calcularTotalYResto() {
-        String seniaStr = movTextoSenia.getText().toString();
-        String totalStr = movTextoTotal.getText().toString();
+        String seniaStr = String.valueOf(movTextoSenia.getText());
+        String totalStr = String.valueOf(movTextoTotal.getText());
 
         if (!totalStr.isEmpty()){
             BigDecimal resto = new BigDecimal(totalStr).subtract(new BigDecimal(seniaStr));
@@ -154,6 +160,7 @@ public class MasInfoPedidos extends AppCompatActivity {
         movTextoResto = findViewById(R.id.editText_Resto_PedidoInfo);
         movTextoTotal = findViewById(R.id.editText_Total_PedidoInfo);
         spinnerTipo = findViewById(R.id.spinner_Estado_PedidoInfo);
+        spinner_Estado_PedidoInfo_box = findViewById(R.id.spinner_Estado_PedidoInfo_box);
         recyclerView = findViewById(R.id.recView_PedidoInfo);
         frameLay_ProdsEnStock = findViewById(R.id.frameLay_ProdsEnStock);
         linearLay_MasInfo = findViewById(R.id.linearLay_MasInfo);
@@ -252,8 +259,9 @@ public class MasInfoPedidos extends AppCompatActivity {
     }
 
     protected void setData(){
-        movTitulo.setText("Pedido N° " + pedidoActual.getId());
-        setSpinnerToValue(spinnerTipo, TiposMovimiento.getEstadoById(pedidoActual.getIdEstado()));
+        movTitulo.setText("Información - Pedido #" + pedidoActual.getId());
+        spinnerTipo.setText(TiposMovimiento.getEstadoById(pedidoActual.getIdEstado()), false);
+        // setSpinnerToValue(spinnerTipo, TiposMovimiento.getEstadoById(pedidoActual.getIdEstado()));
         movTextoNomCliente.setText(pedidoActual.getNomCliente().equals("null") ? "Cliente sin registrar" : pedidoActual.getNomCliente());
         movTextoCelCliente.setText(pedidoActual.getCelCliente().equals("null") ? "Celular sin registrar" : pedidoActual.getCelCliente());
         movTextoFechaEntrega.setText(pedidoActual.getFechaEntrega());
@@ -266,15 +274,15 @@ public class MasInfoPedidos extends AppCompatActivity {
 
         builder.setTitle("Actualizar el Pedido N° " + pedidoActual.getId() + "?");
         builder.setPositiveButton("Si", (dialogInterface, i) -> {
-            String nomCliente =  movTextoNomCliente.getText().toString().trim();
-            String celCliente =  movTextoCelCliente.getText().toString().trim();
-            String fecha_entrega = movTextoFechaEntrega.getText().toString().trim();
-            String detalle = movTextoDetalle.getText().toString().trim();
-            String senia = movTextoSenia.getText().toString().trim();
-            String resto = movTextoSenia.getText().toString().trim();
-            String total = movTextoTotal.getText().toString().trim();
+            String nomCliente = String.valueOf(movTextoNomCliente.getText()).trim();
+            String celCliente = String.valueOf(movTextoCelCliente.getText()).trim();
+            String fecha_entrega = String.valueOf(movTextoFechaEntrega.getText()).trim();
+            String detalle = String.valueOf(movTextoDetalle.getText()).trim();
+            String senia = String.valueOf(movTextoSenia.getText()).trim();
+            String resto = String.valueOf(movTextoSenia.getText()).trim();
+            String total = String.valueOf(movTextoTotal.getText()).trim();
 
-            int estado = TiposMovimiento.estadoToId(spinnerTipo.getSelectedItem().toString());
+            int estado = TiposMovimiento.estadoToId(spinnerTipo.getEditableText().toString());
             dbHelper.updtPedido(pedidoActual.getId(), fecha_entrega, detalle, senia, resto, total, nomCliente, celCliente, estado);
 
             String fechaActual = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());

@@ -25,7 +25,7 @@ public class AgregarPedido extends MasInfoPedidos {
         anularButton.setText("Cancelar");
         anularButton.setOnClickListener(v -> finish());
 
-        spinnerTipo.setVisibility(View.GONE);
+        spinner_Estado_PedidoInfo_box.setVisibility(View.GONE);
     }
 
     @Override
@@ -36,16 +36,16 @@ public class AgregarPedido extends MasInfoPedidos {
     @Override
     protected void setData(){
         super.setData();
-        movTitulo.setText("Ingrese los datos del nuevo Pedido");
+        movTitulo.setText("Agregar Pedido");
     }
 
     private void insertBDD() {
-        String fechaEntrega = movTextoFechaEntrega.getText().toString();
-        String detalle = movTextoDetalle.getText().toString();
-        String senia = movTextoSenia.getText().toString().trim();
-        String total = movTextoTotal.getText().toString();
-        String nomCliente = movTextoNomCliente.getText().toString();
-        String celCliente = movTextoCelCliente.getText().toString();
+        String fechaEntrega = String.valueOf(movTextoFechaEntrega.getText());
+        String detalle = String.valueOf(movTextoDetalle.getText());
+        String senia = String.valueOf(movTextoSenia.getText()).trim();
+        String total = String.valueOf(movTextoTotal.getText());
+        String nomCliente = String.valueOf(movTextoNomCliente.getText());
+        String celCliente = String.valueOf(movTextoCelCliente.getText());
 
         if (dbHelper.addPedido(fechaActual, fechaEntrega, detalle, senia, total, nomCliente, celCliente, 1) != -1){
             Toast.makeText(this, "Elemento agregado con éxito", Toast.LENGTH_SHORT).show();

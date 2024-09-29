@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.activities.MasInfoPedidos;
 import com.example.kauppa_emp.database.dataObjects.Pedidos;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
@@ -72,7 +73,7 @@ public class CustomAdapterPedidos extends RecyclerView.Adapter<CustomAdapterPedi
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textView_Id_FilaPedidos, textView_NomClien_FilaPedidos, textView_FechaEntreg_FilaPedidos;
-        Button textView_Whatsapp_FilaPedidos;
+        MaterialButton button_Whatsapp_FilaPedidos;
         LinearLayout mainLayout;
 
         MyViewHolder(@NonNull View itemView) {
@@ -80,7 +81,7 @@ public class CustomAdapterPedidos extends RecyclerView.Adapter<CustomAdapterPedi
             textView_Id_FilaPedidos = itemView.findViewById(R.id.textView_Id_FilaPedidos);
             textView_NomClien_FilaPedidos = itemView.findViewById(R.id.textView_NomClien_FilaPedidos);
             textView_FechaEntreg_FilaPedidos = itemView.findViewById(R.id.textView_FechaEntreg_FilaPedidos);
-            textView_Whatsapp_FilaPedidos = itemView.findViewById(R.id.textView_Whatsapp_FilaPedidos);
+            button_Whatsapp_FilaPedidos = itemView.findViewById(R.id.button_Whatsapp_FilaPedidos);
             mainLayout = itemView.findViewById(R.id.mainLayoutFilasPedidos);
         }
     }

@@ -12,6 +12,7 @@ import com.example.kauppa_emp.R;
 import com.example.kauppa_emp.database.DatabaseHelper;
 import com.example.kauppa_emp.database.dataObjects.Pedidos;
 import com.example.kauppa_emp.fragments.Adapters.CustomAdapterPedidos;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.Locale;
 
 public class FiltrarPorFechaPedidos extends AppCompatActivity {
     protected RecyclerView recView_FiltrarPorFechaAct;
-    protected Button button_Filtrar_FiltrarPorFechaAct, buttonVolver;
+    protected MaterialButton button_Filtrar_FiltrarPorFechaAct, buttonVolver, button_titulo_Fecha_Filtrar_Pedidos;
 
     protected String fecha;
 
@@ -54,6 +55,8 @@ public class FiltrarPorFechaPedidos extends AppCompatActivity {
     }
 
     protected void createButtonFiltrar() {
+        button_titulo_Fecha_Filtrar_Pedidos = findViewById(R.id.button_titulo_Fecha_Filtrar_Pedidos);
+        button_titulo_Fecha_Filtrar_Pedidos.setText(fecha);
         button_Filtrar_FiltrarPorFechaAct = findViewById(getFiltrarButtonId());
         button_Filtrar_FiltrarPorFechaAct.setText(fecha);
         button_Filtrar_FiltrarPorFechaAct.setOnClickListener(v -> {
