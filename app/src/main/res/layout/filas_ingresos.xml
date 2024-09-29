@@ -1,9 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/mainLayoutFilasIngresos">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardElevation="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFilaIngresos"
+                style="@style/Widget.Material3.Button.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/attach_money_24px"
+                app:iconSize="20dp"
+                app:iconTint="@color/md_theme_surfaceDim"
+                app:strokeColor="@color/md_theme_surfaceDim"
+                app:strokeWidth="2dp">
+
+            </com.google.android.material.button.MaterialButton>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView_Tipo_FilaIngresos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ingreso"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurfaceVariant">
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ID: #"
+                        android:textSize="11sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/md_theme_onSurfaceVariant">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/textView_Id_FilaIngresos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123"
+                        android:textSize="11sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/md_theme_onSurfaceVariant">
+                    </TextView>
+
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="match_parent">
+                    </Space>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha: "
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/md_theme_onSurfaceVariant">
+                    </TextView>
+
+
+                    <TextView
+                        android:id="@+id/textView_Fecha_FilaIngresos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24/05/2024"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/md_theme_onSurfaceVariant">
+                    </TextView>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="2dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:dividerColor="@color/md_theme_surfaceDim">
+            </com.google.android.material.divider.MaterialDivider>
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center">
+                </TextView>
+
+                    <TextView
+                        android:id="@+id/textView_Monto_FilaIngresos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center">
+                    </TextView>
+<!-- ver si estan correctos los id's -->
+                    <TextView
+                        android:id="@+id/textView_DatoExtra_FilaCajaDiaria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="184dp"
+                        android:layout_marginTop="12dp"
+                        android:text=""
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toEndOf="@+id/textView_Id_FilaCajaDiaria"
+                        app:layout_constraintTop_toTopOf="@+id/textView_Id_FilaCajaDiaria" />
+
+
+
+
+            </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
+<!--
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -65,3 +238,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
+
+-->
