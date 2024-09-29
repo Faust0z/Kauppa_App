@@ -16,21 +16,24 @@
 
         <!-- Título -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:background="#966A56"
+            android:gravity="center|center_horizontal|center_vertical"
             android:text="Egresos"
-            android:textStyle="bold"
-            android:textSize="30sp">
-        </TextView>
+            android:textColor="#FEFEFE"
+            android:textSize="30sp"
+            android:textStyle="bold"></TextView>
 
         <!-- Descripción -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="16dp"
             android:text="Aqui podras ver todos tus egresos de dinero, ya sean compras a proveedores como tambien otro tipo de gastos."
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp">
-        </TextView>
+            android:textSize="14sp"></TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recView_Egresos"
