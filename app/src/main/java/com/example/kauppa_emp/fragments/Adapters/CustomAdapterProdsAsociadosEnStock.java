@@ -47,7 +47,7 @@ public class CustomAdapterProdsAsociadosEnStock extends CustomAdapterProductos {
                     if (!prodActual.esFantasma() && cantidad > Integer.parseInt((prodActual.getStock()))){
                         Toast.makeText(activity, "La cantidad del producto debe ser menor al stock existente", Toast.LENGTH_SHORT).show();
                     }else{
-//                      prodActual.setCant(cantidad);
+                        prodActual.setCant(cantidad);
                         prodActual.setStockSinEditar(Integer.parseInt(prodActual.getStock()));
                         prodActual.setRecienAgregado(true);
 
