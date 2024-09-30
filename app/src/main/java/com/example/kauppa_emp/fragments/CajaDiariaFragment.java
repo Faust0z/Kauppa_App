@@ -221,13 +221,13 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     private void enviarReporte() {
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Balance general: .");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "*Balance Diario:* " + textView_TotalCant_CajaDiaria.getText());
         sendIntent.setType("text/plain");
         sendIntent.setPackage("com.whatsapp"); //envia el mensaje al num elegido x nosotros
         try {
             startActivity(sendIntent);
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(getContext(), "Whatsapp no esta instalado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Whatsapp no esta instalado.", Toast.LENGTH_SHORT).show();
         }
     }
 }
