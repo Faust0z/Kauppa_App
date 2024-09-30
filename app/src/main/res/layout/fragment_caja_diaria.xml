@@ -249,13 +249,14 @@
         android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatButton_Whatsapp_CajaDiaria"
+        android:id="@+id/btn_Wapp_CajaDiaria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="85dp"
+        android:layout_marginBottom="150dp"
         android:src="@drawable/baseline_message_24">
+
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 
