@@ -1,6 +1,7 @@
 package com.example.kauppa_emp.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.os.Bundle;
 
@@ -49,6 +50,8 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
 
     private FloatingActionButton addButton;
     private FloatingActionButton button_irBalGnral_CajaDiaria;
+    //Agregue boton wup
+    private FloatingActionButton btn_Wapp_CajaDiaria;
 
     SimpleDateFormat dateFormat;
     String fechaActual;
@@ -88,11 +91,17 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         button_irBalGnral_CajaDiaria = view.findViewById(R.id.button_irBalGnral_CajaDiaria);
         button_irBalGnral_CajaDiaria.setOnClickListener(v -> changeFragment(new BalGnralFragment()));
 
+        //boton wup
+        btn_Wapp_CajaDiaria = view.findViewById(R.id.btn_Wapp_CajaDiaria);
+        btn_Wapp_CajaDiaria.setOnClickListener(v -> enviarReporte());
+
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         fechaActual = dateFormat.format(Calendar.getInstance().getTime());
 
         return view;
     }
+
+
 
     @Override
     public void onResume(){
@@ -211,5 +220,20 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
     private long insertBDD(String monto, String detalle, boolean esEntrada) {
         String tipo = esEntrada ? TiposMovimiento.VARIOSING : TiposMovimiento.VARIOSEGR;
         return dbHelper.addMovimiento(fechaActual, monto, detalle, Integer.parseInt(tipo));
+    }
+
+    //boton de whatsapp
+
+    private void enviarReporte() {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Balance general del mes: " + "\nIngresos: " + textView_IngresosCant_CajaDiaria.getText().toString() + "\nEgresos: " + textView_EgresosCant_CajaDiaria.getText().toString() + "\nTotal: " + textView_TotalCant_CajaDiaria.getText().toString());
+            sendIntent.setType("text/plain");
+            sendIntent.setPackage("com.whatsapp"); //envia el mensaje al num elegido x nosotros
+            try{
+                startActivity(sendIntent);
+            } catch (android.content.ActivityNotFoundException ex){
+                Toast.makeText(getContext(), "Whatsapp no esta instalado", Toast.LENGTH_SHORT).show();
+            }
     }
 }
