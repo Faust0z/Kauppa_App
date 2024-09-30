@@ -6,145 +6,383 @@
     android:layout_height="match_parent"
     tools:context=".activities.MasInfoPedidos">
 
-<!--  Esta pantalla tiene 2 layouts principales diferentes, uno para mostrar la información
+    <!--  Esta pantalla tiene 2 layouts principales diferentes, uno para mostrar la información
   de los Pedidos, y otro para mostrar la lista de productos en stock disponibles
   para agregar. Dentro de la activity se alterna entre estos 2 layouts haciendo invisible
   a uno cuando se lo hace visible al otro y viceversa-->
 
-<FrameLayout
-    android:id="@+id/frameLay_ProdsEnStock"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="invisible">
-
-    <Button
-        android:id="@+id/button_Volver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Volver" />
-</FrameLayout>
-
-<LinearLayout
-    android:id="@+id/linearLay_MasInfo"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/textView_Titulo_PedidoInfo"
+    <FrameLayout
+        android:id="@+id/frameLay_ProdsEnStock"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pedido"
-        android:textSize="18sp" />
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/button_Volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volver" />
+    </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/linearLay_MasInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spinner_Estado_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/editText_NomClient_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Cliente"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editText_CelClient_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Celular"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editText_FechaEnt_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:hint="Fecha de Entrega"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/editText_Senia_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Seña"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/editText_Resto_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Resto"
-            android:focusable="false"
-            android:inputType="none" />
-
-        <EditText
-            android:id="@+id/editText_Total_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:hint="Total"
-            android:inputType="none" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recView_PedidoInfo"
+        <TextView
+            android:id="@+id/textView_Titulo_PedidoInfo"
             android:layout_width="match_parent"
-            android:layout_height="226dp"
-            android:minHeight="60dp" />
+            android:layout_height="wrap_content"
+            android:background="#6E4635"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Pedido"
+            android:textColor="#FEFEFE"
+            android:textSize="30sp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36sp"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button_AddProdPerso_PedidoInfo"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="Estado: "
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/spinner_Estado_PedidoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="Cliente:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/editText_NomClient_PedidoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:hint="Cliente"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="Celular:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/editText_CelClient_PedidoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Celular"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="left|center_vertical"
+                        android:text="Fecha entrega:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/editText_FechaEnt_PedidoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="Fecha de Entrega"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="Seña:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/editText_Senia_PedidoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Seña"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="Resto:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/editText_Resto_PedidoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="Resto"
+                        android:inputType="none" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="Total:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/editText_Total_PedidoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="Total"
+                        android:inputType="none" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recView_PedidoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="226dp"
+                    android:minHeight="60dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_AddProdPerso_PedidoInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Agregar prod personalizado" />
+
+                <Button
+                    android:id="@+id/button_AddProdStock_PedidoInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Agregar prod en stock" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editText_Detalle_PedidoInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Agregar prod personalizado" />
+                android:hint="Detalle"
+                android:inputType="textPersonName" />
 
-            <Button
-                android:id="@+id/button_AddProdStock_PedidoInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Agregar prod en stock" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editText_Detalle_PedidoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Detalle"
-            android:inputType="textPersonName" />
+        <Button
+            android:id="@+id/button_Update_PedidoInfo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="Actualizar"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/button_Eliminar_PedidoInfo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:text="Borrar"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_Update_PedidoInfo"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="Actualizar"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/button_Eliminar_PedidoInfo"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="20dp"
-        android:text="Borrar"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
-</LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
