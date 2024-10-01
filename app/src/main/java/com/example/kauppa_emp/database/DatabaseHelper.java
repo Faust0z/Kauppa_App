@@ -438,4 +438,52 @@ public class DatabaseHelper {
         }
         return cursor;
     }
+
+
+    // ------------------ QUERIES ESPECÍFICAS PARA REPORTES ------------------
+
+    /**
+     * Retorna un cursor con todos los ingresos de un tipo específico y los productos
+     * involucrados en cada uno de ellos.
+     * @param mes formato MM/YYYY
+     * @param tipoId ID de tipo
+     * @return cursor
+     */
+    public Cursor getIngresosByMesAndTipo(String mes, int tipoId) {
+        String query = "SELECT " +
+                "i.id_movimiento AS id, " +
+                "i.fecha AS date, " +
+                "GROUP_CONCAT(p.nombre || ' (' || ppi.cantidad || ')') AS products " +
+                "FROM " + DatabaseInit.TABLE_INGRESOS + " i " +
+                "JOIN " + DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO + " ppi ON i.id_movimiento = ppi.id_ingreso " +
+                "JOIN " + DatabaseInit.TABLE_PRODUCTOS + " p ON ppi.id_producto = p.id_producto " +
+                "WHERE i.id_tipo=? AND " +
+                "i.fecha LIKE ? " +
+                "GROUP BY i.id_movimiento";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            mes = "%" + mes;
+            cursor = db.rawQuery(query, new String[]{String.valueOf(tipoId), String.valueOf(mes)});
+        }
+        return cursor;
+    }
+
+    public Cursor getAllVentas() {
+        String query = "SELECT " +
+                "*" +
+                "FROM " + DatabaseInit.TABLE_INGRESOS + " i " +
+                "JOIN " + DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO + " ppi ON i.id_movimiento = ppi.id_ingreso " +
+                "JOIN " + DatabaseInit.TABLE_PRODUCTOS + " p ON ppi.id_producto = p.id_producto " +
+                "WHERE i.id_tipo=?";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf("1")});
+        }
+        return cursor;
+    }
 }
+
