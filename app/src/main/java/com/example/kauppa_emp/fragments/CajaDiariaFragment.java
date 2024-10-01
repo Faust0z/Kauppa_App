@@ -92,7 +92,7 @@ public class CajaDiariaFragment extends BaseFragment<Movimientos> {
         button_irBalGnral_CajaDiaria.setOnClickListener(v -> changeFragment(new BalGnralFragment()));
 
         //boton wup
-        btn_Wapp_CajaDiaria = view.findViewById(R.id.btn_Wapp_CajaDiaria);
+        btn_Wapp_CajaDiaria = view.findViewById(R.id.floatButton_Whatsapp_CajaDiaria);
         btn_Wapp_CajaDiaria.setOnClickListener(v -> enviarReporte());
 
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
