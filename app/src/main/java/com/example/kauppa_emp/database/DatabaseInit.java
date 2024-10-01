@@ -101,9 +101,13 @@ public class DatabaseInit extends SQLiteOpenHelper {
             "(4, 'Producto D', 0, '2023-07-01', '3000', 0), " +
             "(5, 'Producto E', 150, '2023-07-01', '777', 1);";
     private static final String SQL_INSERT_INGRESOS = "INSERT INTO " + TABLE_INGRESOS + " (id_movimiento, fecha, monto, detalle, id_tipo, nombre_cliente) VALUES " +
-            "(1, '23/07/2024', '100', 'Detalle de ingreso 1', 1, 'Cliente A'), " +
+            "(1, '23/10/2024', '100', 'Detalle de ingreso 1', 1, 'Cliente A'), " +
             "(4, '25/04/2023', '300', 'Detalle de ingreso 4', 3, 'Cliente D'), " +
-            "(5, '30/05/2023', '250', 'Detalle de ingreso 5', 2, 'Cliente E');";
+            "(5, '30/05/2024', '250', 'Detalle de ingreso 5', 1, 'Cliente E'), " +
+            "(20, '20/07/2024', '250', 'Detalle de ingreso 6', 1, 'Cliente E'), " +
+            "(21, '20/10/2024', '250', 'Detalle de ingreso 7', 1, 'Cliente E'), " +
+            "(22, '21/10/2024', '250', 'Detalle de ingreso 8', 1, 'Cliente E'), " +
+            "(23, '01/10/2024', '250', 'Detalle de ingreso 9', 1, 'Cliente E');";
     private static final String SQL_INSERT_EGRESOS = "INSERT INTO " + TABLE_EGRESOS + " (id_movimiento, fecha, monto, detalle, id_tipo, nom_prov) VALUES " +
             "(1, '05/01/2023', '50.0', 'Detalle de egreso 1', 4, 'Prov F'), " +
             "(2, '20/02/2023', '75.0', 'Detalle de egreso 2', 4, 'Prov G'), " +
@@ -115,7 +119,11 @@ public class DatabaseInit extends SQLiteOpenHelper {
             "(1, 2, 7), " +
             "(1, 3, 8), " +
             "(4, 4, 9), " +
-            "(5, 5, 10);";
+            "(5, 5, 10), " +
+            "(20, 1, 6), " +
+            "(21, 2, 7), " +
+            "(22, 4, 8), " +
+            "(23, 5, 9);";
     private static final String SQL_INSERT_PEDIDOS = "INSERT INTO " + TABLE_PEDIDOS + " (fecha, fecha_entrega, detalle, senia, resto, total, nombre_cliente, celular_cliente, id_estado) VALUES " +
             "('26/09/2024', '30/09/2024', 'Pedido de productos electrónicos', '100', '300', '400', 'Juan Pérez', '5551234567', 1), " +
             "('25/09/2024', '29/09/2024', 'Pedido de muebles', '150', '450', '600', 'Ana García', '5559876543', 2), " +

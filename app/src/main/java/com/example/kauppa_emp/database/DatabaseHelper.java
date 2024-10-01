@@ -470,6 +470,27 @@ public class DatabaseHelper {
         return cursor;
     }
 
+    public Cursor getIngresosByAnioAndTipo(String anio, int tipoId) {
+        String query = "SELECT " +
+                "i.id_movimiento AS id, " +
+                "i.fecha AS date, " +
+                "GROUP_CONCAT(p.nombre || ' (' || ppi.cantidad || ')') AS products " +
+                "FROM " + DatabaseInit.TABLE_INGRESOS + " i " +
+                "JOIN " + DatabaseInit.TABLE_PRODUCTOS_POR_INGRESO + " ppi ON i.id_movimiento = ppi.id_ingreso " +
+                "JOIN " + DatabaseInit.TABLE_PRODUCTOS + " p ON ppi.id_producto = p.id_producto " +
+                "WHERE i.id_tipo=? AND " +
+                "i.fecha LIKE ? " +
+                "GROUP BY i.id_movimiento";
+        SQLiteDatabase db = dbInit.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            anio = "%" + anio;
+            cursor = db.rawQuery(query, new String[]{String.valueOf(tipoId), String.valueOf(anio)});
+        }
+        return cursor;
+    }
+
     public Cursor getAllVentas() {
         String query = "SELECT " +
                 "*" +

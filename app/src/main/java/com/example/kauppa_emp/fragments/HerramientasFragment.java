@@ -30,6 +30,12 @@ public class HerramientasFragment extends Fragment {
                 .addToBackStack(null)
                 .commit());
 
+        MaterialCardView btnReporteAnual = view.findViewById(R.id.btnReporteAnual);
+        btnReporteAnual.setOnClickListener(v -> getParentFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, new ReporteAnualFragment())
+                .addToBackStack(null)
+                .commit());
+
         MaterialCardView button_AccesoProds_Herrs = view.findViewById(R.id.button_AccesoProds_Herrs);
         button_AccesoProds_Herrs.setOnClickListener(v -> getParentFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, new ProductosFragment())

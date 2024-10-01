@@ -17,7 +17,7 @@
         android:padding="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnVolverReporteMensual"
+            android:id="@+id/btnVolverReporteAnual"
             style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reporte Mensual"
+            android:text="Reporte Anual"
             android:textSize="30sp"
             android:textStyle="bold"></TextView>
 
@@ -43,7 +43,7 @@
             android:layout_height="20dp" />
 
         <WebView
-            android:id="@+id/webViewReporteMensual"
+            android:id="@+id/webViewReporteAnual"
             android:layout_width="match_parent"
             android:layout_height="514dp" />
 
