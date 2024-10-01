@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.cardview.v7)
     implementation(libs.legacy.support.v4)
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

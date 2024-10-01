@@ -1,33 +1,38 @@
 package com.example.kauppa_emp.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kauppa_emp.R;
-import com.example.kauppa_emp.fragments.Adapters.CustomAdapterReporteMensualMasVendido;
-import com.example.kauppa_emp.fragments.Adapters.CustomAdapterReporteMensualMayorGanancia;
+import com.example.kauppa_emp.database.DatabaseHelper;
+import com.example.kauppa_emp.database.dataObjects.VentaDTO;
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ReporteMensualFragment extends Fragment {
 
     private MaterialButton btnVolverReporteMensual;
-    private RecyclerView recyclerViewMasVendidos;
-    private RecyclerView recyclerViewMayorGanancia;
-    private CustomAdapterReporteMensualMasVendido customAdapterReporteMensualMasVendido;
-    private CustomAdapterReporteMensualMayorGanancia customAdapterReporteMensualMayorGanancia;
-
-    private ArrayList<LineaProductoMasVendido> listaProductosMasVendidos;
-    private ArrayList<LineaProductoMayorGanancia> listaProductosMayorGanancia;
+    private WebView webViewReporteMensual;
 
     @Nullable
     @Override
@@ -35,6 +40,7 @@ public class ReporteMensualFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_reporte_mensual, container, false);
     }
 
+    @SuppressLint("Range")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
@@ -51,36 +57,49 @@ public class ReporteMensualFragment extends Fragment {
             }
         });
 
-        // Inicializar el RecyclerView y el adaptador
-        recyclerViewMasVendidos = view.findViewById(R.id.recyclerViewMasVendidos);
-        recyclerViewMasVendidos.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Inicializar el WebView
+        webViewReporteMensual = view.findViewById(R.id.webViewReporteMensual);
+        // Placeholder:
+        //webViewReporteMensual.loadUrl("https://www.google.com");
 
-        // Crear una lista de productos de ejemplo
-        listaProductosMasVendidos = new ArrayList<>();
-        listaProductosMasVendidos.add(new LineaProductoMasVendido("Anillo Finlandes", 40, 1));
-        listaProductosMasVendidos.add(new LineaProductoMasVendido("Piedra Energetica", 30, 2));
-        listaProductosMasVendidos.add(new LineaProductoMasVendido("Adorno Artesanal", 20, 3));
-        listaProductosMasVendidos.add(new LineaProductoMasVendido("Bombilla Artesanal", 10, 4));
-
-        // Inicializar el adaptador con la lista de productos y configurar el RecyclerView
-        customAdapterReporteMensualMasVendido = new CustomAdapterReporteMensualMasVendido(listaProductosMasVendidos);
-        recyclerViewMasVendidos.setAdapter(customAdapterReporteMensualMasVendido);
+        DatabaseHelper dbhelper = new DatabaseHelper(ReporteMensualFragment.this.getContext());
 
 
-        // Inicializar el RecyclerView y el adaptador
-        recyclerViewMayorGanancia = view.findViewById(R.id.recyclerViewMayorGanancia);
-        recyclerViewMayorGanancia.setLayoutManager(new LinearLayoutManager(getContext()));
+        Cursor nose = dbhelper.getIngresosByMesAndTipo("07/2024",1);
+        Cursor nose1 = dbhelper.getAllVentas();
 
-        // Crear una lista de productos de ejemplo
-        listaProductosMayorGanancia = new ArrayList<>();
-        listaProductosMayorGanancia.add(new LineaProductoMayorGanancia("Anillo Finlandes", 80000, 1));
-        listaProductosMayorGanancia.add(new LineaProductoMayorGanancia("Piedra Energetica", 55000, 2));
-        listaProductosMayorGanancia.add(new LineaProductoMayorGanancia("Adorno Artesanal", 27000, 3));
-        listaProductosMayorGanancia.add(new LineaProductoMayorGanancia("Bombilla Artesanal", 14500.98, 4));
+        //debugging
+        System.out.println("ventas por mes y tipo:");
+        System.out.println(nose.getCount());
+        System.out.println("todas las ventas:");
+        System.out.println(nose1.getCount());
+        //fin debugging
 
-        // Inicializar el adaptador con la lista de productos y configurar el RecyclerView
-        customAdapterReporteMensualMayorGanancia = new CustomAdapterReporteMensualMayorGanancia(listaProductosMayorGanancia);
-        recyclerViewMayorGanancia.setAdapter(customAdapterReporteMensualMayorGanancia);
+        // Generar lista de objetos a partir del cursor
+        ArrayList<VentaDTO> ventasDTO = new ArrayList<VentaDTO>();
+        while (nose.moveToNext()){
+            VentaDTO venta = new VentaDTO();
+            venta.setId(nose.getInt(nose.getColumnIndex("id")));
+            // Parseo manual de fecha
+            String dateString = nose.getString(nose.getColumnIndex("date"));
+            String day = dateString.substring(0, 2);
+            String month = dateString.substring(3, 5);
+            String year = dateString.substring(6);
+            venta.setDate(year + "-" + month + "-" + day);
+
+            venta.setProducts(nose.getString(nose.getColumnIndex("products")));
+            System.out.println(venta.getId());
+            System.out.println(venta.getDate());
+            System.out.println(venta.getProducts());
+            ventasDTO.add(venta);
+        }
+        // Objetos a json
+        Gson gson = new Gson();
+        String json = gson.toJson(ventasDTO);
+        System.out.println(json);
+        // Ejecutar post request en paralelo
+        new ExecuteRequest().execute(json);
+
 
     }
 
@@ -136,4 +155,53 @@ public class ReporteMensualFragment extends Fragment {
 
     }
 
+    /**
+     * Esta clase se usa para ejecuta el request en paralelo evitando el
+     * trabajo en el núcleo principal
+     */
+    private class ExecuteRequest extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params){
+            String json = params[0];
+
+            OkHttpClient client = new OkHttpClient();
+            RequestBody requestBody = RequestBody.create(
+                    MediaType.parse("application/json"), json);
+
+            Request request = new Request.Builder()
+                    .url("http://192.168.1.152:8080/web-report/monthly")
+                    .post(requestBody)
+                    .build();
+
+            Call call = client.newCall(request);
+
+
+
+
+            try {
+                Response response = call.execute();
+                //En caso de éxito se retorna el response body
+                return(response.body().string());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String html){
+            if (html != null){
+                // Exito: se carga el html en el webview
+                webViewReporteMensual.loadData(html, "text/html; charset=utf-8", null);
+            } else {
+                // Falla: se prepara y muestra un diálogo de alerta
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("No se pudo establecer una conexión con el servicio de reportes.")
+                        .setTitle("Error de conexión");
+                AlertDialog connectionDialog = builder.create();
+                connectionDialog.show();
+            }
+        }
+    }
 }
